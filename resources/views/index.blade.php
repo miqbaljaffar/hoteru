@@ -8,5 +8,6 @@
 <body>
 index
 <a href="/login">Login</a>
+<a href="/dashboard">dashboard</a>
 </body>
 </html>
