@@ -68,6 +68,7 @@
     <script src="/db/demo/chart-area-demo.js"></script>
     <script src="/db/demo/chart-pie-demo.js"></script>
     <script src="/bs/js/bootstrap.min.js"></script>
+    @include('sweetalert::alert')
 
 </body>
 </html>

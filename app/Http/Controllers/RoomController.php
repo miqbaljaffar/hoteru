@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Room;
+// use Illuminate\Console\View\Components\Alert as ComponentsAlert;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class RoomController extends Controller
 {
@@ -42,6 +44,8 @@ class RoomController extends Controller
             'status' => $request->status,
             // 'image' => $image
         ]);
-        return redirect('/dashboard/room')->with('success', 'Data Berhasil Dibuat');
+
+       Alert::success('Success','Data berhasil ditambahkan');
+        return redirect('/dashboard/room');
     }
 }
