@@ -16,6 +16,7 @@
     <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="/db/sb-admin-2.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/bs/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
 </head>
 
 <body id="page-top">
@@ -68,7 +69,13 @@
     <script src="/db/demo/chart-area-demo.js"></script>
     <script src="/db/demo/chart-pie-demo.js"></script>
     <script src="/bs/js/bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     @include('sweetalert::alert')
+    <script>
+        $(document).ready( function () {
+        $('#myTable').DataTable();
+        } );
+    </script>
 
 </body>
 </html>

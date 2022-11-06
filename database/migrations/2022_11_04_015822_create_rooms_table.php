@@ -14,13 +14,15 @@ return new class extends Migration
     public function up()
     {
         Schema::create('rooms', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->string('no');
-            $table->string('type');
+            $table->bigInteger('type_id')->unsigned()->index();
+            $table->foreign('type_id')->references('id')->on('types')->onDelete('cascade');
+            $table->bigInteger('status_id')->unsigned()->index();
+            $table->foreign('status_id')->references('id')->on('room_statuses')->onDelete('cascade');
             $table->integer('capacity');
-            $table->integer('price');
-            $table->string('status');
-            $table->string('image')->nullable();
+            $table->bigInteger('price');
+            $table->longText('info');
             $table->timestamps();
         });
     }

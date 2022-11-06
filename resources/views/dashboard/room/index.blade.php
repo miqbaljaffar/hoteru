@@ -7,9 +7,8 @@
                     <div class="container">
                         <div class="col-md-6">
                             <div class="d-sm-flex align-items-center mb-4">
-                                <a href="room/create" class="d-none d-sm-inline-block btn btn-sm btn-outline-secondary shadow-sm me-2"><i
-                                        class="fas fa-download fa-sm ms-1 me-1"></i></a>
-                            <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+                                <h1 class="h2 mb-0 text-dark-1000">Room</h1>
+                                <a href="room/create" class="d-none d-sm-inline-block btn btn-sm btn-outline-dark shadow-sm ms-2"><i class="fas fa-plus"></i></a>
                             </div>
                         </div>
 
@@ -29,19 +28,19 @@
                     <div class="container">
                         <div class="card">
                             <div class="card-header">
-                                <h5>Total data : {{$p }}</h5>
+                                <h5>Total data {{$p }}</h5>
                             </div>
                                 <div class="card-body">
-                                <table class="table table-bordered">
+                                <table class="table table-sm table-bordered" id="myTable">
                                     <thead>
                                         <tr>
-                                            <th>#</th>
-                                            <th>Id</th>
+                                            <th width="5%">#</th>
+                                            <th width="5%">Id</th>
                                             <th>No</th>
                                             <th>Type</th>
+                                            <th>Status</th>
                                             <th>Capacity</th>
                                             <th>Price/day</th>
-                                            <th>Status</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -54,13 +53,14 @@
                                             <td>{{ $no++ }}</td>
                                             <td>{{ $r->id }}</td>
                                             <td>{{ $r->no }}</td>
-                                            <td>{{ $r->type }}</td>
+                                            <td>{{ $r->type->name }}</td>
+                                            <td>{{ $r->status->name }}</td>
                                             <td>{{ $r->capacity }}</td>
-                                            <td>{{ $r->price }}</td>
-                                            <td>{{ $r->status }}</td>
+                                            <td>Rp.{{ number_format($r->price) }}</td>
                                             <td>
                                                 <a href="#" class="btn btn-outline-success"><i class="fas fa-pen"></i></a>
                                                 <a href="#" class="btn btn-outline-danger"><i class="fas fa-trash"></i></i> </a>
+                                                <a href="#" class="btn btn-outline-warning"><i class="fas fa-eye"></i></i></i> </a>
                                             </td>
                                         </tr>
                                         @endforeach
@@ -71,9 +71,9 @@
                                             <th>Id</th>
                                             <th>No</th>
                                             <th>Type</th>
+                                            <th>Status</th>
                                             <th>Capacity</th>
                                             <th>Price/day</th>
-                                            <th>Status</th>
                                             <th>Action</th>
                                         </tr>
                                     </tfoot>

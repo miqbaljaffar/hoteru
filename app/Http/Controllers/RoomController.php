@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Room;
+use App\Models\RoomStatus;
+use App\Models\Type;
 // use Illuminate\Console\View\Components\Alert as ComponentsAlert;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -10,26 +12,28 @@ use RealRashid\SweetAlert\Facades\Alert;
 class RoomController extends Controller
 {
     public function index(){
-        $room = Room::get();
+        $room = Room::orderBy('id', 'desc')->get();
         $p = Room::get()->count();
         // dd($room);
         return view('dashboard.room.index', compact('room','p'));
     }
 
     public function create(){
-        $p = Room::get()->count();
-        // dd($p);
-        return view('dashboard.room.create', compact('p'));
+        $status = RoomStatus::get();
+        $type = Type::get();
+        // dd($type);
+        return view('dashboard.room.create', compact('type', 'status'));
     }
     public function post(Request $request){
         // dd($request);
-        $validatedData = $request->validate([
+        $request->validate([
             'no' => 'required',
-            'type' => 'required',
+            'type_id' => 'required',
             'capacity' => 'required',
             'price' => 'required',
-            'status' => 'nullable',
-            'image' => 'nullable|image|file|max:3072'
+            'status_id' => 'required',
+            'info' => 'required'
+            // 'image' => 'nullable|image|file|max:3072'
         ]);
 
         // if($request->file('image')){
@@ -38,10 +42,11 @@ class RoomController extends Controller
 
         Room::create([
             'no' => $request->no,
-            'type' => $request->type,
+            'type_id' => $request->type_id,
             'capacity' => $request->capacity,
             'price' => $request->price,
-            'status' => $request->status,
+            'status_id' => $request->status_id,
+            'info' => $request->info
             // 'image' => $image
         ]);
 

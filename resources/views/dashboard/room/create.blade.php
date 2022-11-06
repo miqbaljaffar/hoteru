@@ -16,45 +16,47 @@
                                     <form action="/dashboard/room/post" method="POST"  enctype="multipart/form-data">
                                         @csrf
                                         <div class="row">
-                                            {{-- <div class="col-lg-12"> --}}
                                                 <div class="col-md-2">
-                                                    <label class="form-label"> Id </label>
-                                                    <input type="text" class="form-control" value="{{ $p + 1 }}"disabled>
+                                                <label for="no" class="form-label">Room Number <span style="font-style: italic;">(required)</span></label>
+                                                    <input type="text" class="form-control" id="no" name ='no' required placeholder="ex 10A">
                                                 </div>
-                                                <div class="col-md-2">
-
+                                                <div class="col-md-4">
+                                                    <label for="status_id" class="form-label">Status Room <span style="font-style: italic;">(required)</span></label>
+                                                    <select name="status_id" id="status_id" class="form-select">
+                                                        {{-- <option selected>-- Pilih Status Kamar --</option> --}}
+                                                        @foreach ($status as $s)
+                                                            <option value="{{ $s->id }}">{{ $s->name }}</option>
+                                                        @endforeach
+                                                      </select>
+                                                    {{-- <input type="text" class="form-control" id="status_id" name ='status_id' required> --}}
                                                 </div>
-                                                <div class="col-md-6">
-                                                <label for="no" class="form-label">Room Number<span style="font-style: italic;">(required)</span></label>
-                                                    <input type="text" class="form-control" id="no" name ='no' required>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-4 mt-3">
-                                                    <label for="status" class="form-label">Status<span style="font-style: italic;">(required)</span></label>
-                                                    <input type="text" class="form-control" id="status" name ='status' required>
-                                                </div>
-                                                <div class="col-md-6 mt-3">
-                                                    <label for="type" class="form-label">Type<span style="font-style: italic;">(required)</span></label>
-                                                    <input type="text" class="form-control" id="type" name ='type' required>
+                                                <div class="col-md-4">
+                                                    <label for="type_id" class="form-label">Type Rooms <span style="font-style: italic;">(required)</span></label>
+                                                    <select class="form-select" name="type_id" id="type_id">
+                                                        {{-- <option selected> -- Pilih Type Kamar --</option> --}}
+                                                        @foreach ($type as $t)
+                                                        <option value="{{ $t->id }}">{{ $t->name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    {{-- <input type="text" class="form-control" id="type_id" name ='type_id' required> --}}
                                                 </div>
                                             {{-- </div> --}}
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-4 mt-3">
-                                                <label for="capacity" class="form-label"> Capacity <span style="font-style: italic;">(required)</span></label>
+                                            <div class="col-md-5 mt-3">
+                                                <label for="capacity" class="form-label"> Capacity  <span style="font-style: italic;">(required)</span></label>
                                                 <input type="number" class="form-control" id="capacity" name ='capacity' required>
                                             </div>
-                                            <div class="col-md-6 mt-3">
-                                                <label for="price" class="form-label"> Price / day <span style="font-style: italic;">(required)</span></label>
+                                            <div class="col-md-5 mt-3">
+                                                <label for="price" class="form-label"> Price / day  <span style="font-style: italic;">(required)</span></label>
                                                 <input type="number" class="form-control" id="price" name ='price' required>
                                             </div>
                                         </div>
                                         <div class="row">
 
                                             <div class="col-md-10 mt-3">
-                                                <label for="desc" class="form-label"> Description <span style="font-style: italic;">(required)</span></label>
-                                                <textarea placeholder="Beach view" name="desc" id="desc"rows="3" class="form-control"></textarea>
+                                                <label for="info" class="form-label"> Description  <span style="font-style: italic;">(required)</span></label>
+                                                <textarea placeholder="Beach view" name="info" id="info"rows="3" class="form-control"></textarea>
                                                 {{-- <input type="number" class="form-control" id="price" name ='price' required> --}}
                                             </div>
                                         </div>
