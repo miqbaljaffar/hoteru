@@ -4,6 +4,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\StatusController;
+use App\Http\Controllers\TypeController;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/', function () {
@@ -33,4 +34,9 @@ Route::get('/dashboard/status/{id}/edit', [StatusController::class, 'edit']);
 Route::post('/dashboard/status/{id}/update', [StatusController::class, 'update']);
 Route::any('/dashboard/status/{id}/delete', [StatusController::class, 'delete']);
 
-// Rote::get('/dashboard/type', []);
+Route::get('/dashboard/type', [TypeController::class, 'index']);
+Route::get('/dashboard/type/create', [TypeController::class, 'create']);
+Route::get('/dashboard/type/{id}/edit', [TypeController::class, 'edit']);
+Route::post('/dashboard/type/post', [TypeController::class, 'post']);
+Route::post('/dashboard/type/{id}/update', [TypeController::class, 'update']);
+Route::any('/dashboard/type/{id}/delete', [TypeController::class, 'delete']);

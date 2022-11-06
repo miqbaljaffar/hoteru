@@ -27,8 +27,8 @@
         Interface
     </div>
 
-    <!-- Nav Item - Pages Collapse Menu -->
-    <li class="nav-item">
+    <!-- Nav Item - Page s Collapse Menu -->
+    <li class="nav-item active">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
             aria-expanded="true" aria-controls="collapseTwo">
             <i class="fas fa-fw fa-cog"></i>
@@ -39,6 +39,7 @@
                 <h6 class="collapse-header">Inner</h6>
                 <a class="collapse-item" href="/dashboard/room">Room</a>
                 <a class="collapse-item" href="/dashboard/status">Status Room</a>
+                <a class="collapse-item" href="/dashboard/type">Type Room</a>
             </div>
         </div>
     </li>
