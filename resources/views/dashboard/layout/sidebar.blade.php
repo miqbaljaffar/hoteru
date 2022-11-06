@@ -38,7 +38,7 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Inner</h6>
                 <a class="collapse-item" href="/dashboard/room">Room</a>
-                <a class="collapse-item" href="/dashboard/">Cards</a>
+                <a class="collapse-item" href="/dashboard/status">Status Room</a>
             </div>
         </div>
     </li>
