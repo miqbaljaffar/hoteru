@@ -57,7 +57,11 @@
                                                     <td>{{ $r->info }}</td>
                                                     <td>
                                                         <a href="type/{{ $r->id }}/edit" class="btn btn-outline-success"><i class="fas fa-pen"></i></a>
-                                                        {{-- <a href="type/delete" class="btn btn-outline-danger"></i> </a> --}}
+                                                           {{-- <form method="POST" action="type/{{ $r->id }}/delete">
+                                                            @csrf
+                                                            <input name="_method" type="hidden" value="DELETE">
+                                                            <button type="submit" class="btn btn-xs btn-danger btn-flat show_confirm" data-toggle="tooltip" title='Delete'>Delete</button>
+                                                        </form> --}}
                                                         <a href="type/{{ $r->id }}/delete" class="btn btn-outline-danger"><i class="fas fa-trash"></i></a>
                                                         <a href="#" class="btn btn-outline-warning"><i class="fas fa-eye"></i></i></i> </a>
                                                     </td>

@@ -23,6 +23,9 @@ Route::get('/dashboard', [DashboardController::class, 'index']);
 Route::get('/dashboard/room', [RoomController::class, 'index']);
 Route::get('/dashboard/room/create', [RoomController::class, 'create']);
 Route::get('/dashboard/room/{id}/edit', [RoomController::class, 'edit']);
+
+Route::get('/dashboard/room/{room:no}', [RoomController::class, 'show']);
+
 Route::post('/dashboard/room/{id}/edit', [RoomController::class, 'update']);
 Route::post('/dashboard/room/post', [RoomController::class, 'post']);
 Route::any('/dashboard/room/{id}/delete', [RoomController::class, 'delete']);

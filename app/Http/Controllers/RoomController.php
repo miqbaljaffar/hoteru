@@ -76,4 +76,8 @@ class RoomController extends Controller
         Alert::success('Success','Data berhasil diedit');
         return redirect('/dashboard/room');
     }
+
+    public function show(Room $room){
+        return view('dashboard.room.show', compact('room'));
+    }
 }
