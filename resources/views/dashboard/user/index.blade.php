@@ -8,7 +8,7 @@
                         <div class="col-md-6">
                             <div class="d-sm-flex align-items-center mb-4">
                                 <h1 class="h2 mb-0 text-dark-1000">Room</h1>
-                                <a href="room/create" class="d-none d-sm-inline-block btn btn-sm btn-outline-dark shadow-sm ms-2"><i class="fas fa-plus"></i></a>
+                                <a href="user/create" class="d-none d-sm-inline-block btn btn-sm btn-outline-dark shadow-sm ms-2"><i class="fas fa-plus"></i></a>
                             </div>
                         </div>
 
@@ -37,12 +37,13 @@
                                             <thead class="table-secondary">
                                                 <tr>
                                                     <th width="5%">#</th>
-                                                    <th width="5%">Id</th>
-                                                    <th>No</th>
-                                                    <th>Type</th>
-                                                    <th>Status</th>
-                                                    <th>Capacity</th>
-                                                    <th>Price/day</th>
+                                                    <th width="5%">Name</th>
+                                                    <th>Username</th>
+                                                    <th>Telp</th>
+                                                    <th>Birthdate</th>
+                                                    <th>Jk</th>
+                                                    <th>Email</th>
+                                                    <th>Address</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
@@ -50,23 +51,20 @@
                                                 @php
                                                     $no = 1;
                                                 @endphp
-                                                @foreach ($room as $r)
+                                                @foreach ($user as $u)
                                                 <tr>
-                                                    <td>{{ $no++ }}</td>
-                                                    <td>{{ $r->id }}</td>
-                                                    <td>{{ $r->no }}</td>
-                                                    <td>{{ $r->type->name }}</td>
-                                                    <td>{{ $r->status->name }}</td>
-                                                    <td>{{ $r->capacity }}</td>
-                                                    <td>Rp.{{ number_format($r->price) }}</td>
+                                                    <td>{{ $u->id }}</td>
+                                                    <td>{{ $u->name }}</td>
+                                                    <td>{{ $u->username }}</td>
+                                                    <td>{{ $u->telp }}</td>
+                                                    <td>{{ $u->birthdate }}</td>
+                                                    <td>{{ $u->jk }}</td>
+                                                    <td>{{ $u->email }}</td>
+                                                    <td>{{ $u->address }}</td>
                                                     <td>
-                                                        <a href="room/{{ $r->id }}/edit" class="btn btn-outline-success"><i class="fas fa-pen"></i></a>
-
-
-                                                        <button class="btn btn-danger btn-flat btn-sm remove-user" data-id="{{ $r->id }}" data-action="{{ route('room.delete',$r->id) }}" onclick="deleteConfirmation({{$r->id}})"> Delete</button>
-
-                                                        <a href="/dashboard/room/{{ $r->id }}/delete" class="btn btn-outline-danger"><i class="fas fa-trash"></i></a>
-                                                        <a href="room/{{$r->no}}" class="btn btn-outline-warning"><i class="fas fa-eye"></i></i></i> </a>
+                                                        <a href="/dashboard/user/{{ $u->username }}/edit" class="btn btn-outline-success"><i class="fas fa-pen"></i></a>
+                                                        <a href="/dashboard/user/{{ $u->id }}/delete" class="btn btn-outline-danger"><i class="fas fa-trash"></i></a>
+                                                        <a href="user/{{$u->no}}" class="btn btn-outline-warning"><i class="fas fa-eye"></i></i></i> </a>
 
                                                     </td>
                                                 </tr>
@@ -74,14 +72,15 @@
                                             </tbody>
                                             <tfoot class="table-secondary">
                                                 <tr>
-                                                    <th>#</th>
-                                                    <th>Id</th>
-                                                    <th>No</th>
-                                                    <th>Type</th>
-                                                    <th>Status</th>
-                                                    <th>Capacity</th>
-                                                    <th>Price/day</th>
-                                                    <th width="14%">Action</th>
+                                                    <th width="5%">#</th>
+                                                    <th width="5%">Name</th>
+                                                    <th>Username</th>
+                                                    <th>Telp</th>
+                                                    <th>Birthdate</th>
+                                                    <th>Jk</th>
+                                                    <th>Email</th>
+                                                    <th>Address</th>
+                                                    <th>Action</th>
                                                 </tr>
                                             </tfoot>
                                         </table>

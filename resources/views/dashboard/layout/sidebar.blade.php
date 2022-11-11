@@ -46,19 +46,19 @@
 
     <!-- Nav Item - Utilities Collapse Menu -->
     <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-            aria-expanded="true" aria-controls="collapseUtilities">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseuser"
+            aria-expanded="true" aria-controls="collapseuser">
             <i class="fas fa-fw fa-wrench"></i>
-            <span>Utilities</span>
+            <span>User</span>
         </a>
-        <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+        <div id="collapseuser" class="collapse" aria-labelledby="headinguser"
             data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Custom Utilities:</h6>
-                <a class="collapse-item" href="utilities-color.html">Colors</a>
-                <a class="collapse-item" href="utilities-border.html">Borders</a>
-                <a class="collapse-item" href="utilities-animation.html">Animations</a>
-                <a class="collapse-item" href="utilities-other.html">Other</a>
+                <h6 class="collapse-header">Data</h6>
+                <a class="collapse-item" href="/dashboard/user">User</a>
+                {{-- <a class="collapse-item" href="user-border.html">Borders</a>
+                <a class="collapse-item" href="user-animation.html">Animations</a>
+                <a class="collapse-item" href="user-other.html">Other</a> --}}
             </div>
         </div>
     </li>

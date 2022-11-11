@@ -10,7 +10,7 @@
                         <div class="container">
                         <div class="card">
                                 <div class="card-header">
-                                  <h4>Tambah data Kamar</h4>
+                                  <h4>Edit data Kamar No {{ $p->no }} #{{$p->id}} </h4>
                                 </div>
                                 <div class="card-body">
                                     <form action="/dashboard/room/{{ $p->id }}/edit" method="POST"  enctype="multipart/form-data">
@@ -61,7 +61,7 @@
                                             </div>
                                         </div>
 
-                                        <button class="btn btn-outline-dark mt-4" type="submit"> SUBMIT </button>
+                                        <button class="btn btn-dark mt-4" type="submit"> SUBMIT </button>
                                     </form>
                                 </div>
                             </div>

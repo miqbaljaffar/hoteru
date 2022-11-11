@@ -10,7 +10,7 @@
                         <div class="container">
                         <div class="card">
                                 <div class="card-header">
-                                  <h4>Tambah data Kamar</h4>
+                                  <h4>Tambah data Status Kamar</h4>
                                 </div>
                                 <div class="card-body">
                                     <div class="col-md-auto">
@@ -34,7 +34,7 @@
                                                 </div>
                                             </div>
 
-                                            <button class="btn btn-outline-dark mt-4" type="submit"> SUBMIT </button>
+                                            <button class="btn btn-dark mt-4" type="submit"> SUBMIT </button>
                                         </form>
                                     </div>
                                 </div>

@@ -61,7 +61,7 @@
                                             </div>
                                         </div>
 
-                                        <button class="btn btn-outline-dark mt-4" type="submit"> SUBMIT </button>
+                                        <button class="btn btn-dark mt-4" type="submit"> SUBMIT </button>
                                     </form>
                                 </div>
                             </div>

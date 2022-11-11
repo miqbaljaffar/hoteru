@@ -28,7 +28,7 @@
                     <div class="container">
                         <div class="card">
                             <div class="card-header">
-                                <h5>Total data {{$p }}</h5>
+                                <h5>Total data</h5>
                             </div>
                                 <div class="card-body">
                                     <div class="col-md-auto">
@@ -43,34 +43,30 @@
                                                     <th>Status</th>
                                                     <th>Capacity</th>
                                                     <th>Price/day</th>
-                                                    <th>Action</th>
+
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 @php
                                                     $no = 1;
                                                 @endphp
-                                                @foreach ($room as $r)
+
                                                 <tr>
                                                     <td>{{ $no++ }}</td>
-                                                    <td>{{ $r->id }}</td>
-                                                    <td>{{ $r->no }}</td>
-                                                    <td>{{ $r->type->name }}</td>
-                                                    <td>{{ $r->status->name }}</td>
-                                                    <td>{{ $r->capacity }}</td>
-                                                    <td>Rp.{{ number_format($r->price) }}</td>
-                                                    <td>
-                                                        <a href="room/{{ $r->id }}/edit" class="btn btn-outline-success"><i class="fas fa-pen"></i></a>
+                                                    <td>{{ $room->id }}</td>
+                                                    <td>{{ $room->no }}</td>
+                                                    <td>{{ $room->type->name }}</td>
+                                                    <td>{{ $room->status->name }}</td>
+                                                    <td>{{ $room->capacity }}</td>
+                                                    <td>Rp.{{ number_format($room->price) }}</td>
+                                                    {{-- <td>
+                                                        <a href="room/{{ $room->id }}/edit" class="btn btn-outline-success"><i class="fas fa-pen"></i></a>
+                                                        <a href="room/{{ $room->id }}/delete" class="btn btn-outline-danger"><i class="fas fa-trash"></i></a>
+                                                        <a href="#" class="btn btn-outline-warning"><i class="fas fa-eye"></i></i></i> </a>
 
-
-                                                        <button class="btn btn-danger btn-flat btn-sm remove-user" data-id="{{ $r->id }}" data-action="{{ route('room.delete',$r->id) }}" onclick="deleteConfirmation({{$r->id}})"> Delete</button>
-
-                                                        <a href="/dashboard/room/{{ $r->id }}/delete" class="btn btn-outline-danger"><i class="fas fa-trash"></i></a>
-                                                        <a href="room/{{$r->no}}" class="btn btn-outline-warning"><i class="fas fa-eye"></i></i></i> </a>
-
-                                                    </td>
+                                                    </td> --}}
                                                 </tr>
-                                                @endforeach
+
                                             </tbody>
                                             <tfoot class="table-secondary">
                                                 <tr>
@@ -81,7 +77,7 @@
                                                     <th>Status</th>
                                                     <th>Capacity</th>
                                                     <th>Price/day</th>
-                                                    <th width="14%">Action</th>
+
                                                 </tr>
                                             </tfoot>
                                         </table>
@@ -89,45 +85,5 @@
                             </div>
                     </div>
                     </div>
-                    <script type="text/javascript">
-                        function deleteConfirmation(id) {
-                            swal({
-                                title: "Delete?",
-                                text: "Please ensure and then confirm!",
-                                type: "warning",
-                                showCancelButton: !0,
-                                confirmButtonText: "Yes, delete it!",
-                                cancelButtonText: "No, cancel!",
-                                reverseButtons: !0
-                            }).then(function (e) {
-
-                                if (e.value === true) {
-                                    var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-
-                                    $.ajax({
-                                        type: 'POST',
-                                        url: "{{url('room')}}/" + id,
-                                        data: {_token: CSRF_TOKEN},
-                                        dataType: 'JSON',
-                                        success: function (results) {
-
-                                            if (results.success === true) {
-                                                swal("Done!", results.message, "success");
-                                            } else {
-                                                swal("Error!", results.message, "error");
-                                            }
-                                        }
-                                    });
-
-                                } else {
-                                    e.dismiss;
-                                }
-
-                            }, function (dismiss) {
-                                return false;
-                            })
-                        }
-                    </script>
-
 @endsection
             <!-- End of Main Content -->
