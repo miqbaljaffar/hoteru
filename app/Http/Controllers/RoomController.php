@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ImageRoom;
 use App\Models\Room;
 use App\Models\RoomStatus;
 use App\Models\Type;
@@ -79,5 +80,28 @@ class RoomController extends Controller
 
     public function show(Room $room){
         return view('dashboard.room.show', compact('room'));
+    }
+
+    public function addimage(Room $room){
+        // $p = $room->images;
+        // dd($p);
+        return view('dashboard.room.image', compact('room'));
+    }
+
+    public function storeimage(Request $request){
+        $validatedData = $request->validate([
+            'room_id' => 'required',
+            'image' => 'required|image|file',
+        ]);
+        if($request->file('image')){
+            $image = $validatedData['image'] = $request->file('image')->store('room-images', 'public');
+        }
+        // dd($validatedData);
+        ImageRoom::create([
+            'room_id' => $request->room_id,
+            'image' => $image
+        ]);
+        Alert::success('succes', 'p');
+        return redirect('/dashboard/room');
     }
 }

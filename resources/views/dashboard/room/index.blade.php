@@ -59,14 +59,13 @@
                                                     <td>{{ $r->status->name }}</td>
                                                     <td>{{ $r->capacity }}</td>
                                                     <td>Rp.{{ number_format($r->price) }}</td>
-                                                    <td>
-                                                        <a href="room/{{ $r->id }}/edit" class="btn btn-outline-success"><i class="fas fa-pen"></i></a>
-
-
-                                                        <button class="btn btn-danger btn-flat btn-sm remove-user" data-id="{{ $r->id }}" data-action="{{ route('room.delete',$r->id) }}" onclick="deleteConfirmation({{$r->id}})"> Delete</button>
-
-                                                        <a href="/dashboard/room/{{ $r->id }}/delete" class="btn btn-outline-danger"><i class="fas fa-trash"></i></a>
-                                                        <a href="room/{{$r->no}}" class="btn btn-outline-warning"><i class="fas fa-eye"></i></i></i> </a>
+                                                    <td class="d-flex">
+                                                        <a href="room/{{ $r->id }}/edit" class="btn btn-outline-success me-1"><i class="fas fa-pen"></i></a>
+                                                        <form action="/dashboard/room/{{ $r->id }}/delete" method="post">
+                                                            @csrf
+                                                            <button  class="btn btn-outline-danger me-1" type="submit" onclick="return confirm('Are you sure')"><i class="fas fa-trash"></i></button>
+                                                        </form>
+                                                        <a href="/dashboard/room/{{$r->no}}" class="btn btn-outline-warning me-1"><i class="fas fa-eye"></i></i></i> </a>
 
                                                     </td>
                                                 </tr>
@@ -89,11 +88,11 @@
                             </div>
                     </div>
                     </div>
-                    <script type="text/javascript">
+                    {{-- <script type="text/javascript">
                         function deleteConfirmation(id) {
                             swal({
                                 title: "Delete?",
-                                text: "Please ensure and then confirm!",
+                                text: "Apakah kamu yakin ingin menghapus?",
                                 type: "warning",
                                 showCancelButton: !0,
                                 confirmButtonText: "Yes, delete it!",
@@ -102,32 +101,33 @@
                             }).then(function (e) {
 
                                 if (e.value === true) {
-                                    var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+                                    return true;
+                                    // var CSRF_TOKEN = $('input[name="_token"]')[0].value;
+                                    // $.ajax({
+                                    //     type: 'DELETE',
+                                    //     url: "{{url('dashboard/room')}}/" + id,
+                                    //     data: {_token: CSRF_TOKEN},
+                                    //     dataType: 'JSON',
+                                    //     success: function (results) {
 
-                                    $.ajax({
-                                        type: 'POST',
-                                        url: "{{url('room')}}/" + id,
-                                        data: {_token: CSRF_TOKEN},
-                                        dataType: 'JSON',
-                                        success: function (results) {
-
-                                            if (results.success === true) {
-                                                swal("Done!", results.message, "success");
-                                            } else {
-                                                swal("Error!", results.message, "error");
-                                            }
-                                        }
-                                    });
+                                    //         if (results.success === true) {
+                                    //             swal("Done!", results.message, "success");
+                                    //         } else {
+                                    //             swal("Error!", results.message, "error");
+                                    //         }
+                                    //     }
+                                    // });
 
                                 } else {
                                     e.dismiss;
+                                    return false;
                                 }
 
                             }, function (dismiss) {
                                 return false;
                             })
                         }
-                    </script>
+                    </script> --}}
 
 @endsection
             <!-- End of Main Content -->

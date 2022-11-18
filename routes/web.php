@@ -16,12 +16,17 @@ Route::get('/', function(){
     return view('index');
 });
 Route::get('/login', [LoginController::class, 'index'])->middleware('guest');
+Route::post('/login', [LoginController::class, 'authenticate']);
 Route::get('/register', [LoginController::class, 'register'])->middleware('guest');
-
+Route::post('/register', [LoginController::class, 'store']);
+Route::post('/logout', [LoginController::class, 'logout']);
 
 Route::get('/dashboard', [DashboardController::class, 'index']);
 
 Route::get('/dashboard/room', [RoomController::class, 'index']);
+Route::get('/dashboard/room/{room:no}/add-image', [RoomController::class, 'addimage']);
+Route::post('/dashboard/room/{room:no}/store-image', [RoomController::class, 'storeimage']);
+
 Route::get('/dashboard/room/create', [RoomController::class, 'create']);
 Route::get('/dashboard/room/{id}/edit', [RoomController::class, 'edit']);
 Route::get('/dashboard/room/{room:no}', [RoomController::class, 'show']);
