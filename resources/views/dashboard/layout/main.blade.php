@@ -1,17 +1,7 @@
-
-<!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
   @yield('title')
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.css">
+  {{-- <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.css"> --}}
   <script src="http://demo.itsolutionstuff.com/plugin/jquery.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
@@ -20,6 +10,8 @@
     <link href="/db/sb-admin-2.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/bs/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+    <link href="/carousel/carousel.css" rel="stylesheet">
+
 </head>
 
 <body id="page-top">
@@ -71,7 +63,8 @@
     <!-- Page level custom scripts -->
     <script src="/db/demo/chart-area-demo.js"></script>
     <script src="/db/demo/chart-pie-demo.js"></script>
-    <script src="/bs/js/bootstrap.min.js"></script>
+    <script src="/bs/js/bootstrap.bundle.min.js"></script>
+    {{-- <script src="/js/bootstrap.bundle.min.js"><    /script> --}}
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     @include('sweetalert::alert')
     <script>

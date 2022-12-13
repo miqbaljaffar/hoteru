@@ -79,13 +79,19 @@ class RoomController extends Controller
     }
 
     public function show(Room $room){
-        return view('dashboard.room.show', compact('room'));
+        $cts = ImageRoom::where('room_id', $room->id)->orderby('id','asc')->first();
+        // dd($cts);
+        $foto = ImageRoom::where('room_id', $room->id)->orderby('id','asc')->get();
+        return view('dashboard.room.show', compact('room','cts','foto'));
     }
 
     public function addimage(Room $room){
-        // $p = $room->images;
+        // $p = $room->images
+        $cts = ImageRoom::where('room_id', $room->id)->orderby('id','asc')->get();
+        $foto = ImageRoom::where('room_id', $room->id)->orderby('id','asc')->first();
+        // $cts = Room::orderBy('id','desc')->first();
         // dd($p);
-        return view('dashboard.room.image', compact('room'));
+        return view('dashboard.room.image', compact('room','cts','foto'));
     }
 
     public function storeimage(Request $request){
@@ -102,6 +108,6 @@ class RoomController extends Controller
             'image' => $image
         ]);
         Alert::success('succes', 'p');
-        return redirect('/dashboard/room');
+        return back();
     }
 }

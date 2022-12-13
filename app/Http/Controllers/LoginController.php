@@ -30,6 +30,7 @@ class LoginController extends Controller
                 Cookie::queue('username', $request->username, $minutes);
                 Cookie::queue('password', $request->password, $minutes);}
             // dd($tes);
+
             return redirect()->intended('/')->with('success','Login anda berhasil, Welcome back');
             Alert::success('Success', 'Login berhasil');
         }
@@ -52,7 +53,7 @@ class LoginController extends Controller
        User::create($validated);
 
        $request->session();
-       Alert::success('Success', 'Login buru kontol');
+       Alert::success('Success', 'Login buru');
        return redirect('/login')->with('success', 'Registration successfull. Please Login');
     }
 
