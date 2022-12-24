@@ -8,11 +8,18 @@ use App\Models\RoomStatus;
 use App\Models\Type;
 // use Illuminate\Console\View\Components\Alert as ComponentsAlert;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class RoomController extends Controller
 {
     public function index(){
+       if(auth()->guest()){
+            return redirect('/login');
+        }
+        if(auth()->user()->is_admin == 0){
+            abort(404);
+        }
         $room = Room::orderBy('id', 'desc')->get();
         $p = Room::get()->count();
         // dd($room);
@@ -20,6 +27,12 @@ class RoomController extends Controller
     }
 
     public function create(){
+       if(auth()->guest()){
+            return redirect('/login');
+        }
+        if(auth()->user()->is_admin == 0){
+            abort(404);
+        }
         $status = RoomStatus::get();
         $type = Type::get();
         // dd($type);
@@ -52,7 +65,7 @@ class RoomController extends Controller
         ]);
 
        Alert::success('Success','Data berhasil ditambahkan');
-        return redirect('/dashboard/room');
+        return redirect('/dashboard/data/room');
     }
 
     public function delete($id){
@@ -64,6 +77,12 @@ class RoomController extends Controller
     }
 
     public function edit($id){
+       if(auth()->guest()){
+            return redirect('/login');
+        }
+        if(auth()->user()->is_admin == 0){
+            abort(404);
+        }
         $status = RoomStatus::get();
         $type = Type::get();
         $p = Room::findOrFail($id);
@@ -75,22 +94,32 @@ class RoomController extends Controller
         $p = Room::findOrFail($id);
         $p->update($request->all());
         Alert::success('Success','Data berhasil diedit');
-        return redirect('/dashboard/room');
+        return redirect('/dashboard/data/room');
     }
 
     public function show(Room $room){
-        $cts = ImageRoom::where('room_id', $room->id)->orderby('id','asc')->first();
-        // dd($cts);
+       if(auth()->guest()){
+            return redirect('/login');
+        }
+        if(auth()->user()->is_admin == 0){
+            abort(404);
+        }
+        $cts = ImageRoom::where('room_id', $room->id)->orderby('id','desc')->first();
         $foto = ImageRoom::where('room_id', $room->id)->orderby('id','asc')->get();
         return view('dashboard.room.show', compact('room','cts','foto'));
     }
 
     public function addimage(Room $room){
         // $p = $room->images
+       if(auth()->guest()){
+            return redirect('/login');
+        }
+        if(auth()->user()->is_admin == 0){
+            abort(404);
+        }
         $cts = ImageRoom::where('room_id', $room->id)->orderby('id','asc')->get();
         $foto = ImageRoom::where('room_id', $room->id)->orderby('id','asc')->first();
         // $cts = Room::orderBy('id','desc')->first();
-        // dd($p);
         return view('dashboard.room.image', compact('room','cts','foto'));
     }
 

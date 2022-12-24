@@ -63,11 +63,37 @@
                                                     <td>{{ $u->address }}</td>
                                                     <td>
                                                         <a href="/dashboard/user/{{ $u->username }}/edit" class="btn btn-outline-success"><i class="fas fa-pen"></i></a>
-                                                        <a href="/dashboard/user/{{ $u->id }}/delete" class="btn btn-outline-danger"><i class="fas fa-trash"></i></a>
+                                                        <a class="btn btn-outline-danger me-1" href="#" data-toggle="modal" data-target="#deletemodal">
+                                                            <i class="fas fa-trash"></i>
+                                                        </a>
+
                                                         <a href="user/{{$u->no}}" class="btn btn-outline-warning"><i class="fas fa-eye"></i></i></i> </a>
 
                                                     </td>
                                                 </tr>
+
+                                                <div class="modal fade" id="deletemodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                                                aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Are you sure to delete this data?</h5>
+                                                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">×</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">Select "Delete" below if you are ready to delete.</div>
+                                                        <div class="modal-footer">
+                                                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                                                            <form action="/dashboard/data/user/{{ $u->id }}/delete" method="post">
+                                                                @csrf
+                                                                <button  class="btn btn-danger me-1" type="submit">Delete</button>
+                                                            </form>
+                                                            {{-- <a class="btn btn-primary" href="/logout">Logout</a> --}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                </div>
                                                 @endforeach
                                             </tbody>
                                             <tfoot class="table-secondary">

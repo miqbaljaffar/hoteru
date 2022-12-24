@@ -4,12 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Models\RoomStatus;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class StatusController extends Controller
 {
 
     public function index(){
+        if(auth()->guest()){
+            return redirect('/login');
+        }
+        if(auth()->user()->is_admin == 0){
+            abort(404);
+        }
         $status = RoomStatus::orderBy('id','desc')->get();
         $p = $status->count();
         // dd($p);
@@ -17,6 +24,12 @@ class StatusController extends Controller
     }
 
     public function create(){
+                if(auth()->guest()){
+            return redirect('/login');
+        }
+        if(auth()->user()->is_admin == 0){
+            abort(404);
+        }
         return view('dashboard.status.create');
     }
 
@@ -34,10 +47,16 @@ class StatusController extends Controller
         ]);
 
         Alert::success('Success', 'Data berhasil Ditambahkan');
-        return redirect('/dashboard/status');
+        return redirect('/dashboard/data/status');
     }
 
     public function edit($id){
+                if(auth()->guest()){
+            return redirect('/login');
+        }
+        if(auth()->user()->is_admin == 0){
+            abort(404);
+        }
         $status = RoomStatus::findOrFail($id);
         return view('dashboard.status.edit', compact('status'));
     }
@@ -46,7 +65,7 @@ class StatusController extends Controller
         $p = RoomStatus::findOrFail($id);
         $p->update($request->all());
         Alert::success('Success', 'Data berhasil Diedit');
-        return redirect('/dashboard/status');
+        return redirect('/dashboard/data/status');
     }
 
     public function delete($id){

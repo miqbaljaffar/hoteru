@@ -12,7 +12,7 @@
               <h4>Tambah foto kamar {{ $room->no }} #{{ $room->id }}</h4>
             </div>
             <div class="card-body" style="margin-bottom:100px">
-                <form action="/dashboard/room/{{ $room->no }}/store-image" method="POST" enctype="multipart/form-data">
+                <form action="/dashboard/data/room/{{ $room->no }}/store-image" method="POST" enctype="multipart/form-data">
 @csrf
 <div class="row">
     <div class="col-md-7">
@@ -25,12 +25,14 @@
 <thead>
     <Tr>
         <th>#</th>
+        <th>id</th>
         <th>Image</th>
     </Tr>
 </thead>
 <tbody>
     @foreach ($cts as $c)
     <tr>
+        <td>{{ $loop->iteration }}</td>
         <td>{{ $c->id }}</td>
         <td>
             <a href="" data-bs-toggle="modal" data-bs-target="#modal{{ $loop->iteration }}">

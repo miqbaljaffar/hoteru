@@ -21,10 +21,22 @@ class UserSeeder extends Seeder
             'name' => 'admin',
             'address' => 'helloooo worlddddddddd',
             'telp' => 851312512,
-            'birthdate' => Carbon::now(),
+            'birthdate' => Carbon::yesterday(),
             'jk' => '?',
             'email' => 'admin@gmail.com',
-            'password'=> bcrypt('admin')
+            'password'=> bcrypt('admin'),
+            'is_admin' => 1
+        ]);
+
+        User::create([
+            'username' =>  'bukanadmin',
+            'name' => 'bukanadmin',
+            'address' => 'helloooo worlddddddddd',
+            'telp' => 851312512,
+            'birthdate' => Carbon::now(),
+            'jk' => '?',
+            'email' => 'bukanadmin@gmail.com',
+            'password'=> bcrypt('bukanadmin')
         ]);
         // User::create([
         //     'username' =>  'admin2',

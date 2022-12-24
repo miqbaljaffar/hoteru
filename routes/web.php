@@ -26,30 +26,30 @@ Route::post('/logout', [LoginController::class, 'logout']);
 
 Route::get('/dashboard', [DashboardController::class, 'index']);
 
-Route::get('/dashboard/room', [RoomController::class, 'index']);
-Route::get('/dashboard/room/{room:no}/add-image', [RoomController::class, 'addimage']);
-Route::post('/dashboard/room/{room:no}/store-image', [RoomController::class, 'storeimage']);
+Route::get('/dashboard/data/room', [RoomController::class, 'index']);
+Route::get('/dashboard/data/room/{room:no}/add-image', [RoomController::class, 'addimage']);
+Route::post('/dashboard/data/room/{room:no}/store-image', [RoomController::class, 'storeimage']);
 
-Route::get('/dashboard/room/create', [RoomController::class, 'create']);
-Route::get('/dashboard/room/{id}/edit', [RoomController::class, 'edit']);
-Route::get('/dashboard/room/{room:no}', [RoomController::class, 'show']);
-Route::post('/dashboard/room/{id}/edit', [RoomController::class, 'update']);
-Route::post('/dashboard/room/post', [RoomController::class, 'post']);
-Route::any('/dashboard/room/{id}/delete', [RoomController::class, 'delete'])->name('room.delete');
+Route::get('/dashboard/data/room/create', [RoomController::class, 'create']);
+Route::get('/dashboard/data/room/{id}/edit', [RoomController::class, 'edit']);
+Route::get('/dashboard/data/room/{room:no}', [RoomController::class, 'show']);
+Route::post('/dashboard/data/room/{id}/edit', [RoomController::class, 'update']);
+Route::post('/dashboard/data/room/post', [RoomController::class, 'post']);
+Route::any('/dashboard/data/room/{id}/delete', [RoomController::class, 'delete'])->name('room.delete');
 
-Route::get('/dashboard/status', [StatusController::class, 'index']);
-Route::get('/dashboard/status/create', [StatusController::class, 'create']);
-Route::post('/dashboard/status/post', [StatusController::class, 'post']);
-Route::get('/dashboard/status/{id}/edit', [StatusController::class, 'edit']);
-Route::post('/dashboard/status/{id}/update', [StatusController::class, 'update']);
-Route::any('/dashboard/status/{id}/delete', [StatusController::class, 'delete']);
+Route::get('/dashboard/data/status', [StatusController::class, 'index']);
+Route::get('/dashboard/data/status/create', [StatusController::class, 'create']);
+Route::post('/dashboard/data/status/post', [StatusController::class, 'post']);
+Route::get('/dashboard/data/status/{id}/edit', [StatusController::class, 'edit']);
+Route::post('/dashboard/data/status/{id}/update', [StatusController::class, 'update']);
+Route::any('/dashboard/data/status/{id}/delete', [StatusController::class, 'delete']);
 
-Route::get('/dashboard/type', [TypeController::class, 'index']);
-Route::get('/dashboard/type/create', [TypeController::class, 'create']);
-Route::get('/dashboard/type/{id}/edit', [TypeController::class, 'edit']);
-Route::post('/dashboard/type/post', [TypeController::class, 'post']);
-Route::post('/dashboard/type/{id}/update', [TypeController::class, 'update']);
-Route::any('/dashboard/type/{id}/delete', [TypeController::class, 'delete']);
+Route::get('/dashboard/data/type', [TypeController::class, 'index']);
+Route::get('/dashboard/data/type/create', [TypeController::class, 'create']);
+Route::get('/dashboard/data/type/{id}/edit', [TypeController::class, 'edit']);
+Route::post('/dashboard/data/type/post', [TypeController::class, 'post']);
+Route::post('/dashboard/data/type/{id}/update', [TypeController::class, 'update']);
+Route::any('/dashboard/data/type/{id}/delete', [TypeController::class, 'delete']);
 
 Route::get('/dashboard/user', [UserController::class, 'index']);
 Route::get('/dashboard/user/create', [UserController::class, 'create']);

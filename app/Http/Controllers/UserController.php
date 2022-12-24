@@ -4,17 +4,30 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class UserController extends Controller
 {
     public function index(){
+        if(auth()->guest()){
+            return redirect('/login');
+        }
+        if(auth()->user()->is_admin == 0){
+            abort(404);
+        }
         $user = User::get();
         $p = $user->count();
         return view('dashboard.user.index', compact('p','user'));
     }
 
     public function create(){
+        if(auth()->guest()){
+            return redirect('/login');
+        }
+        if(auth()->user()->is_admin == 0){
+            abort(404);
+        }
         return view('dashboard.user.create');
     }
 
@@ -50,6 +63,12 @@ class UserController extends Controller
         return redirect('/dashboard/user');
     }
     public function edit(User $user){
+        if(auth()->guest()){
+            return redirect('/login');
+        }
+        if(auth()->user()->is_admin == 0){
+            abort(404);
+        }
         return view('dashboard.user.edit', compact('user'));
     }
     public function update(Request $request, $id){

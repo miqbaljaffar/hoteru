@@ -61,14 +61,36 @@
                                                     <td>Rp.{{ number_format($r->price) }}</td>
                                                     <td class="d-flex">
                                                         <a href="room/{{ $r->id }}/edit" class="btn btn-outline-success me-1"><i class="fas fa-pen"></i></a>
-                                                        <form action="/dashboard/room/{{ $r->id }}/delete" method="post">
-                                                            @csrf
-                                                            <button  class="btn btn-outline-danger me-1" type="submit" onclick="return confirm('Are you sure')"><i class="fas fa-trash"></i></button>
-                                                        </form>
-                                                        <a href="/dashboard/room/{{$r->no}}" class="btn btn-outline-warning me-1"><i class="fas fa-eye"></i></i></i> </a>
+                                                        <a class="btn btn-outline-danger me-1" href="#" data-toggle="modal" data-target="#deletemodal">
+                                                            <i class="fas fa-trash"></i>
+                                                        </a>
+                                                        <a href="/dashboard/data/room/{{$r->no}}" class="btn btn-outline-warning me-1"><i class="fas fa-eye"></i></i></i> </a>
 
                                                     </td>
                                                 </tr>
+                                                <div class="modal fade" id="deletemodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                                                aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Are you sure to delete this data?</h5>
+                                                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">×</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">Select "Delete" below if you are ready to delete.</div>
+                                                        <div class="modal-footer">
+                                                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                                                            <form action="/dashboard/data/room/{{ $r->id }}/delete" method="post">
+                                                                @csrf
+                                                                <button  class="btn btn-danger me-1" type="submit">Delete</button>
+                                                            </form>
+                                                            {{-- <a class="btn btn-primary" href="/logout">Logout</a> --}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                </div>
+
                                                 @endforeach
                                             </tbody>
                                             <tfoot class="table-secondary">
@@ -87,47 +109,9 @@
                                     </div>
                             </div>
                     </div>
-                    </div>
-                    {{-- <script type="text/javascript">
-                        function deleteConfirmation(id) {
-                            swal({
-                                title: "Delete?",
-                                text: "Apakah kamu yakin ingin menghapus?",
-                                type: "warning",
-                                showCancelButton: !0,
-                                confirmButtonText: "Yes, delete it!",
-                                cancelButtonText: "No, cancel!",
-                                reverseButtons: !0
-                            }).then(function (e) {
 
-                                if (e.value === true) {
-                                    return true;
-                                    // var CSRF_TOKEN = $('input[name="_token"]')[0].value;
-                                    // $.ajax({
-                                    //     type: 'DELETE',
-                                    //     url: "{{url('dashboard/room')}}/" + id,
-                                    //     data: {_token: CSRF_TOKEN},
-                                    //     dataType: 'JSON',
-                                    //     success: function (results) {
 
-                                    //         if (results.success === true) {
-                                    //             swal("Done!", results.message, "success");
-                                    //         } else {
-                                    //             swal("Error!", results.message, "error");
-                                    //         }
-                                    //     }
-                                    // });
-
-                                } else {
-                                    e.dismiss;
-                                    return false;
-                                }
-
-                            }, function (dismiss) {
-                                return false;
-                            })
-                        }
-                    </script> --}}
+                </div>
 
 @endsection
             <!-- End of Main Content -->

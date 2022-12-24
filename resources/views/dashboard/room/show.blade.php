@@ -36,79 +36,16 @@
             <div class="card-body">
                 <div class="d-flex">
                     <div class="col-md-5">
+                        {{-- <img src="{{  }}" alt=""> --}}
+                        @if ($room->images->count() > 0)
+                        <img src="{{asset('storage/' . $cts->image)}}"
+                               class="bd-placeholder-img" alt="foto {{ $cts->room->no }}"" width="100%" fill="#777" focusable="false" aria-hidden="true" height="225">
+                               @else
+                               <marquee class="h4" behavior="alternate" style="font-style: italic">Theres no image for this Room</marquee>
+                        @endif
 
-                        <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
-                            <div class="carousel-indicators">
-
-                              @php
-                                  $nob = 1;
-                                  $pp = 2;
-                              @endphp
-
-                              @foreach ($foto as $c)
-                              @if ($c->id == 1)
-                              <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                              @else
-                              <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="{{ $nob++ }}" aria-label="Slide {{$pp++ }}"></button>
-                              @endif
-                              @endforeach
-                              </div>
-
-                            <div class="carousel-inner">
-                             @foreach ($foto as $cp)
-                              @if ($cp->id == 1)
-                              <div class="carousel-item active">
-
-                                          <img src="{{asset('storage/' . $cts->image)}}"
-                                          class="bd-placeholder-img" alt="foto {{ $cts->room->no }} #{{ $loop->iteration }}" width="100%" fill="#777" focusable="false" aria-hidden="true" height="225">
-
-
-                                  <div class="container">
-                                    <div class="carousel-caption text-start">
-                                      <h1>{{ $cts->nm_category }}</h1>
-                                      <p>Some representative placeholder content for the first slide of the carousel.</p>
-                                      <p><a class="btn btn-lg btn-primary" href="#">Sign up today</a></p>
-                                    </div>
-                                  </div>
-                                </div>
-                                @else
-                                <div class="carousel-item">
-                                    @if ($cp->image)
-                                    <img src="{{asset('storage/' . $cp->image)}}"
-                                    class="bd-placeholder-img" alt="{{ $cp->nm_category }}" width="100%" fill="#777" focusable="false" aria-hidden="true" height="225">
-                                    @else
-                                    <img src="https://source.unsplash.com/1000x1000?{{ $cp->nm_category }}"
-                                    class="bd-placeholder-img" alt="{{ $cp->nm_category }}" width="100%" fill="#777" focusable="false" aria-hidden="true" height="225">
-                                    @endif
-
-                                    <div class="container">
-                                        <div class="carousel-caption">
-                                            <h1>{{ $cp->nm_category }}</h1>
-                                            <p>Some representative placeholder content for the second slide of the carousel.</p>
-                                            <p><a class="btn btn-lg btn-primary" href="#">Learn more</a></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                @endif
-                                @endforeach
-
-                            </div>
-                            <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
-                              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                              <span class="visually-hidden">Previous</span>
-                            </button>
-                            <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
-                              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                              <span class="visually-hidden">Next</span>
-                            </button>
-                          </div>
-
-
-
-
-
-
-
+                                    {{-- <img src="{{asset('storage/' . $cp->image)}}"
+                                    class="bd-placeholder-img" alt="{{ $cp->nm_category }}" width="100%" fill="#777" focusable="false" aria-hidden="true" height="225"> --}}
                     </div>
                     <div class="col-md-6">
                     <table class="table table-sm table-bordered">
@@ -127,7 +64,7 @@
                             </tr>
                         </tbody>
                     </table>
-                    <h5><a href="/dashboard/room/{{ $room->no }}/add-image">Tambahkan foto</a></h5>
+                    <h5><a href="/dashboard/data/room/{{ $room->no }}/add-image" class="btn btn-success">Tambahkan foto</a></h5>
                 </div>
                 </div>
             </div>
