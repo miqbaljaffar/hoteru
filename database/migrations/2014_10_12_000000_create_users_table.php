@@ -14,16 +14,14 @@ return new class extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->string('image')->nullable();
-            $table->string('name');
+            $table->bigInteger('c_id')->unsigned()->index()->nullable();
+            $table->foreign('c_id')->references('id')->on('customers')->onDelete('cascade');
             $table->string('username')->unique();
             $table->string('telp')->nullable();
-            $table->date('birthdate')->nullable();
-            $table->enum('jk',['?','L', 'P'])->default('?');
             $table->string('email')->nullable()->unique();
             $table->string('password');
-            $table->longText('address')->nullable();
             $table->boolean('is_admin')->default(false);
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();

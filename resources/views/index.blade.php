@@ -22,7 +22,7 @@
             <button class="btn btn-dark mt-2 ms-auto" type="submit">Logout</button>
         </form>
     </div>
-    <h2 class="mt-2 ms-auto">Halo {{ Auth::user()->name }}</h2>
+    <h2 class="mt-2 ms-auto">Halo {{ $name }}</h2>
             @endif
 </div>
 </body>

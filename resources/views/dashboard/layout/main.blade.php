@@ -72,6 +72,11 @@
         $('#myTable').DataTable();
         } );
     </script>
+    <script>
+        $(document).ready( function () {
+        $('#myTable1').DataTable();
+        } );
+    </script>
 
 </body>
 </html>

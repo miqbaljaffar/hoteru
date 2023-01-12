@@ -4,8 +4,11 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\Customer;
 use App\Models\Room;
 use App\Models\RoomStatus;
+use App\Models\Transaction;
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -21,7 +24,10 @@ class DatabaseSeeder extends Seeder
             RoomStatusSeeder::class,
             TypeSeeder::class,
             RoomSeeder::class,
-            UserSeeder::class
+            CustomerSeeder::class,
+            UserSeeder::class,
+            TransactionSeeder::class
         ]);
+
     }
 }

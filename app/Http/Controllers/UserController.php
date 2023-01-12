@@ -16,7 +16,8 @@ class UserController extends Controller
         if(auth()->user()->is_admin == 0){
             abort(404);
         }
-        $user = User::get();
+        $user = User::where('is_admin', 0)->get();
+        // dd($user);
         $p = $user->count();
         return view('dashboard.user.index', compact('p','user'));
     }

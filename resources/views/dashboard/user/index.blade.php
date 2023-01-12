@@ -37,6 +37,7 @@
                                             <thead class="table-secondary">
                                                 <tr>
                                                     <th width="5%">#</th>
+                                                    <th width="5%">Id</th>
                                                     <th width="5%">Name</th>
                                                     <th>Username</th>
                                                     <th>Telp</th>
@@ -53,6 +54,7 @@
                                                 @endphp
                                                 @foreach ($user as $u)
                                                 <tr>
+                                                    <td>{{ $loop->iteration }}</td>
                                                     <td>{{ $u->id }}</td>
                                                     <td>{{ $u->name }}</td>
                                                     <td>{{ $u->username }}</td>
@@ -99,6 +101,7 @@
                                             <tfoot class="table-secondary">
                                                 <tr>
                                                     <th width="5%">#</th>
+                                                    <th width="5%">Id</th>
                                                     <th width="5%">Name</th>
                                                     <th>Username</th>
                                                     <th>Telp</th>

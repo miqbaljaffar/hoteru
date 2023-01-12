@@ -20,6 +20,9 @@ class User extends Authenticatable
     protected $guarded = ['id'];
     protected $table = 'users';
 
+    public function Customer(){
+        return $this->belongsTo(Customer::class, 'c_id', 'id');
+    }
     /**
      * The attributes that should be hidden for serialization.
      *

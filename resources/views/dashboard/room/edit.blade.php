@@ -13,7 +13,7 @@
                                   <h4>Edit data Kamar No {{ $p->no }} #{{$p->id}} </h4>
                                 </div>
                                 <div class="card-body">
-                                    <form action="/dashboard/room/{{ $p->id }}/edit" method="POST"  enctype="multipart/form-data">
+                                    <form action="/dashboard/data/room/{{ $p->id }}/update" method="POST"  enctype="multipart/form-data">
                                         @csrf
                                         <div class="row">
                                                 <div class="col-md-2">

@@ -57,7 +57,7 @@
                                                     <td>{{ $r->info }}</td>
                                                     <td>
                                                         <a href="type/{{ $r->id }}/edit" class="btn btn-outline-success"><i class="fas fa-pen"></i></a>
-                                                        <a class="btn btn-outline-danger me-1" href="#" data-toggle="modal" data-target="#deletemodal">
+                                                        <a class="btn btn-outline-danger" href="#" data-toggle="modal" data-target="#deletemodal">
                                                             <i class="fas fa-trash"></i>
                                                         </a>
                                                         <a href="#" class="btn btn-outline-warning"><i class="fas fa-eye"></i></i></i> </a>

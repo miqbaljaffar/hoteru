@@ -14,7 +14,7 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="col-md-auto">
-                                        <form action="/dashboard/status/{{$status->id}}/update" method="POST"  enctype="multipart/form-data">
+                                        <form action="/dashboard/data/status/{{$status->id}}/update" method="POST"  enctype="multipart/form-data">
                                             @csrf
                                             <div class="row">
                                                 <div class="col-md-5">

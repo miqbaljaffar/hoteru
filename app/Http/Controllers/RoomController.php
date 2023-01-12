@@ -9,6 +9,7 @@ use App\Models\Type;
 // use Illuminate\Console\View\Components\Alert as ComponentsAlert;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class RoomController extends Controller
@@ -139,4 +140,21 @@ class RoomController extends Controller
         Alert::success('succes', 'p');
         return back();
     }
+
+    public function deleteimage($id){
+       $image = ImageRoom::findOrFail($id);
+       $path  = storage_path(). "/app/public/" . $image->image;
+    //    dd($path);
+       if (File::exists($path)) {
+          //File::delete($image_path);
+        unlink($path);
+    }
+        $image->delete();
+        Alert::success('success', 'Success gambar berhasil di hapus');
+        return back();
+    }
+
+
+
+
 }

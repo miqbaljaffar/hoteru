@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Customer;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -18,26 +19,26 @@ class UserSeeder extends Seeder
     {
         User::create([
             'username' =>  'admin',
-            'name' => 'admin',
-            'address' => 'helloooo worlddddddddd',
+            // 'name' => 'admin',
+            'c_id' => 1,
             'telp' => 851312512,
-            'birthdate' => Carbon::yesterday(),
-            'jk' => '?',
+            // 'birthdate' => Carbon::yesterday(),
+            // 'jk' => '?',
             'email' => 'admin@gmail.com',
             'password'=> bcrypt('admin'),
             'is_admin' => 1
         ]);
 
-        User::create([
-            'username' =>  'bukanadmin',
-            'name' => 'bukanadmin',
-            'address' => 'helloooo worlddddddddd',
-            'telp' => 851312512,
-            'birthdate' => Carbon::now(),
-            'jk' => '?',
-            'email' => 'bukanadmin@gmail.com',
-            'password'=> bcrypt('bukanadmin')
-        ]);
+        // User::create([
+        //     'username' =>  'bukanadmin',
+        //     'name' => 'bukanadmin',
+        //     'address' => 'helloooo worlddddddddd',
+        //     'telp' => 851312512,
+        //     'birthdate' => Carbon::now(),
+        //     'jk' => '?',
+        //     'email' => 'bukanadmin@gmail.com',
+        //     'password'=> bcrypt('bukanadmin')
+        // ]);
         // User::create([
         //     'username' =>  'admin2',
         //     'name' => 'admin2',

@@ -42,8 +42,11 @@
                    <div class="modal-dialog modal-lg modal-dialog-centered">
  <div class="modal-content">
    <div class="modal-header">
-     <h5 class="modal-title">Image #{{ $loop->iteration }}</h5>
+     <h5 class="modal-title me-auto">Image #{{ $loop->iteration }}</h5>
+     <div>
+         <a href="/dashboard/data/room/26D/image/{{ $c->id }}/delete" class="btn btn-danger"  onclick="return confirm('Are you sure you want to delete this Image?');"> Delete &nbsp;<i class="fas fa-trash"></i> </a>
      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+     </div>
    </div>
    <div class="modal-body">
     <div class="d-flex justify-content-center">
