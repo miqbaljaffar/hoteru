@@ -17,14 +17,14 @@ class TransactionSeeder extends Seeder
     public function run()
     {
         Transaction::create([
-            'cus_id' => 1,
+            'c_id' => 1,
             'room_id' => 2,
             'check_in' => Carbon::now(),
             'check_out' => Carbon::tomorrow(),
             'status' => 'active'
         ]);
         Transaction::create([
-            'cus_id' => 1,
+            'c_id' => 1,
             'room_id' => 2,
             'check_in' => Carbon::createFromDate(2023,01,05),
             'check_out' => Carbon::yesterday(),

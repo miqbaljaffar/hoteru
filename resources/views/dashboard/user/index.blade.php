@@ -56,13 +56,13 @@
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td>{{ $u->id }}</td>
-                                                    <td>{{ $u->name }}</td>
+                                                    <td>{{ $u->customer->name }}</td>
                                                     <td>{{ $u->username }}</td>
                                                     <td>{{ $u->telp }}</td>
-                                                    <td>{{ $u->birthdate }}</td>
-                                                    <td>{{ $u->jk }}</td>
+                                                    <td>{{ $u->customer->birthdate }}</td>
+                                                    <td>{{ $u->customer->jk }}</td>
                                                     <td>{{ $u->email }}</td>
-                                                    <td>{{ $u->address }}</td>
+                                                    <td>{{ $u->customer->address }}</td>
                                                     <td>
                                                         <a href="/dashboard/user/{{ $u->username }}/edit" class="btn btn-outline-success"><i class="fas fa-pen"></i></a>
                                                         <a class="btn btn-outline-danger me-1" href="#" data-toggle="modal" data-target="#deletemodal">

@@ -69,7 +69,8 @@ Route::any('/dashboard/user/{id}/delete', [UserController::class, 'delete']);
 
 Route::get('/dashboard/order', [TransactionController::class, 'index']);
 Route::get('/dashboard/order/history', [TransactionController::class, 'history']);
-Route::get('/dashboard/order/create-identity', [TransactionController::class, 'create_identity']);
-Route::get('/dashboard/order/viewcountperson', [TransactionController::class, 'viewperson']);
-Route::get('/dashboard/order/chooseroom', [TransactionController::class, 'chooseroom']);
-Route::get('/dashboard/order/confirmation', [TransactionController::class, 'confirmation']);
+Route::get('/dashboard/order/create-identity', [TransactionController::class, 'create_identity'])->name('createidentity');
+Route::post('/dashboard/order/post-identity', [TransactionController::class, 'post_identity']);
+Route::get('/dashboard/order/{id}/viewcountperson', [TransactionController::class, 'viewperson'])->name('countperson');
+Route::post('/dashboard/order/chooseroom', [TransactionController::class, 'chooseroom'])->name('chooseroom');
+Route::get('/dashboard/order/confirmation', [TransactionController::class, 'confirmation'])->name('confirmation');

@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('cus_id')->index()->unsigned();
-            $table->foreign('cus_id')->references('id')->on('customers')->onDelete('cascade');
+            $table->bigInteger('c_id')->index()->unsigned();
+            $table->foreign('c_id')->references('id')->on('customers')->onDelete('cascade');
             $table->bigInteger('room_id')->index()->unsigned();
             $table->foreign('room_id')->references('id')->on('rooms')->onDelete('cascade');
             $table->date('check_in');

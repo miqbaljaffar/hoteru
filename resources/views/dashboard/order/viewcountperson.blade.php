@@ -20,13 +20,33 @@
                             </div>
                                 <div class="card-body">
                                     <div class="col-md-auto">
-                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum optio pariatur quaerat unde quos nemo illo numquam exercitationem. Commodi placeat maxime aut ratione dolore sunt fugit iure soluta temporibus qui expedita et impedit earum eum debitis aperiam sequi natus architecto, facilis nam reprehenderit quaerat, pariatur sit! Aliquid dolore illo explicabo error repellendus. Ratione ab mollitia, animi explicabo ducimus odit vel eos similique, deleniti distinctio fuga vero! Repudiandae odio inventore a. Temporibus vel dolorum quasi dolor odit iusto. Officia eaque veritatis eligendi expedita voluptas sed provident nobis, dolorum minima eius officiis. Suscipit ex distinctio eum nihil excepturi expedita corporis quaerat labore!</p>
-                                        <a href="/dashboard/order/chooseroom" class="btn btn-secondary">NEXT</a>
+                                        <form action="{{ route('chooseroom') }}" method="post">
+                                        @csrf
+                                            <input type="text" name="c_id" id="c_id" hidden value="{{ $c_id }}">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                <label for="count" class="form-label">How many Person? </label>
+                                                <input type="text" class="form-control" id="count" name ='count' required">
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6 mt-2">
+                                                    <label for="from" class="form-label">From </label>
+                                                    <input type="date" class="form-control" id="from" name ='from' required">
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6 mt-2">
+                                                    <label for="to" class="form-label">To </label>
+                                                    <input type="date" class="form-control" id="to" name ='to' required">
+                                                </div>
+                                            </div>
+                                            <button class="ms-auto btn btn-dark mt-4" type="submit">Submit</button>
+                                            {{-- <a href="/dashboard/order/chooseroom" >NEXT</a> --}}
+                                        </form>
                                     </div>
                             </div>
                     </div>
-
-
                 </div>
 
 @endsection
