@@ -35,7 +35,7 @@
         <td>{{ $loop->iteration }}</td>
         <td>{{ $c->id }}</td>
         <td>
-            <a href="" data-bs-toggle="modal" data-bs-target="#modal{{ $loop->iteration }}">
+            <a href="" data-toggle="modal" data-target="#modal{{ $loop->iteration }}">
                 {{ $c->image }}</a>
              </td>
                <div class="modal" tabindex="-1" id="modal{{ $loop->iteration }}">
@@ -45,7 +45,7 @@
      <h5 class="modal-title me-auto">Image #{{ $loop->iteration }}</h5>
      <div>
          <a href="/dashboard/data/room/26D/image/{{ $c->id }}/delete" class="btn btn-danger"  onclick="return confirm('Are you sure you want to delete this Image?');"> Delete &nbsp;<i class="fas fa-trash"></i> </a>
-     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+     <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
      </div>
    </div>
    <div class="modal-body">

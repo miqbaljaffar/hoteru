@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ImageRoom;
+use App\Models\Notifications;
 use App\Models\Room;
 use App\Models\RoomStatus;
 use App\Models\Type;
@@ -23,7 +24,6 @@ class RoomController extends Controller
         }
         $room = Room::orderBy('id', 'desc')->get();
         $p = Room::get()->count();
-        // dd($room);
         return view('dashboard.room.index', compact('room','p'));
     }
 
@@ -106,8 +106,7 @@ class RoomController extends Controller
             abort(404);
         }
         $cts = ImageRoom::where('room_id', $room->id)->orderby('id','desc')->first();
-        $foto = ImageRoom::where('room_id', $room->id)->orderby('id','asc')->get();
-        return view('dashboard.room.show', compact('room','cts','foto'));
+        return view('dashboard.room.show', compact('room','cts'));
     }
 
     public function addimage(Room $room){
@@ -118,10 +117,8 @@ class RoomController extends Controller
         if(auth()->user()->is_admin == 0){
             abort(404);
         }
-        $cts = ImageRoom::where('room_id', $room->id)->orderby('id','asc')->get();
-        $foto = ImageRoom::where('room_id', $room->id)->orderby('id','asc')->first();
-        // $cts = Room::orderBy('id','desc')->first();
-        return view('dashboard.room.image', compact('room','cts','foto'));
+        $cts = ImageRoom::where('room_id', $room->id)->orderby('id','desc')->get();
+        return view('dashboard.room.image', compact('room','cts'));
     }
 
     public function storeimage(Request $request){

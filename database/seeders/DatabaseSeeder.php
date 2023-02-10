@@ -26,7 +26,8 @@ class DatabaseSeeder extends Seeder
             RoomSeeder::class,
             CustomerSeeder::class,
             UserSeeder::class,
-            TransactionSeeder::class
+            TransactionSeeder::class,
+            ImageRoomSeeder::class,
         ]);
 
     }

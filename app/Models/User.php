@@ -23,6 +23,10 @@ class User extends Authenticatable
     public function Customer(){
         return $this->belongsTo(Customer::class, 'c_id', 'id');
     }
+
+    public function ImageUser(){
+        return $this->hasone(ImageUser::class);
+    }
     /**
      * The attributes that should be hidden for serialization.
      *

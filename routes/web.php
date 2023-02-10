@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\IndexController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\TransactionController;
@@ -13,18 +15,13 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/', function () {
 //     return view('index');
 // });q22222222222222222222222222222222
-
-Route::get('/', function(){
-    if(Auth::check()){
-        $name = Auth::user()->Customer->name;
-    }
-    else{
-        $name = "Pelanggan";
-    }
-    // dd(Auth::check());
-    // dd($p);
-    return view('index', compact('name'));
+route::get('/tes', function(){
+    return view('nyoba');
 });
+
+Route::get('/', [IndexController::class, 'index']);
+Route::get('/pesan', [IndexController::class, 'pesan'])->name('pesan');
+
 Route::get('/login', [LoginController::class, 'index'])->middleware('guest');
 Route::post('/login', [LoginController::class, 'authenticate']);
 Route::get('/register', [LoginController::class, 'register'])->middleware('guest');
@@ -67,10 +64,29 @@ Route::post('/dashboard/user/post', [UserController::class, 'post']);
 Route::post('/dashboard/user/{id}/update', [UserController::class, 'update']);
 Route::any('/dashboard/user/{id}/delete', [UserController::class, 'delete']);
 
-Route::get('/dashboard/order', [TransactionController::class, 'index']);
+Route::get('/dashboard/order', [TransactionController::class, 'index'])->name('transaction.index');
 Route::get('/dashboard/order/history', [TransactionController::class, 'history']);
+
 Route::get('/dashboard/order/create-identity', [TransactionController::class, 'create_identity'])->name('createidentity');
-Route::post('/dashboard/order/post-identity', [TransactionController::class, 'post_identity']);
-Route::get('/dashboard/order/{id}/viewcountperson', [TransactionController::class, 'viewperson'])->name('countperson');
+// Route::post('/dashboard/order/post-identity', [TransactionController::class, 'post_identity']);
+
+Route::post('/dashboard/order/viewcountperson', [TransactionController::class, 'viewperson'])->name('countperson');
+Route::get('/dashboard/order/viewcountperson', [TransactionController::class, 'errorget'])->name('countget');
+
 Route::post('/dashboard/order/chooseroom', [TransactionController::class, 'chooseroom'])->name('chooseroom');
-Route::get('/dashboard/order/confirmation', [TransactionController::class, 'confirmation'])->name('confirmation');
+Route::get('/dashboard/order/chooseroom', [TransactionController::class, 'errorget'])->name('chooseroomget');
+
+Route::get('/dashboard/order/pick', [TransactionController::class ,'pick'])->name('pick');
+Route::post('/dashboard/order/confirmation', [TransactionController::class, 'confirmation'])->name('confirmation');
+Route::get('/dashboard/order/confirmation', [TransactionController::class, 'errorget'])->name('confirmationget');
+
+Route::post('/dashboard/order/pay', [TransactionController::class, 'payDownPayment'])->name('payDownPayment');
+Route::get('/dashboard/payment/invoice', [TransactionController::class, 'paymentinvoice']);
+Route::get('/dashboard/order/history-pay', [PaymentController::class, 'index']);
+Route::get('/dashboard/order/{id}/pay-debt', [PaymentController::class, 'debt']);
+Route::post('/dashboard/order/debt', [PaymentController::class, 'pays'])->name('paydebt');
+
+Route::post('/dashboard/notif', [DashboardController::class, 'notifiable']);
+Route::get('/dashboard/markall', [DashboardController::class, 'markall']);
+
+Route::get('/dashboard/order/history-pay/{id}', [PaymentController::class, 'invoice'])->name('payment.invoice');

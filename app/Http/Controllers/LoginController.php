@@ -10,7 +10,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class LoginController extends Controller
 {
-    public function index(){
+    public function index(Request $request){
         return view('login.index');
     }
 
@@ -30,8 +30,8 @@ class LoginController extends Controller
                 Cookie::queue('username', $request->username, $minutes);
                 Cookie::queue('password', $request->password, $minutes);}
             // dd($tes);
-
-            return redirect()->intended('/')->with('success','Login anda berhasil, Welcome back');
+                // if()
+            return redirect()->intended('/')->with('success');
             Alert::success('Success', 'Login berhasil');
         }
         Alert::error('Error', 'Gagal');

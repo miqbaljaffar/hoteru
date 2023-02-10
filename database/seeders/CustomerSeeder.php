@@ -19,6 +19,8 @@ class CustomerSeeder extends Seeder
 
         Customer::create(['name' => 'cakra','address' => 'grand', 'jk' => 'L',
         'job' => 'nganggur', 'birthdate' => Carbon::yesterday()->isoFormat('Y-M-D')]);
+        Customer::create(['name' => 'customer','address' => 'grand', 'jk' => 'L',
+        'job' => 'nganggur', 'birthdate' => Carbon::yesterday()->isoFormat('Y-M-D')]);
 
     }
 }

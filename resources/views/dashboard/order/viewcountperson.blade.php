@@ -11,10 +11,11 @@
                             </div>
 
                     </div>
-
                     <!-- Content Row -->
                     <div class="container">
-                        <div class="card">
+                        <div class="row justify-content-md-center">
+                        <div class="col-md-8 mt-2">
+                            <div class="card shadow-sm border">
                             <div class="card-header">
                                 <h5> view count </h5>
                             </div>
@@ -26,7 +27,7 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                 <label for="count" class="form-label">How many Person? </label>
-                                                <input type="text" class="form-control" id="count" name ='count' required">
+                                                <input type="text" autofocus class="form-control" id="count" name ='count' required">
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -46,6 +47,83 @@
                                         </form>
                                     </div>
                             </div>
+                    </div>
+                    </div>
+
+                    <div class="col-md-4 mt-2">
+                        <div class="card shadow-sm">
+                            @if ($customer->User)
+                            @if ($customer->User->ImageUser)
+                                <img class="myImages" src="{{asset('storage/' . $customer->User->ImageUser->image)}}"
+                                style="object-fit: cover; height:250px; border-top-right-radius: 0.5rem; border-top-left-radius: 0.5rem;">
+                                @else
+                                <img class="myImages" src="/img/default-user.jpg" style="object-fit: cover; height:250px; border-top-right-radius: 0.5rem; border-top-left-radius: 0.5rem;">
+                            @endif
+                            @else
+                            <img class="myImages" src="/img/default-user.jpg" style="object-fit: cover; height:250px; border-top-right-radius: 0.5rem; border-top-left-radius: 0.5rem;">
+                            @endif
+
+                            <div class="card-body">
+                                <table>
+                                    <tr>
+                                        <td style="text-align: center; width:50px">
+                                            <span>
+                                                <i class="fas {{ $customer->jk == 'L' ? 'fa-male' : 'fa-female' }}">
+                                                </i>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            {{ $customer->name }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: center; ">
+                                            <span>
+                                                <i class="fas fa-user-md"></i>
+                                            </span>
+                                        </td>
+                                        <td>{{ $customer->job }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: center; ">
+                                            <span>
+                                                <i class="fas fa-birthday-cake"></i>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            {{ Carbon\Carbon::parse($customer->birthdate)->isoformat('D MMM YYYY') }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: center"><i class="fas fa-phone"></i></td>
+                                        <td>
+                                            <span>
+                                                @if ($customer->User)
+                                                @if($customer->User->telp)
+                                                0{{ $customer->User->telp }}
+                                                @else
+                                                -
+                                                @endif
+                                                @else
+                                                -
+                                               @endif
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: center; ">
+                                            <span>
+                                                <i class="fas fa-map-marker-alt"></i>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            {{ $customer->address }}
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 

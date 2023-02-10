@@ -23,7 +23,7 @@
                                       <h4>Create New Customer</h4>
                                     </div>
                                     <div class="card-body">
-                                        <form action="/dashboard/order/post-identity" method="POST">
+                                        <form action="{{ route('countperson')}}" method="POST">
                                             @csrf
                                             <div class="row">
                                                     <div class="col-md-4">

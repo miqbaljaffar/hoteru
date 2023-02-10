@@ -10,7 +10,7 @@
     <link href="/db/sb-admin-2.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/bs/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
-    <link href="/carousel/carousel.css" rel="stylesheet">
+    {{-- <link href="/carousel/carousel.css" rel="stylesheet"> --}}
 
 </head>
 
@@ -51,6 +51,7 @@
     <!-- Logout Modal-->
     @include('dashboard.layout.logout')
 
+    @yield('footer')
     <!-- Bootstrap core JavaScript-->
     <script src="/vendor/jquery/jquery.min.js"></script>
     <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -59,12 +60,7 @@
     <!-- Custom scripts for all pages-->
     <script src="/db/sb-admin-2.min.js"></script>
     <!-- Page level plugins -->
-    <script src="/vendor/chart.js/Chart.min.js"></script>
-    <!-- Page level custom scripts -->
-    <script src="/db/demo/chart-area-demo.js"></script>
-    <script src="/db/demo/chart-pie-demo.js"></script>
-    <script src="/bs/js/bootstrap.bundle.min.js"></script>
-    {{-- <script src="/js/bootstrap.bundle.min.js"><    /script> --}}
+    {{-- <script src="/bs/js/bootstrap.bundle.min.js"></script> --}}
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     @include('sweetalert::alert')
     <script>

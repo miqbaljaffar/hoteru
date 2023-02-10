@@ -12,7 +12,7 @@ class ImageRoom extends Model
     protected $guarded = ['id'];
     protected $table = 'image_rooms';
 
-    public function room(){
-        return $this->belongsTo(Room::class);
+    public function Room(){
+        return $this->belongsTo(Room::class, 'room_id', 'id');
     }
 }

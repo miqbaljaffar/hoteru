@@ -28,6 +28,17 @@ class UserSeeder extends Seeder
             'password'=> bcrypt('admin'),
             'is_admin' => 1
         ]);
+        User::create([
+            'username' =>  'Customer',
+            // 'name' => 'admin',
+            'c_id' => 2,
+            'telp' => 851312512,
+            // 'birthdate' => Carbon::yesterday(),
+            // 'jk' => '?',
+            'email' => 'admsin@gmail.com',
+            'password'=> bcrypt('admin'),
+            'is_admin' => 0
+        ]);
 
         // User::create([
         //     'username' =>  'bukanadmin',

@@ -15,11 +15,13 @@ return new class extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('cus_id')->index()->unsigned();
-            $table->foreign('cus_id')->references('id')->on('customers')->onDelete('cascade');
+            $table->bigInteger('c_id')->index()->unsigned();
+            $table->string('invoice');
+            $table->foreign('c_id')->references('id')->on('customers')->onDelete('cascade')->onUpdate('cascade');
             $table->bigInteger('transaction_id')->index()->unsigned();
-            $table->foreign('transaction_id')->references('id')->on('transactions')->onDelete('cascade');
-            $table->integer('price')->unsigned();
+            $table->foreign('transaction_id')->references('id')->on('transactions')->onDelete('cascade')->onUpdate('cascade');
+            $table->decimal('price',65,2);
+            $table->string('status');
             $table->timestamps();
         });
     }

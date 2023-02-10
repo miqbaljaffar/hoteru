@@ -83,7 +83,7 @@
                 <h6 class="collapse-header">Order now:</h6>
                 <a class="collapse-item" href="/dashboard/order">Order</a>
                 <h6 class="collapse-header">Data Transactions:</h6>
-                <a class="collapse-item" href="login.html">History Payment</a>
+                <a class="collapse-item" href="/dashboard/order/history-pay">History Payment</a>
 
             </div>
         </div>
@@ -114,14 +114,6 @@
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Charts</span></a>
     </li>
-
-    <!-- Nav Item - Tables -->
-    <li class="nav-item">
-        <a class="nav-link" href="tables.html">
-            <i class="fas fa-fw fa-table"></i>
-            <span>Tables</span></a>
-    </li>
-
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
 

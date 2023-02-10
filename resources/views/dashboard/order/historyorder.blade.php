@@ -32,21 +32,27 @@
                                                 @foreach ($transaction as $t)
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
-                                                    <td>{{ $t->Customer->name }}</td>
+                                                    <td>{{ $t->Customer->name ?? '-' }}</td>
                                                     <td>{{ $t->Room->no}}</td>
                                                     <td>{{ $t->check_in->isoFormat('D MMM Y') }}</td>
                                                     <td>{{ $t->check_out->isoFormat('D MMM Y') }}</td>
                                                     <td>{{ $t->check_in->diffindays($t->check_out) }} Day</td>
-                                                    <td>Rp.{{ number_format($t->Room->price) }}</td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
+                                                    <td>Rp.{{ number_format($t->getTotalPrice()) }}</td>
+                                                    <td>Rp. {{ number_format($t->getTotalPayment()) }}</td>
+                                                    <td>Rp. {{ number_format($t->getTotalPrice() - $t->getTotalPayment()) }}</td>
+                                                    <td> @php
+                                                        $insufficient = $t->getTotalPrice() - $t->getTotalPayment();
+                                                 @endphp
+                                                 <a @if($insufficient == 0)
+                                                 style="pointer-events: none;
+                                                 cursor: default;color:gray"
+                                             @endif href="/dashboard/order/{{ $t->id }}/pay-debt"><i class="fas fa-money-bill-wave"></i></a></td>
                                                 </tr>
                                                 @endforeach
                                             </tbody>
                                             <tfoot>
                                                 <tr>
-                                                    <th>#</th>
+                                                    <th width="4%">#</th>
                                                     <th>Customer</th>
                                                     <th>Room</th>
                                                     <th>Check in</th>
@@ -91,15 +97,22 @@
                                                 @foreach ($transactionexpired as $t)
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
-                                                    <td>{{ $t->Customer->name }}</td>
+                                                    <td>{{ $t->Customer->name ?? '-' }}</td>
                                                     <td>{{ $t->Room->no}}</td>
                                                     <td>{{ $t->check_in->isoFormat('D MMM Y') }}</td>
                                                     <td>{{ $t->check_out->isoFormat('D MMM Y') }}</td>
                                                     <td>{{ $t->check_in->diffindays($t->check_out) }} Day</td>
-                                                    <td>Rp.{{ number_format($t->Room->price) }}</td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
+                                                    <td>Rp.{{ number_format($t->getTotalPrice()) }}</td>
+                                                    <td>Rp. {{ number_format($t->getTotalPayment()) }}</td>
+                                                    <td>Rp. {{ number_format($t->getTotalPrice() - $t->getTotalPayment()) }}</td>
+                                                    <td> @php
+                                                        $insufficient = $t->getTotalPrice() - $t->getTotalPayment();
+                                                 @endphp
+                                                 <a @if($insufficient == 0)
+                                                 style="pointer-events: none;
+                                                 cursor: default;color:gray"
+                                             @endif href="/dashboard/order/{{ $t->id }}/pay-debt"><i class="fas fa-money-bill-wave"></i></a></td>
+                                                </tr>
                                                 </tr>
                                                 @endforeach
                                             </tbody>

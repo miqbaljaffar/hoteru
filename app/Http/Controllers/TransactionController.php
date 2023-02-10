@@ -2,103 +2,231 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NewReservationEvent;
+use App\Events\RefreshDashboardEvent;
 use App\Http\Requests\ChooseRoomRequest;
 use App\Models\Customer;
+use Illuminate\Support\Str;
+use App\Models\Notifications;
 use App\Models\Room;
 use App\Models\Transaction;
 use App\Models\User;
 use Carbon\Carbon;
+use App\Models\Payment;
+use App\Notifications\NewRoomReservationDownPayment;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class TransactionController extends Controller
 {
+    public function errorget(){
+        return $this->index();
+    }
+
     public function index(){
+        if(auth()->guest()){
+            return redirect('/login');
+        }
+        if(auth()->user()->is_admin == 0){
+            abort(404);
+        }
         $p = Carbon::now()->isoFormat('Y-M-D');
-       $transaction = Transaction::where('check_out', '>=' , $p)->get();
+        $transaction = Transaction::with('Customer','Payments')->where('check_out', '>=' , $p)->orderby('id','desc')->get();
         return view('dashboard.order.index', compact('transaction'));
     }
 
+
+
     public function history(){
+        if(auth()->guest()){
+            return redirect('/login');
+        }
+        if(auth()->user()->is_admin == 0){
+            abort(404);
+        }
         $p = Carbon::now();
         $transaction = Transaction::where('check_out', '>=' , $p)->get();
         $transactionexpired = Transaction::where('check_out', '<' , $p)->get();
-         return view('dashboard.order.historyorder', compact('transaction', 'transactionexpired', 'p'));
+        return view('dashboard.order.historyorder', compact('transaction', 'transactionexpired', 'p'));
     }
+
     public function create_identity(){
         $uri = Route::currentroutename();
+        if(auth()->guest()){
+            return redirect('/login');
+        }
+        if(auth()->user()->is_admin == 0){
+            abort(404);
+        }
         return view('dashboard.order.createidentity', compact('uri'));
     }
 
-    public function post_identity(Request $request){
-        // dd($request);
-        $request->validate([
-            'name' => 'required',
-            'username' => 'required',
-            'password' => 'required',
-            'email' => 'required',
-            'telp' => 'required',
-            'birthdate' => 'nullable',
-            'jk' => 'nullable',
-            'job' => 'nullable',
-            'address' => 'nullable'
-        ]);
-        $cus = Customer::create([
-            'name' => $request->name,
-            'address' => $request->address,
-            'jk' => $request->jk,
-            'job' => $request->job,
-            'birthdate' => $request->birthdate
-        ]);
-        User::create([
-            'c_id' => $cus->id,
-            'username' => $request->username,
-            'telp' => $request->telp,
-            'email' => $request->email,
-            'password' => $request->password,
-            'is_admin' => 0,
-        ]);
-        $c_id = $cus->id;
-        // dd($c_id);
-        Alert::success('success', 'success');
-        return Redirect::route('countperson', array('id' =>$c_id));
+    // public function post_identity(Request $request){
 
-    }
+        //     // return Redirect::route('countperson', array('id' =>$c_id));
+        // }
+        public function pick(Request $request){
+            if(auth()->guest()){
+                return redirect('/login');
+            }
+            if(auth()->user()->is_admin == 0){
+                abort(404);
+            }
+            $uri = Route::currentroutename();
+            $customers = $this->get($request);
+            $customersCount = $this->count($request);
+            return view('dashboard.order.pickfromcustomer', compact('uri', 'customers', 'customersCount'));
+        }
 
-    public function viewperson($c_id){
+    public function viewperson(Request $request){
+         // dd($request);
+         if ($request['name']) {
+             $request->validate([
+                 'name' => 'required',
+                 'username' => 'required',
+                 'password' => 'required',
+                 'email' => 'required',
+                 'telp' => 'required',
+                 'birthdate' => 'nullable',
+                 'jk' => 'nullable',
+                 'job' => 'nullable',
+                 'address' => 'nullable'
+             ]);
+             $cus = Customer::create([
+                 'name' => $request->name,
+                 'address' => $request->address,
+                 'jk' => $request->jk,
+                 'job' => $request->job,
+                 'birthdate' => $request->birthdate
+             ]);
+             User::create([
+                 'c_id' => $cus->id,
+                 'username' => $request->username,
+                 'telp' => $request->telp,
+                 'email' => $request->email,
+                 'password' => $request->password,
+                 'is_admin' => 0,
+                ]);
+             $c_id = $cus->id;
+
+         }
+         else {
+             $c_id = $request->customer;
+            }
+            Alert::success('success', 'success');
+            $uri = Route::currentroutename();
+            $customer = Customer::where('id', $c_id)->first();
+            // dd($customer);
+            return view('dashboard.order.viewcountperson', compact('uri', 'c_id','customer'));
+        }
+
+    public function chooseroom(ChooseRoomRequest $request){
+        // dd($request->all());
         $uri = Route::currentroutename();
-        return view('dashboard.order.viewcountperson', compact('uri', 'c_id'));
-    }
-    public function chooseroom(ChooseRoomRequest $request, Customer $customer){
-        $uri = Route::currentroutename();
-        // $count = $request->count;
-        // $c_id = $request->c_id;
-        $stayfrom = $request->from;
-        $stayto = $request->to;
+        $stayfrom = Carbon::parse($request->from)->isoFormat('D MMM YYYY');
+        $stayto = Carbon::parse($request->to)->isoFormat('D MMM YYYY');
+        // dd($stayfrom);
         $occupiedRoomId = $this->getOccupiedRoomID($request->from, $request->to);
         $rooms = $this->getUnocuppiedroom($request, $occupiedRoomId);
         $roomsCount = $this->countUnocuppiedroom($request, $occupiedRoomId);
-        // dd($roomsCount);
-        return view('dashboard.order.chooseroom', compact('uri', 'roomsCount', 'rooms', 'stayfrom', 'stayto'));
+        $customer = Customer::where('id', $request->c_id)->first();
+        return view('dashboard.order.chooseroom', compact('uri','customer', 'roomsCount', 'rooms', 'stayfrom', 'stayto'));
     }
-    public function confirmation(){
+
+
+    public function confirmation(Request $request){
         $uri = Route::currentroutename();
-        // dd($uri);
-        return view('dashboard.order.confirmation', compact('uri'));
+        $room = Room::where('id', $request->room)->with('Type')->first();
+        $customer = Customer::where('id', $request->customer)->first();
+        $stayfrom = Carbon::parse($request->from);
+        $stayuntil = Carbon::parse($request->to);
+        $price = $room->price;
+        $dayDifference = $stayfrom->diffindays($stayuntil);
+        $total = $price * $dayDifference;
+        $downPayment = ($price * $dayDifference) * 0.5;
+        return view('dashboard.order.confirmation', compact('uri', 'dayDifference' , 'customer', 'room', 'stayfrom', 'stayuntil', 'total', 'downPayment'));
+    }
+
+
+    public function payDownPayment(Request $request){
+
+        $checkin = Carbon::parse($request->check_in);
+        $checkout = Carbon::parse($request->check_out);
+        $dayDifference = $checkin->diffindays($checkout);
+        $rooms = Room::where('id', $request->room)->first();
+        $customers = Customer::where('id', $request->customer)->first();
+
+        $minimumDownPayment = ($rooms->price * $dayDifference) * 0.5;
+        $request->validate([
+            'downPayment' => 'required|numeric|gte:' . $minimumDownPayment
+        ]);
+
+        $occupiedRoomId = $this->getOccupiedRoomID($request->check_in, $request->check_out);
+        $occupiedRoomIdInArray = $occupiedRoomId->toArray();
+
+        if (in_array($rooms->id, $occupiedRoomIdInArray)) {
+            return redirect()->back()->with('failed', 'Sorry, room ' . $rooms->no . ' already occupied');
+        }
+
+        $transaction = $this->storetransaction($request, $rooms);
+        $status = 'Down Payment';
+        $payment = $this->storepayment($request, $transaction, $status);
+
+        $superAdmins = User::where('is_admin', 1)->get();
+
+        foreach ($superAdmins as $superAdmin) {
+            $message = 'Reservation added by ' . $customers->name;
+            event(new NewReservationEvent($message, $superAdmin));
+            $superAdmin->notify(new NewRoomReservationDownPayment($transaction, $payment));
+        }
+
+        event(new RefreshDashboardEvent("Someone reserved a room"));
+        // dd($customers->name);
+        Alert::success('Success', 'Room '. $rooms->no .' Has been reservated by '. $customers->name);
+        return redirect()->route('transaction.index');
     }
 
 
 
 
 
+    private function storetransaction($request, $rooms){
+        // dd($request->customer);
+        $storetransaction = Transaction::create([
+            // 'user_id' => auth()->user()->id,
+            'room_id' => $rooms->id,
+            'c_id' => $request->customer,
+            'check_in' => $request->check_in,
+            'check_out' => $request->check_out,
+            'status' => 'Reservation'
+        ]);
+        return $storetransaction;
+    }
+
+    private function storepayment($request, $transaction, string $status){
+        if(!empty($request->downPayment)){
+            $price = $request->downPayment;
+        } else {
+            $price = $request->payment;
+        }
+        $count = Payment::count() + 1;
+        $payment = Payment::create([
+            'c_id' => $request->customer,
+            'transaction_id' => $transaction->id,
+            'price' => $price,
+            'status' => $status,
+            'invoice' =>  '0'. $request->customer. 'INV'. $count . Str::random(4)
+        ]);
+
+        return $payment;
+    }
 
     private function getUnocuppiedroom($request, $occupiedRoomId)
     {
         $rooms = Room::with('type', 'status')
             ->where('capacity', '>=', $request->count)
-            ->whereNotIn('id', $occupiedRoomId)->get();
+            ->whereNotIn('id', $occupiedRoomId);
 
         if (!empty($request->sort_name)) {
             $rooms = $rooms->orderBy($request->sort_name, $request->sort_type);
@@ -108,7 +236,7 @@ class TransactionController extends Controller
         //     ->orderBy('capacity')
         //     ->paginate(5);
 
-        return $rooms;
+        return $rooms->get();
     }
 
     private function countUnocuppiedroom($request, $occupiedRoomId)
@@ -128,5 +256,31 @@ class TransactionController extends Controller
             ->orWhere([['check_out', '>=', $stayfrom], ['check_out', '<=', $stayto]])
             ->pluck('room_id');
         return $occupiedRoomId;
+    }
+    private function get($request)
+    {
+
+        $customers = Customer::with('user')->orderBy('id', 'DESC');
+        if (!empty($request->q)) {
+            $customers = $customers->where('name', 'Like', '%' . $request->q . '%')
+                ->orWhere('id', 'Like', '%' . $request->q . '%');
+        }
+
+        $customers = $customers->paginate(8);
+        $customers->appends($request->all());
+        return $customers;
+    }
+
+    private function count($request)
+    {
+        $customersCount = Customer::with('user')->orderBy('id', 'DESC');
+
+        if (!empty($request->q)) {
+            $customersCount = $customersCount->where('name', 'Like', '%' . $request->q . '%')
+                ->orWhere('id', 'Like', '%' . $request->q . '%');
+        }
+
+        $customersCount = $customersCount->count();
+        return $customersCount;
     }
 }

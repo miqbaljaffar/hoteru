@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('image_rooms', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->bigInteger('room_id')->unsigned()->index();
             $table->foreign('room_id')->references('id')->on('rooms')->onDelete('cascade');
             $table->longText('image');
