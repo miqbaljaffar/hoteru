@@ -16,9 +16,11 @@ use Illuminate\Support\Facades\Route;
 //     return view('index');
 // });q22222222222222222222222222222222
 route::get('/tes', function(){
-    return view('nyoba');
+    return view('nyoba.index');
 });
 
+Route::get('/', [IndexController::class, 'index']);
+Route::get('/rooms', [IndexController::class, 'room']);
 Route::get('/', [IndexController::class, 'index']);
 Route::get('/pesan', [IndexController::class, 'pesan'])->name('pesan');
 

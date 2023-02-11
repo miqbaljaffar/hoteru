@@ -1,151 +1,516 @@
-@extends('layout.main')
-@section('title')
-<title>
-    Pesan | Cakra
-</title>
-@endsection
-@section('content')
-<section class="hero" id="home">
-    <main class="content">
-            <h1>Mari Nginep Di<span>hotel Kami</span></h1>
-            <p>Mau cari hotel yang Murah? Ada lo</p>
-            <a href="/pesan" class="cta">Pesan Sekarang!</a>
-    </main>
-</section>
-<!--hero section end-->
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Hotel Booking Website</title>
+	<!-- CSS only -->
+@include('frontend.inc.links')
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"
+/>
+<link rel="stylesheet" type="text/css" href="css/common.css">
+<script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
 
-<!--About Section ya dek -->
+<style type="text/css">
 
+	.availability-form{
+		margin-top: -50px;
+		z-index: 2;
+		position: relative;
+	}
 
-<section id="about" style="margin-bottom: 80px" class="about">
-    <h2><span>Tentang</span> Kami</h2>
-    <div class="rows">
-        <div class="about-img"><img src="/frontend/img/tentang-kami.jpg" alt="Tentang Kami">
+	@media screen and (max-width: 575px) {
+	.availability-form{
+		margin-top: 25px;
+		padding: 0 35px;
+	}
+
+	}
+</style>
+</head>
+<body>
+
+@include('frontend.inc.header')
+<!-- Swiper Carousal-->
+ <div class="container-fluid px-lg-4 mt-4">
+ 	 <div class="swiper swiper-container">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <img src="/nyoba/images/carousel/1.png" class="w-100 d-block" />
         </div>
-        <div class="content">
-            <h3>Kenapa Memili hotel Kami</h3>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Est eligendi maiores, eveniet quas omnis dolorum.</p>
-            <p>Mau cari hotel yang Murah? Di kenangan senja aja</p>
+        <div class="swiper-slide">
+          <img src="/nyoba/images/carousel/2.png" class="w-100 d-block" />
         </div>
-    </div>
-</section>
-
-
-<!--About Section end ya noob-->
-
-
-<!--Fasilitas Section strat ya deck-->
-
-<section id="fasilitas" style="background-color: rgb(02, 50, 24)" class="menus">
-<h2><span>Fasilitas</span>Kami</h2>
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium rerum commodi ipsa cum sit expedita.</p>
-<div class="rows">
-    <div class="menus-card">
-        <img src="/frontend/img/fasilitas/1.jpg" alt="renang" class="menus-card-img">
-        <h3 class="menus-card-title">-Kolam Renang</h3>
-        <p class="menus-card-price">GRATIS</p>
-    </div>
-    <div class="menus-card">
-        <img src="/frontend/img/fasilitas/2.jpg" alt="renang" class="menus-card-img">
-        <h3 class="menus-card-title">-Free Wifi-</h3>
-        <p class="menus-card-price">GRATIS</p>
-    </div>
-    <div class="menus-card">
-        <img src="/frontend/img/fasilitas/3.jpg" alt="renang" class="menus-card-img">
-        <h3 class="menus-card-title">-Sarapan Pagi-</h3>
-        <p class="menus-card-price">GRATIS</p>
-    </div>
-    <div class="menus-card">
-        <img src="/frontend/img/fasilitas/4.jpg" alt="renang" class="menus-card-img">
-        <h3 class="menus-card-title">-Bathup-</h3>
-        <p class="menus-card-price">GRATIS</p>
-    </div>
-    <div class="menus-card">
-        <img src="/frontend/img/fasilitas/5.jpg" alt="renang" class="menus-card-img">
-        <h3 class="menus-card-title">-Makan Siang</h3>
-        <p class="menus-card-price">GRATIS</p>
-    </div>
-</div>
-
-</section>
-<!--Fasilitas section end ya noob-->
-
-<!--Kontak Section Start ya deck-->
-<section id="contact" class="contact container">
-<h2><span>Kontak</span>Kami</h2>
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium rerum commodi ipsa cum sit expedita.</p>
-<div class="row">
-    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3964.9060098636683!2d106.96529953804958!3d-6.406108795364871!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e6995d20156e367%3A0x5b7cd089c3c57813!2sSMK%20Bina%20Mandiri%20Multimedia%20Cileungsi!5e0!3m2!1sid!2sid!4v1675517872782!5m2!1sid!2sid"allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="map"></iframe>
-
-</div>
-</section>
-
-<section id="a" style="background-color: rgb(02, 50, 24)" class="menus">
-    <h2><span>Fasilitas</span>Kami</h2>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium rerum commodi ipsa cum sit expedita.</p>
-    <div class="rows">
-        <div class="menus-card">
-            <img src="/frontend/img/fasilitas/1.jpg" alt="renang" class="menus-card-img">
-            <h3 class="menus-card-title">-Kolam Renang</h3>
-            <p class="menus-card-price">GRATIS</p>
+        <div class="swiper-slide">
+          <img src="/nyoba/images/carousel/3.png" class="w-100 d-block" />
         </div>
-        <div class="menus-card">
-            <img src="/frontend/img/fasilitas/2.jpg" alt="renang" class="menus-card-img">
-            <h3 class="menus-card-title">-Free Wifi-</h3>
-            <p class="menus-card-price">GRATIS</p>
+        <div class="swiper-slide">
+          <img src="/nyoba/images/carousel/4.png" class="w-100 d-block" />
         </div>
-        <div class="menus-card">
-            <img src="/frontend/img/fasilitas/3.jpg" alt="renang" class="menus-card-img">
-            <h3 class="menus-card-title">-Sarapan Pagi-</h3>
-            <p class="menus-card-price">GRATIS</p>
+        <div class="swiper-slide">
+          <img src="/nyoba/images/carousel/5.png" class="w-100 d-block" />
         </div>
-        <div class="menus-card">
-            <img src="/frontend/img/fasilitas/4.jpg" alt="renang" class="menus-card-img">
-            <h3 class="menus-card-title">-Bathup-</h3>
-            <p class="menus-card-price">GRATIS</p>
+        <div class="swiper-slide">
+          <img src="/nyoba/images/carousel/6.png" class="w-100 d-block" />
         </div>
-        <div class="menus-card">
-            <img src="/frontend/img/fasilitas/5.jpg" alt="renang" class="menus-card-img">
-            <h3 class="menus-card-title">-Makan Siang</h3>
-            <p class="menus-card-price">GRATIS</p>
+
+      </div>
+
+    </div>
+ </div>
+
+ <!-- check avilability form-->
+ <div class="container availability-form">
+ 	<div class="row">
+ 		<div class="col-lg-12 bg-white shadow p-4 rounded">
+ 			<h5 class="col-lg-3">Check Booking Availability</h5>
+ 			<form>
+ 				<div class="row align-items-end">
+ 					<div class="col-lg-3 mb-3">
+ 						<label class="form-label" style="font-weight: 500;">Check-in</label>
+ 						<input type="date" class="form-control shadow-none">
+ 					</div>
+ 					<div class="col-lg-3 mb-3">
+ 						<label class="form-label" style="font-weight: 500;">Check-in</label>
+ 						<input type="date" class="form-control shadow-none">
+ 					</div>
+ 					<div class="col-lg-3 mb-3">
+ 						<label class="form-label" style="font-weight: 500;">Adult</label>
+ 						<select class="form-select shadow-none">
+
+  						<option value="1">One</option>
+  						<option value="2">Two</option>
+  						<option value="3">Three</option>
+						</select>
+ 					</div>
+ 					<div class="col-lg-2 mb-3">
+ 						<label class="form-label" style="font-weight: 500;">Children</label>
+ 						<select class="form-select shadow-none">
+
+  						<option value="1">One</option>
+  						<option value="2">Two</option>
+  						<option value="3">Three</option>
+						</select>
+ 					</div>
+ 					<div class="col-lg-1 mb-lg-3 mt-2">
+ 						<button type="submit" class="btn text-white shadow-none custom-bg">Submit</button>
+ 					</div>
+
+ 				</div>
+ 			</form>
+ 		</div>
+ 	</div>
+ </div>
+
+ <!-- Our Rooms -->
+ <h2 class="mt-5 pt-4 mb-4 text-center fw-bold h-font">OUR ROOMS</h2>
+ <div class="container">
+ 	<div class="row">
+
+        @foreach ($room as $r)
+        {{-- @php
+            $r->capacty > 10
+        @endphp --}}
+        <div class="col-lg-4 col-md-6 my-3">
+            <div class="card border-0 shadow" style="max-width: 350px; margin: auto;">
+                @if ($r->image)
+                <img src="/nyoba/images/rooms/1.jpg" class="card-img-top" alt="...">
+                @else
+                <img src="/img/default-room.png" alt="...">
+                @endif
+             <div class="card-body">
+               <h5 class="card-title">{{ $r->type->name }} #{{ $r->no }}</h5>
+               <h6 class="mb-4">IDR {{ number_format($r->price) }} </h6>
+               <div class="features mb-4">
+                   <h6 class="mb-1">Features</h6>
+                   <span class="badge rounded-pill bg-light text-dark text-wrap">
+                       2 Rooms
+                   </span>
+                   <span class="badge rounded-pill bg-light text-dark text-wrap">
+                       1 Bathroom
+                   </span>
+                   <span class="badge rounded-pill bg-light text-dark text-wrap">
+                       1 Balcony
+                   </span>
+                   <span class="badge rounded-pill bg-light text-dark text-wrap">
+                       3 Sofa
+                   </span>
+               </div>
+               <div class="Facilities mb-4">
+                   <h6 class="mb-1">Facilities</h6>
+                   <span class="badge rounded-pill bg-light text-dark text-wrap">
+                       Wifi
+                   </span>
+                   <span class="badge rounded-pill bg-light text-dark text-wrap">
+                       Television
+                   </span>
+                   <span class="badge rounded-pill bg-light text-dark text-wrap">
+                       AC
+                   </span>
+                   <span class="badge rounded-pill bg-light text-dark text-wrap">
+                       Room Heater
+                   </span>
+               </div>
+
+               <div class="guests mb-4">
+                   <h6 class="mb-1">Guests</h6>
+                   <span class="badge rounded-pill bg-light text-dark text-wrap">
+                      {{$r->capacity}}
+                   </span>
+
+               </div>
+                   {{-- <div class="rating mb-4">
+
+                       <h6 class="mb-1">Rating</h6>
+                       <span class="badge rounded-pill bg-light">
+                           <i class="bi bi-star-fill text-warning"></i>
+                           <i class="bi bi-star-fill text-warning"></i>
+                           <i class="bi bi-star-fill text-warning"></i>
+                           <i class="bi bi-star-fill text-warning"></i>
+                       </span>
+                   </div> --}}
+                   <div class="d-flex justify-content-evenly mb-2">
+                       <a href="#" class="btn btn-sm text-white custom-bg shadow-none">Book Now</a>
+                       <a href="#" class="btn btn-sm btn-outline-dark shadow-none">More details</a>
+                   </div>
+             </div>
+           </div>
         </div>
+
+        @endforeach
+ 		{{-- <div class="col-lg-4 col-md-6 my-3">
+ 			<div class="card border-0 shadow" style="max-width: 350px; margin: auto;">
+			  <img src="/nyoba/images/rooms/1.jpg" class="card-img-top" alt="...">
+			  <div class="card-body">
+			    <h5 class="card-title">Simple Room Name</h5>
+			    <h6 class="mb-4">Ꝛ2000 per night </h6>
+			    <div class="features mb-4">
+			    	<h6 class="mb-1">Features</h6>
+			    	<span class="badge rounded-pill bg-light text-dark text-wrap">
+			    		2 Rooms
+    				</span>
+    				<span class="badge rounded-pill bg-light text-dark text-wrap">
+			    		1 Bathroom
+    				</span>
+    				<span class="badge rounded-pill bg-light text-dark text-wrap">
+			    		1 Balcony
+    				</span>
+    				<span class="badge rounded-pill bg-light text-dark text-wrap">
+			    		3 Sofa
+    				</span>
+			    </div>
+			    <div class="Facilities mb-4">
+			    	<h6 class="mb-1">Facilities</h6>
+			    	<span class="badge rounded-pill bg-light text-dark text-wrap">
+			    		Wifi
+    				</span>
+    				<span class="badge rounded-pill bg-light text-dark text-wrap">
+			    		Television
+    				</span>
+    				<span class="badge rounded-pill bg-light text-dark text-wrap">
+			    		AC
+    				</span>
+    				<span class="badge rounded-pill bg-light text-dark text-wrap">
+			    		Room Heater
+    				</span>
+    				<div class="guests mb-4">
+			    	<h6 class="mb-1">Guests</h6>
+			    	<span class="badge rounded-pill bg-light text-dark text-wrap">
+			    		5 Adults
+    				</span>
+    				<span class="badge rounded-pill bg-light text-dark text-wrap">
+			    		4 Children
+    				</span>
+
+    				</div>
+    				<div class="rating mb-4">
+
+    					<h6 class="mb-1">Rating</h6>
+    					<span class="badge rounded-pill bg-light">
+    						<i class="bi bi-star-fill text-warning"></i>
+    						<i class="bi bi-star-fill text-warning"></i>
+    						<i class="bi bi-star-fill text-warning"></i>
+    						<i class="bi bi-star-fill text-warning"></i>
+    					</span>
+    				</div>
+    				<div class="d-flex justify-content-evenly mb-2">
+    					<a href="#" class="btn btn-sm text-white custom-bg shadow-none">Book Now</a>
+    					<a href="#" class="btn btn-sm btn-outline-dark shadow-none">More details</a>
+    				</div>
+			    </div>
+			  </div>
+			</div>
+ 		</div>
+
+ 		<div class="col-lg-4 col-md-6 my-3">
+ 			<div class="card border-0 shadow" style="max-width: 350px; margin: auto;">
+			  <img src="/nyoba/images/rooms/1.jpg" class="card-img-top" alt="...">
+			  <div class="card-body">
+			    <h5 class="card-title">Simple Room Name</h5>
+			    <h6 class="mb-4">Ꝛ2000 per night </h6>
+			    <div class="features mb-4">
+			    	<h6 class="mb-1">Features</h6>
+			    	<span class="badge rounded-pill bg-light text-dark text-wrap">
+			    		2 Rooms
+    				</span>
+    				<span class="badge rounded-pill bg-light text-dark text-wrap">
+			    		1 Bathroom
+    				</span>
+    				<span class="badge rounded-pill bg-light text-dark text-wrap">
+			    		1 Balcony
+    				</span>
+    				<span class="badge rounded-pill bg-light text-dark text-wrap">
+			    		3 Sofa
+    				</span>
+			    </div>
+			    <div class="Facilities mb-4">
+			    	<h6 class="mb-1">Facilities</h6>
+			    	<span class="badge rounded-pill bg-light text-dark text-wrap">
+			    		Wifi
+    				</span>
+    				<span class="badge rounded-pill bg-light text-dark text-wrap">
+			    		Television
+    				</span>
+    				<span class="badge rounded-pill bg-light text-dark text-wrap">
+			    		AC
+    				</span>
+    				<span class="badge rounded-pill bg-light text-dark text-wrap">
+			    		Room Heater
+    				</span>
+
+    				<div class="guests mb-4">
+			    	<h6 class="mb-1">Guests</h6>
+			    	<span class="badge rounded-pill bg-light text-dark text-wrap">
+			    		5 Adults
+    				</span>
+    				<span class="badge rounded-pill bg-light text-dark text-wrap">
+			    		4 Children
+    				</span>
+    				</div>
+
+    				<div class="rating mb-4">
+
+    					<h6 class="mb-1">Rating</h6>
+    					<span class="badge rounded-pill bg-light">
+    						<i class="bi bi-star-fill text-warning"></i>
+    						<i class="bi bi-star-fill text-warning"></i>
+    						<i class="bi bi-star-fill text-warning"></i>
+    						<i class="bi bi-star-fill text-warning"></i>
+    					</span>
+    				</div>
+    				<div class="d-flex justify-content-evenly mb-2">
+    					<a href="#" class="btn btn-sm text-white custom-bg shadow-none">Book Now</a>
+    					<a href="#" class="btn btn-sm btn-outline-dark shadow-none">More details</a>
+    				</div>
+			    </div>
+			  </div>
+			</div>
+ 		</div> --}}
+
+
+ 		<div class="col-lg-12 text-center mt-5">
+ 			<a href="#" class="btn btn-sm btn-outline-dark rounded-0 fw-bold shadow-none">More Rooms</a>
+ 		</div>
+ 	</div>
+ </div>
+
+ <!-- Our Facilities-->
+
+ <h2 class="mt-5 pt-4 mb-4 text-center fw-bold h-font">OUR FACILITIES</h2>
+
+ <div class="container">
+ 	<div class="row justify-content-evenly px-lg-0 px-md-0 px-5">
+ 		<div class="col-lg-2 col-md-2 text-center bg-white rounded shadow py-4 my-3">
+ 			<img src="/frontend/img/fasilitas/1.jpg" width="80px">
+ 			<h5 class="mt-3">Swimming Pool</h5>
+ 		</div>
+ 		<div class="col-lg-2 col-md-2 text-center bg-white rounded shadow py-4 my-3">
+ 			<img src="/frontend/img/fasilitas/2.jpg" width="80px">
+ 			<h5 class="mt-3">Wifi</h5>
+ 		</div>
+ 		<div class="col-lg-2 col-md-2 text-center bg-white rounded shadow py-4 my-3">
+ 			<img src="/frontend/img/fasilitas/3.jpg" width="80px">
+ 			<h5 class="mt-3">Breakfast</h5>
+ 		</div>
+ 		<div class="col-lg-2 col-md-2 text-center bg-white rounded shadow py-4 my-3">
+ 			<img src="/frontend/img/fasilitas/4.jpg" width="80px">
+ 			<h5 class="mt-3">Warm Water</h5>
+ 		</div>
+ 		<div class="col-lg-2 col-md-2 text-center bg-white rounded shadow py-4 my-3">
+ 			<img src="/frontend/img/fasilitas/5.jpg" width="80px">
+ 			<h5 class="mt-3">Lunch</h5>
+ 		</div>
+ 		{{-- <div class="col-lg-12 text-center mt-5">
+ 			<a href="#" class="btn btn-sm btn-outline-dark rounded rounded-0 fw-bold shadow-none">More Facilities >>></a>
+ 		</div> --}}
+ 	</div>
+ </div>
+
+<!-- Testimonials -->
+
+ {{-- <h2 class="mt-5 pt-4 mb-4 text-center fw-bold h-font">TESTIMONIALS</h2>
+
+ <div class="container mt-5">
+ 	<!-- Swiper -->
+    <div class="swiper swiper-testimonials">
+      <div class="swiper-wrapper mb-5">
+
+        <div class="swiper-slide bg-white p-4">
+          <div class="profile d-flex align-items-center mb-3">
+          	<img src="/nyoba/images/facilities/stars.png" width="30px">
+          	<h6 class="m-0 ms-2">Random user1</h6>
+          </div>
+          <p>
+          	Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+          	tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+          	quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+          	consequat.
+          </p>
+          <div class="rating">
+          	<i class="bi bi-star-fill text-warning"></i>
+    		<i class="bi bi-star-fill text-warning"></i>
+    		<i class="bi bi-star-fill text-warning"></i>
+    		<i class="bi bi-star-fill text-warning"></i>
+          </div>
+        </div>
+
+        <div class="swiper-slide bg-white p-4">
+          <div class="profile d-flex align-items-center mb-3">
+          	<img src="/nyoba/images/facilities/stars.png" width="30px">
+          	<h6 class="m-0 ms-2">Random user1</h6>
+          </div>
+          <p>
+          	Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+          	tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+          	quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+          	consequat.
+          </p>
+          <div class="rating">
+          	<i class="bi bi-star-fill text-warning"></i>
+    		<i class="bi bi-star-fill text-warning"></i>
+    		<i class="bi bi-star-fill text-warning"></i>
+    		<i class="bi bi-star-fill text-warning"></i>
+          </div>
+        </div>
+
+        <div class="swiper-slide bg-white p-4">
+          <div class="profile d-flex align-items-center mb-3">
+          	<img src="/nyoba/images/facilities/stars.png" width="30px">
+          	<h6 class="m-0 ms-2">Random user1</h6>
+          </div>
+          <p>
+          	Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+          	tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+          	quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+          	consequat.
+          </p>
+          <div class="rating">
+          	<i class="bi bi-star-fill text-warning"></i>
+    		<i class="bi bi-star-fill text-warning"></i>
+    		<i class="bi bi-star-fill text-warning"></i>
+    		<i class="bi bi-star-fill text-warning"></i>
+          </div>
+        </div>
+
+      </div>
+      <div class="swiper-pagination"></div>
     </div>
+ </div> --}}
 
-    </section>
+ <!-- REach us-->
 
-@endsection
+ <h2 class="mt-5 pt-4 mb-4 text-center fw-bold h-font">Our Contact</h2>
 
-@section('footer')
-<footer style="background-color:#010101">
-    <div class="socials">
-        <a href="https://www.instagram.com/ozanrevol123/"><i data-feather="instagram"></i></a>
-        <a href="https://twitter.com/FGusdani"><i data-feather="twitter"></i></a>
-        <a href="https://www.facebook.com/whoami.clay.50767"><i data-feather="facebook"></i></a>
-    </div>
+ <div class="container">
+ 	<div class="row">
+ 		<div class="col-lg-8 col-md-8 p-4 mb-lg-0 mb-3 bg-white rounded">
+            <iframe class="w-100 rounded" height="320px" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3964.9060098636683!2d106.96529953804958!3d-6.406108795364871!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e6995d20156e367%3A0x5b7cd089c3c57813!2sSMK%20Bina%20Mandiri%20Multimedia%20Cileungsi!5e0!3m2!1sid!2sid!4v1675517872782!5m2!1sid!2sid"allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="map"></iframe>
+ 		{{-- <iframe class="w-100 rounded" height="320px" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63225.996807740055!2d80.97815907936754!3d7.934196847392783!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3afb456e05e5a4c9%3A0x72cd1cfea9d4d0a9!2sPolonnaruwa%20Ancient%20City!5e0!3m2!1sen!2slk!4v1659525623039!5m2!1sen!2slk" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> --}}
+ 		</div>
+ 		<div class="col-lg-4 col-md-4 ">
+ 			<div class="bg-white p-4 rounded">
+ 				<h5>Call us</h5>
+ 				<a href="tel: +94768799665" class="d-inline-block mb-2 text-decoration-none text-dark"><i class="bi bi-telephone-fill"></i> +62 85773674231</a>
+ 				<br>
+ 				<a href="tel: +94768799665" class="d-inline-block mb-2 text-decoration-none text-dark"><i class="bi bi-telephone-fill"></i> +62 85773674231</a>
+ 			</div>
+ 			<div class="bg-white p-4 rounded">
+ 				<h5>Follow us</h5>
+ 				<a href="#" class="d-inline-block mb-3">
+ 					<span class="badge bg-light text-dark fs-6 p-2">
+ 						<i class="bi bi-twitter me-1"></i>Twitter
+ 					</span>
+ 				</a>
+ 				<br>
+ 				<a href="#" class="d-inline-block mb-3">
+ 					<span class="badge bg-light text-dark fs-6 p-2">
+ 						<i class="bi bi-facebook me-1"></i>Facebook
+ 					</span>
+ 				</a>
+ 				<br>
+ 				<a href="#" class="d-inline-block">
+ 					<span class="badge bg-light text-dark fs-6 p-2">
+ 						<i class="bi bi-instagram me-1"></i>Instagram
+ 					</span>
+ 				</a>
+ 			</div>
+ 		</div>
+ 	</div>
+ </div>
+<hr>@include('frontend.inc.footer')
 
-    <div class="links">
-        <a href="#home">home</a>
-        <a href="#about">about</a>
-        <a href="fasilitas">Fasilitas Kami</a>
-        <a href="#contact">Kontak</a>
-    </div>
-    <div class="credit">
-        <p>Created By <a href="">Fauzan Gusdani</a>. | &copy; 2023.</p>
-    </div>
-</footer>
+<!-- JavaScript Bundle with Popper -->
 
-@endsection
 
-@section('script')
- <!--feather icon-->
- <script>
-    feather.replace()
-  </script>
+ <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
 
-    <!--javascipt ane -->
+ <!-- Initialize Swiper -->
+    <script>
+      var swiper = new Swiper(".swiper-container", {
+        spaceBetween: 30,
+        effect: "fade",
+        loop: true,
+        autoplay: {
+        	delay: 3500,
+        	disableOnInteraction: false,
+        }
+      });
 
-    <script src="/vendor/jquery/jquery.min.js"></script>
-<script src="https://unpkg.com/feather-icons"></script>
-<script src="/bs/js/bootstrap.bundle.min.js"></script>
-    <script src="/frontend/js/script.js"></script>
-@endsection
+      var swiper = new Swiper(".swiper-testimonials", {
+        effect: "coverflow",
+        grabCursor: true,
+        centeredSlides: true,
+        slidesPerView: "auto",
+        slidesPerView: "3",
+        loop: true,
+        coverflowEffect: {
+          rotate: 50,
+          stretch: 0,
+          depth: 100,
+          modifier: 1,
+          slideShadows: false,
+        },
+        pagination: {
+          el: ".swiper-pagination",
+        },
+        breakpoints: {
+        	320: {
+        		slidesPerView: 1,
+        	},
+        	640: {
+        		slidesPerView: 1,
+        	},
+        	768: {
+        		slidesPerView: 2,
+        	},
+        	1024: {
+        		slidesPerView: 3,
+        	},
+        }
+      });
+    </script>
+</body>
+</html>
+
+
