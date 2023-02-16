@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\PaymentMethod;
 use App\Models\Payments;
 use App\Models\Transaction;
 use Carbon\Carbon;
@@ -24,6 +25,17 @@ class TransactionSeeder extends Seeder
         //     'check_out' => Carbon::tomorrow(),
         //     'status' => 'Reservation'
         // ]);
+
+        PaymentMethod::create([
+            'nama' => 'OFFLINE',
+            'no_rek' => null,
+        ]);
+
+        PaymentMethod::create([
+            'nama' => 'BCA',
+            'no_rek' => 'asd12asdqwe',
+        ]);
+
         Transaction::create([
             'c_id' => 1,
             'room_id' => 2,
@@ -34,6 +46,7 @@ class TransactionSeeder extends Seeder
 
         Payments::create([
             'c_id' => 1,
+            'payment_method_id' => 1,
             'invoice' => 'ngasal',
             'transaction_id' => 1,
             'price' => 2000000,
@@ -51,6 +64,7 @@ class TransactionSeeder extends Seeder
         ]);
         Payments::create([
             'c_id' => 1,
+            'payment_method_id' => 1,
             'invoice' => 'ngasal',
             'transaction_id' => 2,
             'price' => 2000000,
@@ -69,6 +83,7 @@ class TransactionSeeder extends Seeder
 
         Payments::create([
             'c_id' => 1,
+            'payment_method_id' => 1,
             'invoice' => 'ngasal',
             'transaction_id' => 3,
             'price' => 2000000,
@@ -87,6 +102,7 @@ class TransactionSeeder extends Seeder
         ]);
         Payments::create([
             'c_id' => 1,
+            'payment_method_id' => 1,
             'invoice' => 'ngasal',
             'transaction_id' => 4,
             'price' => 2000000,
@@ -103,6 +119,7 @@ class TransactionSeeder extends Seeder
         ]);
         Payments::create([
             'c_id' => 1,
+            'payment_method_id' => 1,
             'invoice' => 'ngasal',
             'transaction_id' => 5,
             'price' => 2000000,
@@ -119,6 +136,7 @@ class TransactionSeeder extends Seeder
         ]);
         Payments::create([
             'c_id' => 1,
+            'payment_method_id' => 1,
             'invoice' => 'ngasal',
             'transaction_id' => 6,
             'price' => 2000000,
@@ -136,6 +154,7 @@ class TransactionSeeder extends Seeder
 
         Payments::create([
             'c_id' => 1,
+            'payment_method_id' => 1,
             'invoice' => 'ngasal',
             'transaction_id' => 7,
             'price' => 2000000,
@@ -153,6 +172,7 @@ class TransactionSeeder extends Seeder
 
         Payments::create([
             'c_id' => 1,
+            'payment_method_id' => 1,
             'invoice' => 'ngasal',
             'transaction_id' => 8,
             'price' => 2000000,

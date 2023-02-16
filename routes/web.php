@@ -3,6 +3,7 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\StatusController;
@@ -16,13 +17,25 @@ use Illuminate\Support\Facades\Route;
 //     return view('index');
 // });q22222222222222222222222222222222
 route::get('/tes', function(){
-    return view('nyoba.index');
+    return view('p');
 });
-
-Route::get('/', [IndexController::class, 'index']);
+Route::get('/myaccount/edit', [UserController::class, 'cusedit']);
+Route::get('/history', [UserController::class, 'history']);
+Route::get('/invoice/{id}', [OrderController::class, 'invoice']);
+Route::get('/', [IndexController::class, 'index'])->name('index');
 Route::get('/rooms', [IndexController::class, 'room']);
-Route::get('/', [IndexController::class, 'index']);
+Route::post('/rooms', [IndexController::class, 'roompost']);
+Route::get('/facilities', [IndexController::class, 'facility']);
+Route::get('/contact', [IndexController::class, 'contact']);
+Route::get('/about', [IndexController::class, 'about']);
+Route::post('/order', [OrderController::class,'index']);
+Route::get('/myaccount', [UserController::class, 'profile']);
+Route::post('/order/post', [OrderController::class,'order']);
 Route::get('/pesan', [IndexController::class, 'pesan'])->name('pesan');
+Route::get('/bayar/{id}', [OrderController::class, 'pembayaran']);
+
+Route::get('/rooms/{no}', [RoomController::class, 'roomshow']);
+Route::post('/rooms/{no}', [RoomController::class, 'roomshowpost']);
 
 Route::get('/login', [LoginController::class, 'index'])->middleware('guest');
 Route::post('/login', [LoginController::class, 'authenticate']);
@@ -64,6 +77,7 @@ Route::get('/dashboard/user/{user:username}/edit', [UserController::class, 'edit
 // Route::get('/dashboard/user/{user:username}/show', [UserController::class, 'p']);
 Route::post('/dashboard/user/post', [UserController::class, 'post']);
 Route::post('/dashboard/user/{id}/update', [UserController::class, 'update']);
+Route::post('/myaccount/{id}/update', [UserController::class, 'updatefront']);
 Route::any('/dashboard/user/{id}/delete', [UserController::class, 'delete']);
 
 Route::get('/dashboard/order', [TransactionController::class, 'index'])->name('transaction.index');

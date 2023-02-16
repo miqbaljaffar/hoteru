@@ -31,27 +31,28 @@ class LoginController extends Controller
                 Cookie::queue('password', $request->password, $minutes);}
             // dd($tes);
                 // if()
+                Alert::success('Success', 'Login berhasil');
             return redirect()->intended('/')->with('success');
-            Alert::success('Success', 'Login berhasil');
         }
         Alert::error('Error', 'Gagal');
-        return back();
+        return redirect('/register');
     }
 
     public function store(Request $request){
         $validated = $request->validate([
-            'name' => 'required|max:255',
+            'name' =>  'required|max:255',
             'username' => ['required', 'min:3', 'max:255', 'unique:users'],
             'password' => ['min:3', 'max:255','required'],
-            'confirmation_password' => ['required','same:password','min:3', 'max:255']
         ]);
+        // dd($request->all());
 
-        // dd($validated);
-
+        if($request->confirmation_password != $request->password){
+        Alert::error('Error', 'Gagal');
+        // dd($request->all());
+        return redirect('/register');
+        }
         $validated['password'] = bcrypt($validated['password']);
-
        User::create($validated);
-
        $request->session();
        Alert::success('Success', 'Login buru');
        return redirect('/login')->with('success', 'Registration successfull. Please Login');

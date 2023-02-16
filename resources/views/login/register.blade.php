@@ -66,5 +66,6 @@
     </div>
     <script type="text/javascript" src="/loginn/js/main.js"></script>
     <script src="/js/bootstrap.bundle.min.js"></script>
+    @include('sweetalert::alert')
 </body>
 </html>

@@ -131,6 +131,7 @@ class TransactionController extends Controller
         $rooms = $this->getUnocuppiedroom($request, $occupiedRoomId);
         $roomsCount = $this->countUnocuppiedroom($request, $occupiedRoomId);
         $customer = Customer::where('id', $request->c_id)->first();
+        // dd($rooms);
         return view('dashboard.order.chooseroom', compact('uri','customer', 'roomsCount', 'rooms', 'stayfrom', 'stayto'));
     }
 
@@ -150,7 +151,7 @@ class TransactionController extends Controller
 
 
     public function payDownPayment(Request $request){
-
+        // dd($request->all());
         $checkin = Carbon::parse($request->check_in);
         $checkout = Carbon::parse($request->check_out);
         $dayDifference = $checkin->diffindays($checkout);
@@ -216,6 +217,7 @@ class TransactionController extends Controller
             'transaction_id' => $transaction->id,
             'price' => $price,
             'status' => $status,
+            'payment_method_id' => 1,
             'invoice' =>  '0'. $request->customer. 'INV'. $count . Str::random(4)
         ]);
 
@@ -257,6 +259,7 @@ class TransactionController extends Controller
             ->pluck('room_id');
         return $occupiedRoomId;
     }
+
     private function get($request)
     {
 

@@ -68,7 +68,7 @@ class StatusController extends Controller
         return redirect('/dashboard/data/status');
     }
 
-    public function delete($id){
+    public  function delete($id){
         $p = RoomStatus::findOrFail($id);
         $p->delete();
         Alert::success('Success', 'Data berhasil dihapus');

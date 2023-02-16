@@ -105,6 +105,7 @@
                 </div>
             </div>
         </div>
+
         <div class="col-md-4 mt-2">
             <div class="card shadow-sm">
                 @if ($customer->User)
@@ -179,6 +180,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 </div>
 

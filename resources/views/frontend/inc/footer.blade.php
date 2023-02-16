@@ -1,4 +1,4 @@
-<div class="container-fluid bg-white mt-5">
+{{-- <div class="container-fluid bg-white mt-5">
  	<div class="row">
  		<div class="col-lg-4 p-4">
  			<h3 class="h-font fw-bold fs-3 mb-2">TJ HOTEL</h3>
@@ -28,7 +28,8 @@
  			</a><br>
  		</div>
  	</div>
- </div>
+ </div> --}}
 
-<h6 class="text-center bg-dark text-white p-3 m-0">Angger Cakra & Fauzan Gusdani</h6>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
+<h6 class="text-center bg-dark text-white p-3 m-0 mt-3">Angger Cakra & Fauzan Gusdani</h6>
+<script src="/bs/js/bootstrap.bundle.min.js"></script>
+{{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script> --}}

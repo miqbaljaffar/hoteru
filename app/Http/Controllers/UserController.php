@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
+use App\Models\Payment;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -73,10 +75,40 @@ class UserController extends Controller
         return view('dashboard.user.edit', compact('user'));
     }
     public function update(Request $request, $id){
+        // dd($request->all());
         $p = User::findOrFail($id);
         $p->update($request->all());
         Alert::success('Success', 'Data berhasil di edit');
         return redirect('/dashboard/user');
+    }
+    public function updatefront(Request $request, $id){
+        // dd($request->all())
+        $p = User::findOrFail($id);
+        $c = Customer::findOrFail($p->Customer->id);
+        // dd($c);
+        $request->validate([
+            'name' => 'nullable',
+            'username' => 'nullable',
+            'email' => 'nullable',
+            'telp' => 'nullable',
+            'address' => 'nullable',
+            'jk' => 'nullable',
+            'job' => 'nullable',
+        ]);
+        $c->update([
+            'name' => $request->name,
+            'address' => $request->address,
+            'jk' => $request->jk,
+            'job' => $request->job,
+        ]);
+
+        $p->update([
+            'username' => $request->username,
+            'email' => $request->email,
+            'telp' => $request->telp,
+        ]);
+        Alert::success('Success', 'Data berhasil di edit');
+        return redirect('/myaccount');
     }
 
     public function delete($id){
@@ -85,5 +117,33 @@ class UserController extends Controller
         $p->delete();
         Alert::success('Success', 'Data berhasil di hapus');
         return back();
+    }
+
+    public function profile(){
+        if(auth()->guest()){
+            return redirect('/login');
+        }
+        $user = Auth()->user();
+        // dd($user);
+        // dd($user);
+        return view('user.profile', compact('user'));
+    }
+
+    public function cusedit(){
+        if(auth()->guest()){
+            return redirect('/login');
+        }
+        $user = Auth()->user();
+        return view('user.edit',compact('user'));
+    }
+
+    public function history(){
+        if(auth()->guest()){
+            return redirect('/login');
+        }
+        $id = Auth()->user()->Customer->id;
+        $user = Auth()->user();
+        $his = Payment::where('c_id', $id)->orderby('id', 'desc')->paginate(10);
+        return view('user.history', compact('his', 'user'));
     }
 }

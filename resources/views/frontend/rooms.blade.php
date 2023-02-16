@@ -8,7 +8,7 @@
   rel="stylesheet"
   href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"
 />
-<link rel="stylesheet" type="text/css" href="css/common.css">
+<link rel="stylesheet" type="text/css" href="/nyoba/css/common.css">
 <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
 
 
@@ -19,7 +19,7 @@
 
 <div class="my-5 px-4">
   <h2 class="fw-bold h-font text-center">OUR ROOMS</h2>
-
+  <p class="h5 mt-3 text-center">{{$roomsCount}} Rooms Availlable</p>
   <div class="h-line bg-dark"></div>
 
 </div>
@@ -40,9 +40,9 @@
       <div class="border bg-light p-3 rounded mb-3">
             <h5 class="mb-3" style="font-size: 18px;">CHECK AVAILABILITY</h5>
             <label class="form-label">Check-in</label>
-        <input type="date" name="check_in" class="form-control shadow-none mb-3">
+        <input type="date" name="from" class="form-control shadow-none mb-3">
         <label class="form-label">Check-out</label>
-        <input type="date" name="check_out" class="form-control shadow-none">
+        <input type="date" name="to" class="form-control shadow-none">
       </div>
       {{-- <div class="border bg-light p-3 rounded mb-3">
         <h5 class="mb-3" style="font-size: 18px;">FACILITIES</h5>
@@ -64,7 +64,7 @@
         <div class="d-flex">
           <div class="me-2">
               <label class="form-label">How many person?</label>
-          <input type="number" name="person" class="form-control shadow-none">
+          <input type="number" name="count" class="form-control shadow-none" value="1">
         </div>
         {{-- <div>
           <label class="form-label">Children</label>
@@ -72,15 +72,21 @@
         </div> --}}
         </div>
       </div>
+
+      <div class="container">
+        <div class="row">
+            <button class="btn border" type="submit">SEARCH</button>
+        </div>
+      </div>
     </div>
-    <button class="btn border" type="button">SEARCH</button>
 </form>
   </div>
 </nav>
 </div>
 
+
 <div class="col-lg-9 col-md-12 px-4">
-@foreach ($room as $r)
+@foreach ($rooms as $r)
 
 <div class="card mb-4 border-0 shadow">
     <div class="row g-0 p-3 align-items-center">
@@ -89,175 +95,146 @@
     </div>
     <div class="col-md-5 px-lg-3 px-md-3 px-0">
       <h5 class="mb-3">{{ $r->type->name }} #{{ $r->no }} </h5>
-      <div class="features mb-4">
+      <div class="guests">
+        <h6 class="mb-1">Guests</h6>
+        <span class="badge rounded-pill bg-light text-dark text-wrap">
+          {{ $r->capacity}}
+        </span>
+      </div>
+      <div class="features mb-3 mt-3">
             <h6 class="mb-1">Features</h6>
-            <span class="badge rounded-pill bg-light text-dark text-wrap">
-              2 Rooms
-            </span>
-            <span class="badge rounded-pill bg-light text-dark text-wrap">
-              1 Bathroom
-            </span>
-            <span class="badge rounded-pill bg-light text-dark text-wrap">
-              1 Balcony
-            </span>
-            <span class="badge rounded-pill bg-light text-dark text-wrap">
-              3 Sofa
-            </span>
-          </div>
-          <div class="Facilities mb-3">
-            <h6 class="mb-1">Facilities</h6>
-            <span class="badge rounded-pill bg-light text-dark text-wrap">
-              Wifi
-            </span>
-            <span class="badge rounded-pill bg-light text-dark text-wrap">
-              Television
-            </span>
-            <span class="badge rounded-pill bg-light text-dark text-wrap">
-              AC
-            </span>
-            <span class="badge rounded-pill bg-light text-dark text-wrap">
-              Room Heater
-            </span>
-          </div>
-          <div class="guests">
-            <h6 class="mb-1">Guests</h6>
-            <span class="badge rounded-pill bg-light text-dark text-wrap">
-              5 Adults
-            </span>
-            <span class="badge rounded-pill bg-light text-dark text-wrap">
-              4 Children
-            </span>
-          </div>
+            @if ($r->capacity <= 5)
+                <span class="badge rounded-pill bg-light text-dark text-wrap">
+                    2 Rooms
+                </span>
+                <span class="badge rounded-pill bg-light text-dark text-wrap">
+                    1 Bathroom
+                </span>
+                <span class="badge rounded-pill bg-light text-dark text-wrap">
+                    1 Balcony
+                </span>
+                <span class="badge rounded-pill bg-light text-dark text-wrap">
+                    2 Sofa
+                </span>
+                 </div>
+                <div class="Facilities mb-3">
+                <h6 class="mb-1">Facilities</h6>
+                <span class="badge rounded-pill bg-light text-dark text-wrap">
+                    Wifi
+                </span>
+                <span class="badge rounded-pill bg-light text-dark text-wrap">
+                    Television
+                </span>
+                <span class="badge rounded-pill bg-light text-dark text-wrap">
+                    AC
+                </span>
+              {{-- <span class="badge rounded-pill bg-light text-dark text-wrap">
+                Room Heater
+              </span> --}}
+              @elseif ($r->capacity <=10)
+                <span class="badge rounded-pill bg-light text-dark text-wrap">
+                    3 Rooms
+                </span>
+                <span class="badge rounded-pill bg-light text-dark text-wrap">
+                    2 Bathroom
+                </span>
+                <span class="badge rounded-pill bg-light text-dark text-wrap">
+                    2 Balcony
+                </span>
+                <span class="badge rounded-pill bg-light text-dark text-wrap">
+                    4 Sofa
+                </span>
+                </div>
+                <div class="Facilities mb-3">
+                <h6 class="mb-1">Facilities</h6>
+                <span class="badge rounded-pill bg-light text-dark text-wrap">
+                    Wifi
+                </span>
+                <span class="badge rounded-pill bg-light text-dark text-wrap">
+                    Television
+                </span>
+                <span class="badge rounded-pill bg-light text-dark text-wrap">
+                    AC
+                </span>
+                <span class="badge rounded-pill bg-light text-dark text-wrap">
+                    Room Heater
+                </span>
+
+                @else
+                <span class="badge rounded-pill bg-light text-dark text-wrap">
+                    4 Rooms
+                </span>
+                <span class="badge rounded-pill bg-light text-dark text-wrap">
+                    2 Bathroom
+                </span>
+                <span class="badge rounded-pill bg-light text-dark text-wrap">
+                    2 Balcony
+                </span>
+                <span class="badge rounded-pill bg-light text-dark text-wrap">
+                    6 Sofa
+                </span>
+                {{-- <span class="badge rounded-pill bg-light text-dark text-wrap">
+                    6 Sofa
+                </span> --}}
+                </div>
+                <div class="Facilities mb-3">
+                <h6 class="mb-1">Facilities</h6>
+                <span class="badge rounded-pill bg-light text-dark text-wrap">
+                    Wifi
+                </span>
+                <span class="badge rounded-pill bg-light text-dark text-wrap">
+                    Television
+                </span>
+                <span class="badge rounded-pill bg-light text-dark text-wrap">
+                    AC
+                </span>
+                <span class="badge rounded-pill bg-light text-dark text-wrap">
+                    Room Heater
+                </span>
+                <span class="badge rounded-pill bg-light text-dark text-wrap">
+                    Smooking Room
+                </span>
+              @endif
+            </div>
+
+
     </div>
     <div class="col-md-2 mt-lg-0 mt-md-0 mt-4 text-center">
-      <h6 class="mb-4"> IDR {{ number_format($r->price) }} </h6>
-      <a href="#" class="btn btn-sm w-100 text-white custom-bg shadow-none mb-2">Book Now</a>
-      <a href="#" class="btn btn-sm w-100 btn-outline-dark shadow-none">More details</a>
+      <h6 class="mb-4 text-success"> IDR {{ number_format($r->price) }} </h6>
+      @if ($request->from)
+      <form action="/order" method="post">
+        @csrf
+        <input type="hidden" name="room" value="{{ $r->id }}">
+        <input type="hidden" name="from" value="{{ $request->from }}">
+        <input type="hidden" name="to" value="{{ $request->to }}">
+            <button class="btn btn-sm w-100 btn-light border border-dark shadow-none mb-2">Book now</button>
+        </form>
+      <form action="/rooms/{{ $r->no }}" method="post">
+    @csrf
+    <input type="hidden" name="no" value="{{ $r->no }}">
+    <input type="hidden" name="from" value="{{ $request->from }}">
+    <input type="hidden" name="to" value="{{ $request->to }}">
+        <button class="btn btn-sm w-100 btn-dark shadow-none">More details</button>
+    </form>
+    @else
+    <a href="/rooms/{{ $r->no }}" class="btn btn-sm w-100 btn-light border border-dark shadow-none mb-2">Book Now</a>
+    <a href="/rooms/{{ $r->no }}" class="btn btn-sm w-100 btn-dark shadow-none">More details</a>
+      @endif
     </div>
   </div>
  </div>
  @endforeach
-
-{{--
- <div class="card mb-4 border-0 shadow">
-  <div class="row g-0 p-3 align-items-center">
-    <div class="col-md-5 mb-lg-0 mb-md-0 mb-3">
-      <img src="/nyoba/images/rooms/1.jpg" class="img-fluid rounded">
-    </div>
-    <div class="col-md-5 px-lg-3 px-md-3 px-0">
-      <h5 class="mb-3">Simple Room Name</h5>
-      <div class="features mb-4">
-            <h6 class="mb-1">Features</h6>
-            <span class="badge rounded-pill bg-light text-dark text-wrap">
-              2 Rooms
-            </span>
-            <span class="badge rounded-pill bg-light text-dark text-wrap">
-              1 Bathroom
-            </span>
-            <span class="badge rounded-pill bg-light text-dark text-wrap">
-              1 Balcony
-            </span>
-            <span class="badge rounded-pill bg-light text-dark text-wrap">
-              3 Sofa
-            </span>
-          </div>
-          <div class="Facilities mb-3">
-            <h6 class="mb-1">Facilities</h6>
-            <span class="badge rounded-pill bg-light text-dark text-wrap">
-              Wifi
-            </span>
-            <span class="badge rounded-pill bg-light text-dark text-wrap">
-              Television
-            </span>
-            <span class="badge rounded-pill bg-light text-dark text-wrap">
-              AC
-            </span>
-            <span class="badge rounded-pill bg-light text-dark text-wrap">
-              Room Heater
-            </span>
-          </div>
-          <div class="guests">
-            <h6 class="mb-1">Guests</h6>
-            <span class="badge rounded-pill bg-light text-dark text-wrap">
-              5 Adults
-            </span>
-            <span class="badge rounded-pill bg-light text-dark text-wrap">
-              4 Children
-            </span>
-          </div>
-    </div>
-    <div class="col-md-2 text-center">
-      <h6 class="mb-4">Ꝛ2000 per night </h6>
-      <a href="#" class="btn btn-sm w-100 text-white custom-bg shadow-none mb-2">Book Now</a>
-      <a href="#" class="btn btn-sm w-100 btn-outline-dark shadow-none">More details</a>
-    </div>
-  </div>
-</div> --}}
-{{--
-<div class="card mb-4 border-0 shadow">
-  <div class="row g-0 p-3 align-items-center">
-    <div class="col-md-5 mb-lg-0 mb-md-0 mb-3">
-      <img src="/nyoba/images/rooms/1.jpg" class="img-fluid rounded">
-    </div>
-    <div class="col-md-5 px-lg-3 px-md-3 px-0">
-      <h5 class="mb-3">Simple Room Name</h5>
-      <div class="features mb-4">
-            <h6 class="mb-1">Features</h6>
-            <span class="badge rounded-pill bg-light text-dark text-wrap">
-              2 Rooms
-            </span>
-            <span class="badge rounded-pill bg-light text-dark text-wrap">
-              1 Bathroom
-            </span>
-            <span class="badge rounded-pill bg-light text-dark text-wrap">
-              1 Balcony
-            </span>
-            <span class="badge rounded-pill bg-light text-dark text-wrap">
-              3 Sofa
-            </span>
-          </div>
-          <div class="Facilities mb-3">
-            <h6 class="mb-1">Facilities</h6>
-            <span class="badge rounded-pill bg-light text-dark text-wrap">
-              Wifi
-            </span>
-            <span class="badge rounded-pill bg-light text-dark text-wrap">
-              Television
-            </span>
-            <span class="badge rounded-pill bg-light text-dark text-wrap">
-              AC
-            </span>
-            <span class="badge rounded-pill bg-light text-dark text-wrap">
-              Room Heater
-            </span>
-          </div>
-          <div class="guests">
-            <h6 class="mb-1">Guests</h6>
-            <span class="badge rounded-pill bg-light text-dark text-wrap">
-              5 Adults
-            </span>
-            <span class="badge rounded-pill bg-light text-dark text-wrap">
-              4 Children
-            </span>
-          </div>
-    </div>
-    <div class="col-md-2 text-center">
-      <h6 class="mb-4">Ꝛ2000 per night </h6>
-      <a href="#" class="btn btn-sm w-100 text-white custom-bg shadow-none mb-2">Book Now</a>
-      <a href="#" class="btn btn-sm w-100 btn-outline-dark shadow-none">More details</a>
-    </div>
-  </div>
-</div> --}}
-
+ <div class="d-flex justify-content-center">
+    {!! $rooms->links() !!}
+</div>
 </div>
 
 
   </div>
 </div>
-
-
+@include('vendor.sweetalert.alert')
 
 @include('frontend.inc.footer')
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>

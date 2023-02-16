@@ -7,6 +7,7 @@ use App\Models\Notifications;
 use App\Models\Room;
 use App\Models\RoomStatus;
 use App\Models\Type;
+use Carbon\Carbon;
 // use Illuminate\Console\View\Components\Alert as ComponentsAlert;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -153,5 +154,29 @@ class RoomController extends Controller
 
 
 
+    public function roomshow(Request $request,$no){
+        $room = Room::where('no' , $no)->first();
+        // dd($request->all());
+        if(Auth()->user()){
+            $customer = Auth()->user()->customer->id;
+        } else {
+        $customer = null;
+        }
+
+        // dd($customer);
+        return view('frontend.room', compact('room', 'customer', 'request'));
+    }
+    public function roomshowpost(Request $request){
+        // dd($request->all());
+        $checkin = Carbon::parse($request->from);
+        $checkout = Carbon::parse($request->to);
+        if($request->customer){
+            $customer = Auth()->user()->customer->id;
+      } else {
+        $customer = null;
+        }
+        $room = Room::where('no', $request->no)->first();
+        return view('frontend.room', compact('room','customer', 'request'));
+    }
 
 }

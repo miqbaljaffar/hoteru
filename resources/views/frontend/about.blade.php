@@ -3,7 +3,7 @@
 <head>
 	<title>Hotel Booking Website - About Us</title>
 	<!-- CSS only -->
-<?php require('inc/links.php'); ?>
+@include('frontend.inc.links')
 <link
   rel="stylesheet"
   href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"
@@ -19,21 +19,55 @@
 </head>
 <body>
 
-<?php require('inc/header.php'); ?>
+    @include('frontend.inc.header')
+
 
 <div class="my-5 px-4">
   <h2 class="fw-bold h-font text-center">ABOUT US</h2>
 
   <div class="h-line bg-dark"></div>
-  <p class="text-center mt-3">
+  {{-- <p class="text-center mt-3">
     Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
     tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
     quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
     consequat.
-  </p>
+  </p> --}}
 </div>
 
-<div class="container">
+
+<div class="container mt-5 mb-5">
+    <div class="row d-flex justify-content-center">
+    <div class="col-lg-3 col-md-6 mb-4 px-4">
+      <div class="bg-white rounded shadow p-4 border-top border-4 text-center box">
+        <img src="/nyoba/images/about/hotel.svg" width="70px">
+        <h4 class="mt-3">{{$r }}+ ROOMS</h4>
+      </div>
+    </div>
+
+    <div class="col-lg-3 col-md-6 mb-4 px-4">
+      <div class="bg-white rounded shadow p-4 border-top border-4 text-center box">
+        <img src="/nyoba/images/about/customers.svg" width="70px">
+        <h4 class="mt-3">{{$c}}+ CUSTOMERS</h4>
+      </div>
+    </div>
+
+    {{-- <div class="col-lg-3 col-md-6 mb-4 px-4">
+        <div class="bg-white rounded shadow p-4 border-top border-4 text-center box">
+            <img src="/nyoba/images/about/rating.svg" width="70px">
+            <h4 class="mt-3">150+ REVIEWS</h4>
+        </div>
+    </div>
+--}}
+    <div class="col-lg-3 col-md-6 mb-4 px-4">
+        <div class="bg-white rounded shadow p-4 border-top border-4 text-center box">
+            <img src="/nyoba/images/about/t.png" width="70px">
+            <h4 class="mt-3">{{ $t }}+ TRANSACTIONS</h4>
+        </div>
+    </div>
+
+</div>
+</div>
+<div class="container mt-5 mb-5">
   <div class="row justify-content-between align-items-center">
     <div class="col-lg-6 col-md-5 mb-4 order-lg-1 order-md-1 order-2">
       <h3 class="mb-3">Lorem Ipsum doler sit</h3>
@@ -45,41 +79,10 @@
       </p>
     </div>
     <div class="col-lg-5 col-md-5 mb-4 order-lg-2 order-md-2 order-1">
-      <img src="images/about/about.jpg" class="w-100">
+      <img src="/nyoba/images/carousel/1.png" class="w-100 d-block">
+      <img src="/nyoba/images/carousel/2.png" class="w-100 d-block">
+      <img src="/nyoba/images/carousel/3.png" class="w-100 d-block">
     </div>
-  </div>
-</div>
-
-<div class="container mt-5">
-  <div class="row">
-    <div class="col-lg-3 col-md-6 mb-4 px-4">
-      <div class="bg-white rounded shadow p-4 border-top border-4 text-center box">
-        <img src="images/about/hotel.svg" width="70px">
-        <h4 class="mt-3">100+ ROOMS</h4>
-      </div>
-    </div>
-
-    <div class="col-lg-3 col-md-6 mb-4 px-4">
-      <div class="bg-white rounded shadow p-4 border-top border-4 text-center box">
-        <img src="images/about/customers.svg" width="70px">
-        <h4 class="mt-3">200+ CUSTOMERS</h4>
-      </div>
-    </div>
-
-    <div class="col-lg-3 col-md-6 mb-4 px-4">
-      <div class="bg-white rounded shadow p-4 border-top border-4 text-center box">
-        <img src="images/about/rating.svg" width="70px">
-        <h4 class="mt-3">150+ REVIEWS</h4>
-      </div>
-    </div>
-
-    <div class="col-lg-3 col-md-6 mb-4 px-4">
-      <div class="bg-white rounded shadow p-4 border-top border-4 text-center box">
-        <img src="images/about/staff.svg" width="70px">
-        <h4 class="mt-3">200+ STAFFS</h4>
-      </div>
-    </div>
-  
   </div>
 </div>
 
@@ -89,41 +92,42 @@
    <div class="swiper mySwiper">
       <div class="swiper-wrapper mb-5">
         <div class="swiper-slide bg-white text-center overflow-hidden rounded">
-          <img src="images/about/about.jpg" class="w-100">
+          <img src="/nyoba/images/about/about.jpg" class="w-100">
           <h5 class="mt-2">Random Name</h5>
         </div>
         <div class="swiper-slide bg-white text-center overflow-hidden rounded">
-          <img src="images/about/about.jpg" class="w-100">
+          <img src="/nyoba/images/about/about.jpg" class="w-100">
           <h5 class="mt-2">Random Name</h5>
         </div>
         <div class="swiper-slide bg-white text-center overflow-hidden rounded">
-          <img src="images/about/about.jpg" class="w-100">
+          <img src="/nyoba/images/about/about.jpg" class="w-100">
           <h5 class="mt-2">Random Name</h5>
         </div>
         <div class="swiper-slide bg-white text-center overflow-hidden rounded">
-          <img src="images/about/about.jpg" class="w-100">
+          <img src="/nyoba/images/about/about.jpg" class="w-100">
           <h5 class="mt-2">Random Name</h5>
         </div>
         <div class="swiper-slide bg-white text-center overflow-hidden rounded">
-          <img src="images/about/about.jpg" class="w-100">
+          <img src="/nyoba/images/about/about.jpg" class="w-100">
           <h5 class="mt-2">Random Name</h5>
         </div>
-        
+
         <div class="swiper-slide bg-white text-center overflow-hidden rounded">
-          <img src="images/about/about.jpg" class="w-100">
+          <img src="/nyoba/images/about/about.jpg" class="w-100">
           <h5 class="mt-2">Random Name</h5>
         </div>
         <div class="swiper-slide bg-white text-center overflow-hidden rounded">
-          <img src="images/about/about.jpg" class="w-100">
+          <img src="/nyoba/images/about/about.jpg" class="w-100">
           <h5 class="mt-2">Random Name</h5>
         </div>
       </div>
       <div class="swiper-pagination"></div>
     </div>
 </div>
+@include('frontend.inc.footer')
+@include('vendor.sweetalert.alert')
 
-<?php require('inc/footer.php'); ?>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
+{{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script> --}}
 
  <!-- Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
