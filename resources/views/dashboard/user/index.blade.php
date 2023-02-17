@@ -7,7 +7,7 @@
                     <div class="container">
                         <div class="col-md-6">
                             <div class="d-sm-flex align-items-center mb-4">
-                                <h1 class="h2 mb-0 text-dark-1000">Room</h1>
+                                <h1 class="h2 mb-0 text-dark-1000">User</h1>
                                 <a href="/dashboard/user/create" class="d-none d-sm-inline-block btn btn-sm btn-outline-dark shadow-sm ms-2"><i class="fas fa-plus"></i></a>
                             </div>
                         </div>

@@ -11,4 +11,6 @@ class PaymentMethod extends Model
     public function Payment(){
         return $this->hasMany(Payment::class);
     }
+
+    protected $guarded = ['id'];
 }

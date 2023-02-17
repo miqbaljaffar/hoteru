@@ -30,7 +30,7 @@
 </div>
 
 <div class="container mb-5">
-    <div class="bg-white rounded shadow p-4">
+    <div style="margin-bottom:140px" class="bg-white rounded shadow p-4">
               <div class="col-lg-12">
                   <div class="row">
           <div class="col-lg-8 col-md-6 mb-5 px-4">
@@ -39,14 +39,14 @@
           <div class="col-lg-4">
               <h5>Address</h5>
               <a href="https://goo.gl/maps/jy8CDHNPpsyBHVHYA" target="_blank" class="d-inline-block text-decoration-none text-dark mb-2">
-                <i class="bi bi-geo-alt-fill"></i> Hotel Kami
+                <i class="bi bi-geo-alt-fill"></i> SMK BINA MANDIRI MULTIMEDIA
               </a>
               <h5 class="mt-4">Call us</h5>
-              <a href="tel: +94768799665" class="d-inline-block mb-2 text-decoration-none text-dark"><i class="bi bi-telephone-fill"></i> +94 768799665</a>
+              <a href="tel: +94768799665" class="d-inline-block mb-2 text-decoration-none text-dark"><i class="bi bi-telephone-fill"></i> +85773674231</a>
               <br>
-              <a href="tel: +94768799665" class="d-inline-block mb-2 text-decoration-none text-dark"><i class="bi bi-telephone-fill"></i> +94 768799665</a>
+              <a href="tel: +94768799665" class="d-inline-block mb-2 text-decoration-none text-dark"><i class="bi bi-telephone-fill"></i> +85773674231</a>
               <h5 class="mt-4">Email</h5>
-              <a href="mailto: dineshslweb@gmail.com" class="d-inline-block mb-2 text-decoration-none text-dark"><i class="bi bi-envelope-fill"></i> dineshslweb@gmail.com</a>
+              <a href="mailto: dineshslweb@gmail.com" class="d-inline-block mb-2 text-decoration-none text-dark"><i class="bi bi-envelope-fill"></i> Anggercakra@gmail.com</a>
 
               <h5 class="mt-4">Follow us</h5>
               <a href="#" class="d-inline-block text-dark fs-5 me-2">

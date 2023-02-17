@@ -33,7 +33,7 @@ class TransactionSeeder extends Seeder
 
         PaymentMethod::create([
             'nama' => 'BCA',
-            'no_rek' => 'asd12asdqwe',
+            'no_rek' => '5221-8420-7788-2024',
         ]);
 
         Transaction::create([
@@ -46,11 +46,11 @@ class TransactionSeeder extends Seeder
 
         Payments::create([
             'c_id' => 1,
-            'payment_method_id' => 1,
-            'invoice' => 'ngasal',
+            'payment_method_id' => 2,
+            'invoice' => 'INV021CJ23KA',
             'transaction_id' => 1,
             'price' => 2000000,
-            'status' => 'down',
+            'status' => 'Down Payment',
             'created_at' => Carbon::createFromDate(2022,01,05),
         ]);
 
@@ -64,11 +64,11 @@ class TransactionSeeder extends Seeder
         ]);
         Payments::create([
             'c_id' => 1,
-            'payment_method_id' => 1,
-            'invoice' => 'ngasal',
+            'payment_method_id' => 2,
+            'invoice' => 'INVB0912AS2',
             'transaction_id' => 2,
             'price' => 2000000,
-            'status' => 'down',
+            'status' => 'Down Payment',
             'created_at' => Carbon::createFromDate(2022,02,01),
         ]);
 
@@ -83,11 +83,11 @@ class TransactionSeeder extends Seeder
 
         Payments::create([
             'c_id' => 1,
-            'payment_method_id' => 1,
-            'invoice' => 'ngasal',
+            'payment_method_id' => 2,
+            'invoice' => 'INV01FAJ412',
             'transaction_id' => 3,
             'price' => 2000000,
-            'status' => 'down',
+            'status' => 'Down Payment',
             'created_at' => Carbon::createFromDate(2022,02,03),
         ]);
 
@@ -102,11 +102,11 @@ class TransactionSeeder extends Seeder
         ]);
         Payments::create([
             'c_id' => 1,
-            'payment_method_id' => 1,
-            'invoice' => 'ngasal',
+            'payment_method_id' => 2,
+            'invoice' => 'INV4KU5UK4',
             'transaction_id' => 4,
             'price' => 2000000,
-            'status' => 'down',
+            'status' => 'Down Payment',
             'created_at' => Carbon::createFromDate(2022,03,04),
         ]);
 
@@ -123,7 +123,7 @@ class TransactionSeeder extends Seeder
             'invoice' => 'ngasal',
             'transaction_id' => 5,
             'price' => 2000000,
-            'status' => 'down',
+            'status' => 'Down Payment',
             'created_at' => Carbon::createFromDate(2022,03,06),
         ]);
 
@@ -140,7 +140,7 @@ class TransactionSeeder extends Seeder
             'invoice' => 'ngasal',
             'transaction_id' => 6,
             'price' => 2000000,
-            'status' => 'down',
+            'status' => 'Down Payment',
             'created_at' => Carbon::createFromDate(2022,04,02),
         ]);
 
@@ -158,7 +158,7 @@ class TransactionSeeder extends Seeder
             'invoice' => 'ngasal',
             'transaction_id' => 7,
             'price' => 2000000,
-            'status' => 'down',
+            'status' => 'Down Payment',
             'created_at' => Carbon::createFromDate(2022,04,04),
         ]);
 
@@ -176,7 +176,7 @@ class TransactionSeeder extends Seeder
             'invoice' => 'ngasal',
             'transaction_id' => 8,
             'price' => 2000000,
-            'status' => 'down',
+            'status' => 'Down Payment',
             'created_at' => Carbon::createFromDate(2022,04,06),
         ]);
 

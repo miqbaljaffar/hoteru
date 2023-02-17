@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -35,7 +36,7 @@ class LoginController extends Controller
             return redirect()->intended('/')->with('success');
         }
         Alert::error('Error', 'Gagal');
-        return redirect('/register');
+        return redirect('/login');
     }
 
     public function store(Request $request){
@@ -44,6 +45,7 @@ class LoginController extends Controller
             'username' => ['required', 'min:3', 'max:255', 'unique:users'],
             'password' => ['min:3', 'max:255','required'],
         ]);
+
         // dd($request->all());
 
         if($request->confirmation_password != $request->password){
@@ -51,8 +53,14 @@ class LoginController extends Controller
         // dd($request->all());
         return redirect('/register');
         }
-        $validated['password'] = bcrypt($validated['password']);
-       User::create($validated);
+        $p = Customer::create([
+            'name' => $request->name
+        ]);
+       User::create([
+        'username'=> $request->username,
+        'c_id'=> $p->id,
+        'password' => bcrypt($request->password)
+       ]);
        $request->session();
        Alert::success('Success', 'Login buru');
        return redirect('/login')->with('success', 'Registration successfull. Please Login');

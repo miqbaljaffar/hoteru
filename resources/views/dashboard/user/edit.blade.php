@@ -18,7 +18,7 @@
                                         <div class="row">
                                                 <div class="col-md-4">
                                                 <label for="name" class="form-label">Name <span style="font-style: italic;">(required)</span></label>
-                                                    <input type="text" class="form-control" id="name" name ='name' required value="{{ $user->name }}" placeholder="ex Jamal Kurniawan">
+                                                    <input type="text" class="form-control" id="name" name='name' required value="{{ $user->Customer->name }}" placeholder="ex Jamal Kurniawan">
                                                 </div>
                                                 <div class="col-md-4">
                                                     <label for="username" class="form-label">Username <span style="font-style: italic;">(required)</span></label>
@@ -42,7 +42,7 @@
                                         <div class="row">
                                             <div class="col-md-5 mt-3">
                                                 <label for="address" class="form-label">Address</label>
-                                                <input type="text" class="form-control" id="address" name ='address'  value="{{ $user->address }}" placeholder="ex Jamal">
+                                                <input type="text" class="form-control" id="address" name ='address'  value="{{ $user->Customer->address }}" placeholder="ex Jamal">
                                             </div>
                                             <div class="col-md-4 mt-3">
                                                 <label for="telp" class="form-label">Telp</label>
@@ -54,24 +54,22 @@
                                         <div class="row">
                                             <div class="col-md-4 mt-3">
                                                 <label for="birthdate" class="form-label">Birthdate</label>
-                                                <input type="date" class="form-control" id="birthdate" name ='birthdate' value="{{ $user->birthdate }}">
+                                                <input type="date" class="form-control" id="birthdate" name ='birthdate' value="{{ $user->Customer->birthdate }}">
                                             </div>
 
                                             <div class="col-md-4 mt-3">
                                                 <label for="jk" class="form-label">Jenis Kelamin </label>
                                                 <select class="form-select" name="jk" id="jk">
-                                                    <option selected value="?">
-                                                        @if ($user->jk == '?')
+                                                    <option>
+                                                        @if ($user->Customer->jk == '?')
                                                             -- Pilih Jenis Kelamin --
-                                                        @elseif ($user->jk == 'P')
+                                                        @elseif ($user->Customer->jk == 'P')
                                                         Perempuan
-                                                        @elseif($user->jk == 'L')
+                                                        @elseif($user->Customer->jk == 'L')
                                                         Laki Laki
                                                         @endif
 
                                                     </option>
-                                                    <option value="L">Pria</option>
-                                                    <option value="P">Wanita</option>
                                                   </select>
                                             </div>
                                         </div>

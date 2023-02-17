@@ -28,12 +28,12 @@
   <h2 class="fw-bold h-font text-center">OUR FACILITIES</h2>
 
   <div class="h-line bg-dark"></div>
-  <p class="text-center mt-3">
+  {{-- <p class="text-center mt-3">
     Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
     tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
     quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
     consequat.
-  </p>
+  </p> --}}
 </div>
 
 <div class="container">
@@ -45,7 +45,7 @@
           {{-- --}}
         </div>
         <div class="d-flex justify-content-center">
-          <h5 class="mt-4">Wifi</h5>  </div>
+          <h5 class="mt-4">Kolam Renang</h5>  </div>
         </div>
     </div>
     <div class="col-lg-4 col-md-6 mb-5 px-4">
@@ -66,7 +66,7 @@
 
         </div>
         <div class="d-flex justify-content-center">
-            <h5 class="mt-4">Wifi</h5>
+            <h5 class="mt-4">Lunch</h5>
         </div>
       </div>
     </div>
@@ -77,7 +77,7 @@
 
         </div>
         <div class="d-flex justify-content-center">
-            <h5 class="mt-4">Wifi</h5>
+            <h5 class="mt-4">Hot Water</h5>
         </div>
       </div>
     </div>
@@ -88,18 +88,18 @@
 
         </div>
         <div class="d-flex justify-content-center">
-            <h5 class="mt-4">Wifi</h5>
+            <h5 class="mt-4">Breakfast</h5>
         </div>
       </div>
     </div>
     <div class="col-lg-4 col-md-6 mb-5 px-4">
       <div class="bg-white rounded shadow p-4 border-top border-4 border-dark pop">
         <div class="d-flex align-items-center mb-2">
-         <img src="/frontend/img/fasilitas/6.jpg"  width="300px" height="200px">
+         <img src="/frontend/img/fasilitas/ball.jpg"  width="300px" height="200px">
 
         </div>
         <div class="d-flex justify-content-center">
-            <h5 class="mt-4">Wifi</h5>
+            <h5 class="mt-4">8 Ball Pool</h5>
         </div>
       </div>
     </div>

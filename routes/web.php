@@ -20,6 +20,8 @@ route::get('/tes', function(){
     return view('p');
 });
 Route::get('/myaccount/edit', [UserController::class, 'cusedit']);
+Route::post('/myaccount/addimage', [UserController::class, 'cusfoto']);
+Route::get('/myaccount/{id}/delete-foto', [UserController::class, 'delfoto']);
 Route::get('/history', [UserController::class, 'history']);
 Route::get('/invoice/{id}', [OrderController::class, 'invoice']);
 Route::get('/', [IndexController::class, 'index'])->name('index');
@@ -33,6 +35,11 @@ Route::get('/myaccount', [UserController::class, 'profile']);
 Route::post('/order/post', [OrderController::class,'order']);
 Route::get('/pesan', [IndexController::class, 'pesan'])->name('pesan');
 Route::get('/bayar/{id}', [OrderController::class, 'pembayaran']);
+Route::post('/bayar', [OrderController::class, 'bayar']);
+
+Route::post('/payments/tolak', [PaymentController::class, 'tolak']);
+Route::post('/payments/confirm', [PaymentController::class, 'confirmation']);
+
 
 Route::get('/rooms/{no}', [RoomController::class, 'roomshow']);
 Route::post('/rooms/{no}', [RoomController::class, 'roomshowpost']);

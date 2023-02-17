@@ -20,6 +20,7 @@ return new class extends Migration
             $table->foreign('c_id')->references('id')->on('customers')->onDelete('cascade');
             $table->string('username')->unique();
             $table->string('telp')->nullable();
+            $table->string('card_number')->nullable();
             $table->string('email')->nullable()->unique();
             $table->string('password');
             $table->boolean('is_admin')->default(false);

@@ -20,9 +20,15 @@
         <div class="col-lg-4">
           <div class="card mb-4">
             <div class="card-body text-center">
-              <img src="/img/default-user.jpg" alt="avatar"
-                class="rounded-circle img-fluid" style="width: 150px;">
-              <h5 class="my-3">{{ $user->Customer->name }}</h5>
+                @if($user->image == null) 
+                    <img src="/img/default-user.jpg" alt="avatar"
+                      class="rounded-circle img-fluid" style="width: 150px;height:150px">
+                 @else
+                <img src="{{asset('storage/' . $user->image)}}" alt="avatar"
+                class="rounded-circle img-fluid" style="width: 150px;height:150px">
+                @endif
+              <h3 class="mt-2">{{ $user->Customer->name }}</h5>
+              <h5 class="">{{ $user->username }}</h5>
               <p class=" mb-1">@if ($user->Customer->job)
                 {{ $user->Customer->job}}
                 @else
@@ -37,7 +43,7 @@
                 @if ($user->image == null)
                 <a href="/myaccount/edit" class="btn btn-primary me-2">Tambah Foto</a>
                 @else
-                <a href="/myaccount/edit" class="btn btn-primary me-2">Hapus Foto</a>
+                <a href="/myaccount/edit" class="btn btn-primary me-2">Edit Foto</a>
                 @endif
 
               </div>
@@ -93,7 +99,15 @@
                 </div>
               </div>
               <hr>
-
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Birthday</p>
+                </div>
+                <div class="col-sm-9">
+                    <input type="date" class="form-control " name="birthdate" id="birthdate" value="{{ $user->Customer->birthdate }}">
+                </div>
+              </div>
+              <hr class="mt-3">
               <div class="row">
                 <div class="col-sm-3">
                   <p class="mb-0">Address</p>
@@ -140,6 +154,7 @@
                     </div>
                     {{-- @endif value="{{ $user->Customer->name }}"> --}}
               </div>
+              </div>
               <hr class="mt-2 mb-4">
 
               <div class="row">
@@ -151,14 +166,53 @@
                 </div>
               </div>
               <hr class="mt-3">
+
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Card Number</p>
+                </div>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control " name="card_number" id="card_number" value="{{ $user->card_number }}">
+                </div>
+              </div>
+
+              <div class="d-flex justify-content-end mt-4">
+                      <button type="submit" class="btn btn-primary"> Update! </button>
+                  </form>
+              </div>
+              <hr class="mt-3">
+
+              <div class="row mt-4">
+                <div class="d-flex">
+                    <form action="/myaccount/{{ $user->id }}/update" method="post">
+                    @csrf
+
+                    <h5>CHANGE PASSWORD</h5>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-sm-3">
+                      <p class="mb-0">New Password</p>
+                    </div>
+                    <div class="col-sm-9">
+                        <input type="password" class="form-control " required name="newpassword" id="newpassword" >
+                    </div>
+                  </div>
+                  <div class="row mt-3">
+                    <div class="col-sm-3">
+                      <p class="mb-0">Confirmation Password</p>
+                    </div>
+                    <div class="col-sm-9">
+                        <input type="password" class="form-control " required name="confirmation" id="confirmation" >
+                    </div>
+                  </div>
+                  <div class="d-flex justify-content-end mt-4">
+                    <button type="submit" class="btn btn-danger"> Change Password! </button>
+                </form>
+            </div>
+              </div>
             </div>
           </div>
           <div class="container mb-4 ">
-            <div class="d-flex justify-content-end">
-
-                    <button type="submit" class="btn btn-primary"> Update! </button>
-                </form>
-            </div>
           </div>
 
         </div>

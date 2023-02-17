@@ -7,6 +7,7 @@ use App\Models\Payment;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class UserController extends Controller
@@ -85,7 +86,18 @@ class UserController extends Controller
         // dd($request->all())
         $p = User::findOrFail($id);
         $c = Customer::findOrFail($p->Customer->id);
-        // dd($c);
+        // dd($c);\
+        if($request->newpassword){
+            // dd($request->all());
+            $request->validate(['newpassword' => 'min:3']);
+            if($request->confirmation != $request->newpassword){
+                Alert::error('Error', 'Gagal');
+                // dd($request->all());
+                return redirect('/myaccount');
+                }
+                $p->update(['password' => bcrypt($request->newpassword)]);
+                // dd($p);
+        } else{
         $request->validate([
             'name' => 'nullable',
             'username' => 'nullable',
@@ -94,19 +106,26 @@ class UserController extends Controller
             'address' => 'nullable',
             'jk' => 'nullable',
             'job' => 'nullable',
+            'birthdate' => 'nullable',
+            'card_number' => 'nullable',
+
         ]);
         $c->update([
             'name' => $request->name,
             'address' => $request->address,
             'jk' => $request->jk,
             'job' => $request->job,
+            'birthdate'=>$request->birthdate
         ]);
 
         $p->update([
             'username' => $request->username,
             'email' => $request->email,
             'telp' => $request->telp,
+            'card_number' => $request->card_number,
+
         ]);
+    }
         Alert::success('Success', 'Data berhasil di edit');
         return redirect('/myaccount');
     }
@@ -136,14 +155,44 @@ class UserController extends Controller
         $user = Auth()->user();
         return view('user.edit',compact('user'));
     }
-
+    public function cusfoto(Request $request){
+        $validatedData = $request->validate([
+            'image' => 'required|image|file',
+        ]);
+        if($request->file('image')){
+            $image = $validatedData['image'] = $request->file('image')->store('user-images', 'public');
+        }
+        $user = User::findOrFail($request->id);
+        $user->update([
+            'image' => $image
+        ]);
+        // dd($image);
+        Alert::success('Success', 'Image Successfully Update!');
+        return back();
+    }
+    public function delfoto($id){
+        $user = User::findOrFail($id);
+        $image = $user->image;
+        $path  = storage_path(). "/app/public/" . $image;
+        //    dd($path);
+           if (File::exists($path)) {
+              //File::delete($image_path);
+            unlink($path);
+        }
+        $user->update([
+            'image' => null
+        ]);
+        Alert::success('Success', 'Image Successfully Deleted!');
+        return back();
+    }
     public function history(){
         if(auth()->guest()){
             return redirect('/login');
         }
         $id = Auth()->user()->Customer->id;
         $user = Auth()->user();
-        $his = Payment::where('c_id', $id)->orderby('id', 'desc')->paginate(10);
+        $not = [1];
+        $his = Payment::where('c_id', $id)->orderby('id', 'desc')->wherenotin('payment_method_id', $not)->paginate(10);
         return view('user.history', compact('his', 'user'));
     }
 }

@@ -156,7 +156,7 @@ class RoomController extends Controller
 
     public function roomshow(Request $request,$no){
         $room = Room::where('no' , $no)->first();
-        // dd($request->all());
+        // dd(Auth()->user()->customer);
         if(Auth()->user()){
             $customer = Auth()->user()->customer->id;
         } else {

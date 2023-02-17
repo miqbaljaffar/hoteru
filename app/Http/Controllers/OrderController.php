@@ -55,9 +55,10 @@ class OrderController extends Controller
         }
         event(new RefreshDashboardEvent("Someone reserved a room"));
         $inv = Payment::where('c_id', $request->customer)->orderby('id', 'desc')->first();
+        // dd($inv);
         // dd($inv->id);
         Alert::success('Thanks!', 'Room '. $rooms->no .' Has been reservated'. ' Please Pay now!');
-        return redirect('/invoice/' . $inv->id);
+        return redirect('/bayar/' . $inv->Transaction->id);
     }
 
     public function invoice($id){
@@ -69,10 +70,35 @@ class OrderController extends Controller
         return view('frontend.invoice', compact('p'));
     }
 
-    public function pembayaran(Request $request,$id){
-        return view('frontend.bayar');
+    public function pembayaran($id){
+
+        $t = Transaction::findOrFail($id);
+        // dd($t->Payments[0]->Methode->nama);
+        $pmi = [1];
+        $pay = $t->Payments->wherenotin('payment_method_id', $pmi)->first();
+        if($pay->status == 'Pending' and $pay->image != null){
+            return back();
+        }
+        // dd($pay->id);
+        $price = Room::where('id', $t->Room->id)->first()->price;
+        return view('frontend.bayar',compact('t', 'price', 'pay'));
     }
 
+    public function bayar(Request $request){
+        $validatedData = $request->validate([
+            'image' => 'required|image|file',
+        ]);
+        if($request->file('image')){
+            $image = $validatedData['image'] = $request->file('image')->store('bukti-images', 'public');
+        }
+        $payment = Payment::findOrFail($request->id);
+        // dd($request->all());
+        $payment->update([
+            'image' => $image,
+        ]);
+        Alert::success('Pembayaran Berhasil', 'Tunggu Konfirmasi!');
+        return redirect('/history');
+    }
 
 
 
@@ -100,7 +126,7 @@ class OrderController extends Controller
             'transaction_id' => $transaction->id,
             'price' => $price,
             'status' => $status,
-            'payment_method_id' => 1,
+            'payment_method_id' => $request->payment_method_id,
             'invoice' =>  '0'. $request->customer. 'INV'. $count . Str::random(4)
         ]);
 

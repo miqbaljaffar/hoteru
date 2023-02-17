@@ -16,10 +16,10 @@ return new class extends Migration
         Schema::create('customers', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->longText('address');
-            $table->enum('jk', ['L','P']);
-            $table->string('job');
-            $table->date('birthdate');
+            $table->longText('address')->nullable();
+            $table->enum('jk', ['L','P'])->nullable();
+            $table->string('job')->nullable();
+            $table->date('birthdate')->nullable();
             $table->timestamps();
         });
     }

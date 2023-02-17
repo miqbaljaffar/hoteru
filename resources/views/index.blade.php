@@ -107,8 +107,8 @@
                 @endif
              <div class="card-body">
                <h5 class="card-title">{{ $r->type->name }} #{{ $r->no }}</h5>
-               <h6 class="mb-4 text-success">IDR {{ number_format($r->price) }} </h6>
-               <div class="guests mb-4">
+               <h6 class="mb-3 text-success">IDR {{ number_format($r->price) }} </h6>
+               <div class="guests mb-2">
                 <h6 class="mb-1">Guests</h6>
                 <span class="badge rounded-pill bg-light text-dark text-wrap">
                    {{$r->capacity}}
@@ -206,13 +206,13 @@
                             Room Heater
                         </span>
                         <span class="badge rounded-pill bg-light text-dark text-wrap">
-                            Smooking Room
+                            Smooke Room
                         </span>
                       @endif
 
                </div>
                    <div class="d-flex justify-content-evenly mb-2">
-                       <a href="#" class="btn btn-sm border border-black btn- shadow-none">Book Now</a>
+                       <a href="/rooms/{{ $r->no }}" class="btn btn-sm border border-black btn- shadow-none">Book Now</a>
                        <a href="/rooms/{{ $r->no }}" class="btn btn-sm btn-outline-dark shadow-none">More details</a>
                    </div>
              </div>

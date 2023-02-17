@@ -13,7 +13,7 @@
 <body>
 
 @include('frontend.inc.header')
-<div class="container " style="margin-top:30px">
+<div class="container " style="margin-top:30px;margin-bottom:310px">
     <div class="row">
         {{-- <table class="table"> --}}
             <div class="col-lg-1"></div>
@@ -52,13 +52,13 @@
 
                       </div>
                       <div class="features mb-3 mt-3">
-                        <h6 class="mb-1">Status @if ($h->status == 'Pending')
+                        <h6 class="mb-1">Status @if ($h->status == 'Pending' and $h->image != null)
+                            <span style="color:red">{{ $h->status }}</span> | Sudah Bayar
+                            @elseif ($h->status == 'Pending' and $h->image == null)
                             <span style="color:red">{{ $h->status }}</span>
                             @else
                             <span style="color:green">{{ $h->status }}</span>
-
                         @endif</h6>
-
                             <h6 class="mb-1">Total IDR {{ number_format($h->price) }}</h6>
 
                             </div>
@@ -67,8 +67,13 @@
                     </div>
                     <div class="col-md-3 mt-lg-0 mt-md-0 mt-4 text-center">
                       <h6 class="mb-4 text-dark"> {{$h->created_at}} </h6>
-                        @if ($h->status == 'Pending')
+                        @if ($h->status == 'Pending' and $h->image == null)
                         <a class="btn btn-sm w-100 btn-danger shadow-none mb-2" href="/bayar/{{ $h->id }}">Bayar Sekarang</a>
+                        <a class="btn btn-sm w-100 btn-secondary shadow-none" style="pointer-events: none;
+                        cursor: default;" href="/invoice/{{ $h->id }}">Lihat Invoice</a>
+                        @elseif ($h->status == 'Pending' and $h->image != null)
+                        <a class="btn btn-sm w-100 btn-danger shadow-none mb-2" href="/bayar/{{ $h->id }}" style="pointer-events: none;
+                            cursor: default;">Tunggu Konfirmasi</a>
                         <a class="btn btn-sm w-100 btn-secondary shadow-none" style="pointer-events: none;
                         cursor: default;" href="/invoice/{{ $h->id }}">Lihat Invoice</a>
                         @else

@@ -50,13 +50,19 @@
 </div>
 
 <div class="container-fluid">
-    <img src="/nyoba/images/carousel/1.png" class="w-100 d-block" style="margin-bottom:30px" />
-    <div class="container border">
+    @if ($room->image)
+    <img src="{{asset('room/' . $user->image)}}}}" class="w-100 d-block"style="margin-bottom:30px;max-height:400px"/>
+    @else
+    <img src="/nyoba/images/carousel/1.png" class="w-100 d-block" style="margin-bottom:30px;max-height:400px" />
+    {{-- <img src="/img/default-room.png" class="w-100 d-block" style="margin-bottom:30px;max-height:400px" /> --}}
+
+    @endif
+    <div class="container">
         <div class="d-flex justify-content-between">
-            <div class="col-md-6 border">
+            <div class="col-md-6">
                 <h2 class="fw-bold h-font" >{{ $room->type->name }} {{ $room->no }}</h2>
             </div>
-            <div class="col-md-6 border text-end">
+            <div class="col-md-6 text-end">
                 <h4 class="h-font" ><span class="text-success "> IDR {{ number_format($room->price)}}</span><span class="h6">/night
                         </span></h4>
                         <h6 style="font-size:10px">(max. {{ $room->capacity}} Orang) </h6>
@@ -127,20 +133,16 @@
             <hr class="border border-secondary opacity-25 w-100">
         </div>
 
-        <div class="col-md-12 mb-5 border">
+        <div class="col-md-12 mb-5">
             <div class="d-flex justify-content-between mt-4 mb-3">
                 <h4> Lokasi </h4>
                 <a href=""> Lihat MAPS</a>
             </div>
             <div class="d-flex">
-                <div class="col-md-7">
+                <div class="col-md-12">
                     <iframe class="w-100 rounded mt-3" height="320px" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3964.9060098636683!2d106.96529953804958!3d-6.406108795364871!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e6995d20156e367%3A0x5b7cd089c3c57813!2sSMK%20Bina%20Mandiri%20Multimedia%20Cileungsi!5e0!3m2!1sid!2sid!4v1675517872782!5m2!1sid!2sid"allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="map"></iframe>
                 </div>
-                <div class="col-md-5 ms-2">
-                    <div class="container">
-                        <p class="mt-3 h4">Hotel SMK Bina Mandiri Multimedia</p>
-                    </div>
-                </div>
+
             </div>
         </div>
 

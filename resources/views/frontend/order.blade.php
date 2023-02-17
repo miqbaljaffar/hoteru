@@ -17,8 +17,10 @@
     <div class="col-md-8 mt-2">
         <div class="card shadow border-0">
             <div class="container">
-                <div class="d-flex">
-                    <h4 class="mb-3">Detail Pemesanan</h4>
+                <div class="card-body">
+                    <div class="d-flex">
+                        <h4 class="mb-3">Detail Pemesanan</h4>
+                    </div>
                 </div>
                     <div class="col-md-12" style="margin-bottom:30px">
                         <div class="card-body p-4">
