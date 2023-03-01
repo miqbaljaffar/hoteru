@@ -62,7 +62,7 @@ class LoginController extends Controller
         'password' => bcrypt($request->password)
        ]);
        $request->session();
-       Alert::success('Success', 'Login buru');
+       Alert::success('Success', 'Ayo Login!');
        return redirect('/login')->with('success', 'Registration successfull. Please Login');
     }
 

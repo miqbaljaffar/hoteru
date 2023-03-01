@@ -52,7 +52,7 @@
                                 <i class="fas fa-bell fa-fw"></i>
                                 <!-- Counter - Alerts -->
                                 @php
-                                   $notif = App\Models\Notifications::limit(5)->where('status', 'unread')->orderby('id', 'asc')->get();
+                                   $notif = App\Models\Notifications::limit(5)->where('status', 'unread')->orderby('created_at', 'desc')->get();
                                    $countnotif = App\Models\Notifications::where('status', 'unread')->count();
                                  @endphp
                                 <span class="badge badge-danger badge-counter">{{ $countnotif }}</span>

@@ -27,9 +27,17 @@ class OrderController extends Controller
         return redirect('/login');
     }
         $stayfrom = Carbon::parse($request->from);
+        // dd($request);
         $stayuntil = Carbon::parse($request->to);
         $room = Room::where('id', $request->room)->first();
-        $customer = Customer::where('id', $request->customer)->first();
+        if($request->customer == null){
+            $auth = Auth()->user()->Customer->id;
+            // dd($auth);
+            $customer = Customer::where('id', $auth)->first();
+            // dd($customer);
+        } else{
+            $customer = Customer::where('id', $request->customer)->first();
+        }
         $price = $room->price;
         $dayDifference = $stayfrom->diffindays($stayuntil);
         $total = $price * $dayDifference;
@@ -41,7 +49,10 @@ class OrderController extends Controller
     public function order(Request $request){
         $rooms = Room::where('id', $request->room)->first();
         $customers = Customer::where('id', $request->customer)->first();
-
+        if($customers->nik == null){
+            Alert::error('Kesalahan Data', 'Mohon Isi Data NIK');
+            return redirect('myaccount');
+        }
         $transaction = $this->storetransaction($request, $rooms);
         $status = 'Pending';
         $payment = $this->storepayment($request, $transaction, $status);

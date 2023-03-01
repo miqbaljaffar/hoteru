@@ -1,6 +1,6 @@
 @extends('dashboard.layout.main')
 @section('title')
-<title>Dashboard</title>
+<title>Dashboard | Input Kapasitas</title>
 @endsection
 @section('content')
                     <!-- Page Heading -->
@@ -73,7 +73,7 @@
                                             </span>
                                         </td>
                                         <td>
-                                            {{ $customer->name }}
+                                            {{ $customer->name ?? '-'}}
                                         </td>
                                     </tr>
                                     <tr>
@@ -82,7 +82,7 @@
                                                 <i class="fas fa-user-md"></i>
                                             </span>
                                         </td>
-                                        <td>{{ $customer->job }}</td>
+                                        <td>{{ $customer->job ?? '-'}}</td>
                                     </tr>
                                     <tr>
                                         <td style="text-align: center; ">
@@ -117,7 +117,15 @@
                                             </span>
                                         </td>
                                         <td>
-                                            {{ $customer->address }}
+                                            {{ $customer->address ?? '-' }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:center"><i class="far fa-id-card"></i></td>
+                                        <td>
+                                            <span>
+                                                {{ $customer->nik ?? '-' }}
+                                            </span>
                                         </td>
                                     </tr>
                                 </table>

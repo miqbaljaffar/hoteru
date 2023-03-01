@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg bg-light px-lg-3 py-lg-2 shadow-sm sticky-top">
   <div class="container-fluid">
-    <a class="navbar-brand me-5 fw-bold fs-3 h-font" href="/">HOTEL</a>
+    <a class="navbar-brand me-5 fw-bold fs-3 h-font" href="/"><img src="/img/logo.png" style="max-width:90px"> <span class="h5 fw-bold fs-3"> DONQUIXOTE </span> </a>
     <a class="navbar-toggler shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </a>
@@ -43,11 +43,15 @@
                     <i class="bi bi-cart-check-fill" style="font-size:15px" aria-hidden="true"></i>&nbsp; history</a></li>
             </ul>
           </div>
-        <form action="/logout" method="post">
-        @csrf
-            <button type="submit" class="btn btn-light border shadow-none" style="margin-top:7px">Logout</button>
-        </form>
+        {{-- <form action="/logout" method="post">
+        @csrf --}}
+        <a href="#" data-bs-toggle="modal" data-bs-target="#logoutModal" class="btn btn-light border shadow-none" style="margin-top:7px">Logout</a>
+            {{-- <button type="submit" class="btn btn-light border shadow-none" style="margin-top:7px">Logout</button> --}}
+        {{-- </form> --}}
         @endif
+
+
+        {{-- logout --}}
       </div>
     </div>
   </div>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Hotel Booking Website</title>
+	<title>DONQUIXOTE | History Pemesanans</title>
 	<!-- CSS only -->
 @include('frontend.inc.links')
 
@@ -13,6 +13,7 @@
 <body>
 
 @include('frontend.inc.header')
+@include('frontend.inc.logout')
 <div class="container " style="margin-top:30px;margin-bottom:310px">
     <div class="row">
         {{-- <table class="table"> --}}
@@ -20,8 +21,16 @@
             <div class="col-lg-3">
                 <div class="card mb-4">
                   <div class="card-body text-center">
-                    <img src="/img/default-user.jpg" alt="avatar"
-                      class="rounded-circle img-fluid" style="width: 150px;">
+
+                    @if ($user->image)
+                        <img alt="avatar"  class="rounded-circle img-fluid" style="width: 150px;"src="{{asset('storage/' . $user->image)}}">
+                        @else
+                        <img alt="avatar"  class="rounded-circle img-fluid" style="width: 150px;"src="/img/default-user.jpg">
+                    @endif
+
+
+
+
                       <div class="card-body">
                             <div class="d-flex justify-content-center">
                             <table>

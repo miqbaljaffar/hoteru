@@ -80,7 +80,7 @@ class TransactionController extends Controller
         }
 
     public function viewperson(Request $request){
-         // dd($request);
+        //  dd($request->all());
          if ($request['name']) {
              $request->validate([
                  'name' => 'required',
@@ -91,6 +91,7 @@ class TransactionController extends Controller
                  'birthdate' => 'nullable',
                  'jk' => 'nullable',
                  'job' => 'nullable',
+                 'nik' => 'nullable',
                  'address' => 'nullable'
              ]);
              $cus = Customer::create([
@@ -98,7 +99,8 @@ class TransactionController extends Controller
                  'address' => $request->address,
                  'jk' => $request->jk,
                  'job' => $request->job,
-                 'birthdate' => $request->birthdate
+                 'birthdate' => $request->birthdate,
+                 'nik' => $request->nik
              ]);
              User::create([
                  'c_id' => $cus->id,
@@ -114,7 +116,7 @@ class TransactionController extends Controller
          else {
              $c_id = $request->customer;
             }
-            Alert::success('success', 'success');
+            // Alert::success('Success', 'success');
             $uri = Route::currentroutename();
             $customer = Customer::where('id', $c_id)->first();
             // dd($customer);

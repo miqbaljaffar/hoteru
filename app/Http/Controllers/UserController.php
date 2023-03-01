@@ -44,23 +44,35 @@ class UserController extends Controller
             'telp' => 'nullable|numeric',
             'birthdate' => 'nullable',
             'jk' => 'required',
+            'job' => 'nullable',
             'address' => 'nullable',
-            'image' => 'nullable'
+            'image' => 'nullable',
+            'is_admin' => 'nullable'
         ]);
         // dd($request);
         if($request->file('image')){
             $image = $validatedData['image'] = $request->file('image')->store('user-images');
+        } else{
+            $image = null;
         }
-        User::create([
+        // dd($request->all());
+      $cus =  Customer::create([
             'name' => $request->name,
+            'address' => $request->address,
+            'jk' => $request->jk,
+            'job' => $request->job,
+            'birthdate' => $request->birthdate,
+
+        ]);
+        // dd($cus->id);
+        User::create([
+            'c_id' => $cus->id,
             'username' => $request->username,
             'email' => $request->email,
             'password' => bcrypt($request->password),
             'telp' => $request->telp,
-            'birthdate' => $request->birthdate,
-            'jk' => $request->jk,
-            'address' => $request->address,
-            // 'image' => $image
+            'image' => $image,
+            'is_admin' => $request->is_admin
         ]);
 
         Alert::success('Success', 'Data berhasil di buat');
@@ -75,29 +87,11 @@ class UserController extends Controller
         }
         return view('dashboard.user.edit', compact('user'));
     }
-    public function update(Request $request, $id){
+    public function update(Request $request){
         // dd($request->all());
-        $p = User::findOrFail($id);
-        $p->update($request->all());
-        Alert::success('Success', 'Data berhasil di edit');
-        return redirect('/dashboard/user');
-    }
-    public function updatefront(Request $request, $id){
-        // dd($request->all())
-        $p = User::findOrFail($id);
+        $p = User::findOrFail($request->id);
         $c = Customer::findOrFail($p->Customer->id);
-        // dd($c);\
-        if($request->newpassword){
-            // dd($request->all());
-            $request->validate(['newpassword' => 'min:3']);
-            if($request->confirmation != $request->newpassword){
-                Alert::error('Error', 'Gagal');
-                // dd($request->all());
-                return redirect('/myaccount');
-                }
-                $p->update(['password' => bcrypt($request->newpassword)]);
-                // dd($p);
-        } else{
+        // dd($c);
         $request->validate([
             'name' => 'nullable',
             'username' => 'nullable',
@@ -116,6 +110,54 @@ class UserController extends Controller
             'jk' => $request->jk,
             'job' => $request->job,
             'birthdate'=>$request->birthdate
+        ]);
+
+        $p->update([
+            'username' => $request->username,
+            'email' => $request->email,
+            'telp' => $request->telp,
+            'card_number' => $request->card_number,
+
+        ]);
+
+        Alert::success('Success', 'Data berhasil di edit');
+        return redirect('/dashboard/user');
+    }
+    public function updatefront(Request $request, $id){
+        // dd($request->all())
+        $p = User::findOrFail($id);
+        $c = Customer::findOrFail($p->Customer->id);
+        // dd($c);\
+        if($request->newpassword){
+            // dd($request->all());
+            $request->validate(['newpassword' => 'min:3']);
+            if($request->confirmation != $request->newpassword){
+                Alert::error('Gagal', 'Password Tidak Sama!');
+                // dd($request->all());
+                return redirect('/myaccount');
+                }
+                $p->update(['password' => bcrypt($request->newpassword)]);
+                // dd($p);
+        } else{
+        $request->validate([
+            'name' => 'nullable',
+            'username' => 'nullable',
+            'email' => 'nullable',
+            'telp' => 'nullable',
+            'address' => 'nullable',
+            'jk' => 'nullable',
+            'job' => 'nullable',
+            'birthdate' => 'nullable',
+            'card_number' => 'nullable',
+            'nik' => 'nullable'
+        ]);
+        $c->update([
+            'name' => $request->name,
+            'address' => $request->address,
+            'jk' => $request->jk,
+            'job' => $request->job,
+            'birthdate'=>$request->birthdate,
+            'nik' => $request->nik,
         ]);
 
         $p->update([

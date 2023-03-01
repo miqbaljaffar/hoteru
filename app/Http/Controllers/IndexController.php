@@ -45,10 +45,21 @@ class IndexController extends Controller
                 $roomsCount = $this->countUnocuppiedroom($request, $occupiedRoomId);
             }
         } else {
-            $rooms = Room::paginate(10);
+            $rooms = Room::paginate(20);
             $roomsCount = Room::count();
             // dd($roomsCount);
         }
+        // foreach($rooms as $r){
+            // if($r->images->count() > 1){
+
+                // dd($rooms);
+            // }
+        // }
+        // if($rooms[0]->images){
+        //     // $images = images[0]->image;
+        //     dd($rooms[0]->images[0]->image);
+        // }
+        // dd($rooms[0]->images[0]->image);
         return view('frontend.rooms', compact('rooms', 'roomsCount', 'request'));
     }
 

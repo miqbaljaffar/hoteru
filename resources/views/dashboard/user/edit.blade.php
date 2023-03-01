@@ -1,6 +1,6 @@
 @extends('dashboard.layout.main')
 @section('title')
-<title>Dashboard</title>
+<title>Dashboard | Edit User {{ $user->username }}</title>
 @endsection
 @section('content')
 <div class="row">
@@ -13,27 +13,33 @@
                                   <h4>Edit user {{ $user->username }} #{{ $user->id }}</h4>
                                 </div>
                                 <div class="card-body">
-                                    <form action="/dashboard/user/post" method="POST"  enctype="multipart/form-data">
+                                    <form action="/dashboard/user/update" method="POST"  enctype="multipart/form-data">
                                         @csrf
                                         <div class="row">
                                                 <div class="col-md-4">
+                                                    <input type="hidden" name="id" value="{{ $user->id }}">
                                                 <label for="name" class="form-label">Name <span style="font-style: italic;">(required)</span></label>
-                                                    <input type="text" class="form-control" id="name" name='name' required value="{{ $user->Customer->name }}" placeholder="ex Jamal Kurniawan">
+                                                    <input type="text" class="form-control" id="name" name='name' value="{{ $user->Customer->name }}" placeholder="ex Jamal Kurniawan">
                                                 </div>
                                                 <div class="col-md-4">
                                                     <label for="username" class="form-label">Username <span style="font-style: italic;">(required)</span></label>
-                                                    <input type="text" class="form-control" id="username" name="username" required value="{{ $user->username }}" placeholder="ex Jamal30">
+                                                    <input type="text" class="form-control" id="username" name="username" value="{{ $user->username }}" placeholder="ex Jamal30">
                                                 </div>
                                                 <div class="col-md-4">
                                                     <label for="email" class="form-label">Email <span style="font-style: italic;">(required)</span></label>
-                                                    <input type="text" class="form-control" id="email" name ='email' required value="{{ $user->email }}" placeholder="ex Jamal@gmail.com">
+                                                    <input type="text" class="form-control" id="email" name ='email' value="{{ $user->email }}" placeholder="ex Jamal@gmail.com">
                                                 </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6 mt-3">
                                                 <label for="password" class="form-label">Password <span style="font-style: italic;">(required)</span></label>
-                                                <input type="text" class="form-control" id="password" name ='password' required value="{{ $user->password }}" placeholder="***********">
+                                                <input type="password" class="form-control" id="password" name ='password' value="{{ $user->password }}" placeholder="***********">
                                           </div>
+
+                                          <div class="col-md-6 mt-3">
+                                            <label for="nik" class="form-label">Nik <span style="font-style: italic;">(required)</span></label>
+                                            <input type="text" class="form-control" id="nik" name ='nik' value="{{ $user->Customer->nik }}">
+                                      </div>
                                             {{-- <div class="col-md-6 mt-3">
                                                 <label for="password" class="form-label">Password <span style="font-style: italic;">(required)</span></label>
                                                 <input type="password" class="form-control" id="password" name ='password'  placeholder="******as*****">
@@ -60,16 +66,22 @@
                                             <div class="col-md-4 mt-3">
                                                 <label for="jk" class="form-label">Jenis Kelamin </label>
                                                 <select class="form-select" name="jk" id="jk">
-                                                    <option>
+                                                    {{-- <option> --}}
                                                         @if ($user->Customer->jk == '?')
-                                                            -- Pilih Jenis Kelamin --
+                                                        <option selected value="?"> Pilih Jenis Kelamin </option>
+                                                        <option value="L">Pria</option>
+                                                        <option value="P">Wanita</option>
                                                         @elseif ($user->Customer->jk == 'P')
-                                                        Perempuan
+                                                        <option  value="?"> Pilih Jenis Kelamin </option>
+                                                        <option value="L">Pria</option>
+                                                        <option selected value="P">Wanita</option>
                                                         @elseif($user->Customer->jk == 'L')
-                                                        Laki Laki
+                                                        <option  value="?"> Pilih Jenis Kelamin </option>
+                                                        <option selected value="L">Pria</option>
+                                                        <option  value="P">Wanita</option>
                                                         @endif
 
-                                                    </option>
+                                                    {{-- </option> --}}
                                                   </select>
                                             </div>
                                         </div>

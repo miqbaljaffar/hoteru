@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Hotel Booking Website</title>
+	<title>DONQUIXOTE | Edit Fotor Profile</title>
 	<!-- CSS only -->
 @include('frontend.inc.links')
 
@@ -12,7 +12,7 @@
 </head>
 <body>
 
-@include('frontend.inc.header')
+@include('frontend.inc.header') @include('frontend.inc.logout')
 
 <section style="background-color: #eee;margin-bottom:65px">
     <div class="container py-5">

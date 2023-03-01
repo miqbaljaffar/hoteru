@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Hotel Booking Website</title>
+	<title>DONQUIXOTE | Order NOW</title>
 	<!-- CSS only -->
 @include('frontend.inc.links')
 
@@ -10,7 +10,7 @@
 </head>
 <body>
 
-@include('frontend.inc.header')
+@include('frontend.inc.header') @include('frontend.inc.logout')
 
 <div class="container" style="margin-top:50px;margin-bottom:100px">
     <div class="row justify-content-md-center">
@@ -100,6 +100,8 @@
                                             </div>
                                         </div>
 
+
+
                                         <div class="row mb-3">
                                             <label for="paymentmethod" class="col-sm-2 col-form-label">Payment Method</label>
                                             <div class="col-sm-10">
@@ -112,6 +114,17 @@
                             @endforeach
                            </select>
 
+                                            </div>
+                                        </div>
+                                        <hr>
+
+                                        <div class="row mb-4" style="margin-bottom:50px">
+                                            <label for="NIK" class="col-sm-2 col-form-label">NIK</label>
+                                            <div class="col-sm-10">
+                             <input type="text" class="form-control" id="NIK"
+                                 placeholder="col-form-label"
+                                 value="{{ $customer->nik ?? '-' }} "
+                                 disabled>
                                             </div>
                                         </div>
                                         <button type="submit" class="btn btn-primary float-end">Pay DownPayment</button>
@@ -129,8 +142,8 @@
 <div class="col-md-4 mt-2">
     <div class="card shadow border-0">
         @if ($customer->User)
-        @if ($customer->User->ImageUser)
-            <img class="myImages" src="{{asset('storage/' . $customer->User->ImageUser->image)}}"
+        @if ($customer->User->image)
+            <img class="myImages" src="{{asset('storage/' . $customer->User->image)}}"
             style="object-fit: cover; height:250px; border-top-right-radius: 0.5rem; border-top-left-radius: 0.5rem;">
             @else
             <img class="myImages" src="/img/default-user.jpg" style="object-fit: cover; height:250px; border-top-right-radius: 0.5rem; border-top-left-radius: 0.5rem;">
@@ -176,7 +189,7 @@
                         <span>
                             @if ($customer->User)
                             @if($customer->User->telp)
-                            0{{ $customer->User->telp }}
+                            {{ $customer->User->telp }}
                             @else
                             -
                             @endif
@@ -196,6 +209,16 @@
                         {{ $customer->address }}
                     </td>
                 </tr>
+                {{-- <tr>
+                    <td style="text-align: center; ">
+                        <span>
+                           NIK
+                        </span>
+                    </td>
+                    <td>
+                        {{ $customer->nik }}
+                    </td>
+                </tr> --}}
             </table>
         </div>
         </div>

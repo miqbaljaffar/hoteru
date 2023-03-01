@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Hotel Booking Website</title>
+	<title>DONQUIXOTE | Form Bukti Pembayaran</title>
 	<!-- CSS only -->
 @include('frontend.inc.links')
 
@@ -13,6 +13,7 @@
 <body>
 
 @include('frontend.inc.header')
+@include('frontend.inc.logout')
 <div class="container " style="margin-top:30px;margin-bottom:21%">
     <div class="d-flex justify-content-between">
         {{-- <table class="table"> --}}

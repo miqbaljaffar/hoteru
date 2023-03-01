@@ -1,6 +1,6 @@
 @extends('dashboard.layout.main')
 @section('title')
-<title>Dashboard</title>
+<title>Dashboard | Status</title>
 @endsection
 @section('content')
                     <!-- Page Heading -->
@@ -56,12 +56,12 @@
                                                     <td>{{ $r->code }}</td>
                                                     <td>{{ $r->info }}</td>
                                                     <td>
-                                                        <a href="status/{{ $r->id }}/edit" class="btn btn-outline-success"><i class="fas fa-pen"></i></a>
-                                                        {{-- <a href="status/delete" class="btn btn-outline-danger"></i> </a> --}}
-                                                        <a class="btn btn-outline-danger" href="#" data-toggle="modal" data-target="#deletemodal">
+                                                        <a href="status/{{ $r->id }}/edit" class="btn btn-success"><i class="fas fa-pen"></i></a>
+                                                        {{-- <a href="status/delete" class="btn btn-danger"></i> </a> --}}
+                                                        <a class="btn btn-danger" href="#" data-toggle="modal" data-target="#deletemodal">
                                                             <i class="fas fa-trash"></i>
                                                         </a>
-                                                        <a href="#" class="btn btn-outline-warning"><i class="fas fa-eye"></i></i></i> </a>
+
                                                     </td>
                                                 </tr>
                                                 <div class="modal fade" id="deletemodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"

@@ -1,6 +1,6 @@
 @extends('dashboard.layout.main')
 @section('title')
-<title>Dashboard</title>
+<title>Dashboard | Create Identity</title>
 @endsection
 @section('content')
                     <!-- Page Heading -->
@@ -40,13 +40,17 @@
                                                     </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-md-6 mt-3">
+                                                <div class="col-md-4 mt-3">
                                                     <label for="password" class="form-label">Password <span style="font-style: italic;">(required)</span></label>
                                                     <input type="password" class="form-control" id="password" name ='password' required placeholder="***********">
                                                 </div>
                                                 <div class="col-md-4 mt-3">
                                                     <label for="telp" class="form-label">Telp <span style="font-style: italic;">(required)</span> </label>
                                                     <input type="text" class="form-control" id="telp" name ='telp' required placeholder="ex 0123123123">
+                                                </div>
+                                                <div class="col-md-4 mt-3">
+                                                    <label for="nik" class="form-label">NIK <span style="font-style: italic;">(required)</span> </label>
+                                                    <input type="text" class="form-control" id="nik" name ='nik' required placeholder="ex 32012023123123">
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -65,19 +69,17 @@
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-md-6 mt-3">
+                                                <div class="col-md-4 mt-3">
                                                     <label for="job" class="form-label">Job </label>
                                                   <input type="text" name="job" id="job" class="form-control">
                                                 </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-7 mt-3">
+                                                <div class="col-md-8 mt-3">
                                                     <label for="address" class="form-label">Address</label>
                                                     {{-- <input type="text" class="form-control" id="address" name ='address'  placeholder="ex Jamal"> --}}
                                                     <textarea name="address" id="address" class="form-control" cols="50" rows="2"></textarea>
                                                 </div>
-
                                             </div>
+
 
                                             <button class="btn btn-dark mt-4" type="submit"> SUBMIT </button>
                                         </form>

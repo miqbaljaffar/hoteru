@@ -23,6 +23,7 @@ class PaymentController extends Controller
         }
         $pay = Payment::with('Customer', 'Transaction')->orderBy('id','desc')->get()->where('status', 'Down Payment');
         $pay1 = Payment::with('Customer', 'Transaction')->orderBy('id','desc')->get()->where('status', 'Pending');
+        // dd($pay1);
         return view('dashboard.payment.index', compact('pay','pay1'));
     }
     public function debt($id){
@@ -53,10 +54,11 @@ class PaymentController extends Controller
             'c_id' => $transaction->Customer->id,
             'transaction_id' => $transaction->id,
             'price' => $price,
+            'payment_method_id' => 1,
             'invoice' => '0'. $request->customer. 'INV'. $count . Str::random(4),
             'status' => "Down Payment"
         ]);
-        Alert::success('success', 'p');
+        Alert::success('Success', 'Pembayaran Berhasil');
         return redirect('/dashboard/order');
 
     }
@@ -83,7 +85,7 @@ class PaymentController extends Controller
     public function confirmation(Request $request){
         $pay = Payment::findOrFail($request->id);
         $pay->update([
-            'Status' => 'Down Payment'
+            'status' => 'Down Payment'
         ]);
         Alert::success('Success', 'Payment Berhasil Di terima');
         return redirect('/dashboard/order/history-pay');
@@ -102,7 +104,7 @@ class PaymentController extends Controller
         ]);
         $transaction = Transaction::findOrFail($pay->Transaction->id);
         $transaction->delete();
-        Alert::success('Success', 'Payment Berhasil Di tolak');
+        Alert::success('Success', 'Payment Telah Di tolak');
         return redirect('/dashboard/order/history-pay');
     }
 

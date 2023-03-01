@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Hotel Booking Website</title>
+	<title>DONQUIXOTE | Kamar {{ $room->no }}</title>
 	<!-- CSS only -->
 @include('frontend.inc.links')
 
@@ -13,6 +13,7 @@
 <body>
 
 @include('frontend.inc.header')
+@include('frontend.inc.logout')
 
 <div class="modal fade" id="checkin" tabindex="-1" aria-labelledby="checkinLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -50,8 +51,8 @@
 </div>
 
 <div class="container-fluid">
-    @if ($room->image)
-    <img src="{{asset('room/' . $user->image)}}}}" class="w-100 d-block"style="margin-bottom:30px;max-height:400px"/>
+    @if ($room->images->count() > 0)
+    <img src="{{asset('storage/' . $room->images[0]->image)}}" class="w-100 d-block"style="margin-bottom:30px;max-height:400px"/>
     @else
     <img src="/nyoba/images/carousel/1.png" class="w-100 d-block" style="margin-bottom:30px;max-height:400px" />
     {{-- <img src="/img/default-room.png" class="w-100 d-block" style="margin-bottom:30px;max-height:400px" /> --}}
@@ -106,7 +107,8 @@
                     <h5>Prosedur Check-in</h5>
                 </div>
                 <div class="col-md-8">
-                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Exercitationem, possimus natus magni adipisci sequi, quos iure hic dolor ducimus quisquam facere molestiae eum quia inventore dignissimos incidunt. Ratione officia est enim culpa totam? Vitae, cumque soluta quas repellat assumenda asperiores provident necessitatibus fuga aut, corporis inventore ab reprehenderit magni eius!</p>
+                    <p>Check in Jam 14:00</p>
+                    <p>Check out Jam 12:00</p>
                 </div>
             </div>
             <div class="d-flex">
@@ -115,24 +117,35 @@
                 </div>
                 <div class="col-md-8">
                     <h6 class="mt-4">Merokok</h6>
-                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Exercitationem, possimus natus magni adipisci sequi, quos iure hic dolor ducimus quisquam facere molestiae eum quia inventore dignissimos incidunt. Ratione officia est enim culpa totam? Vitae, cumque soluta quas repellat assumenda asperiores provident necessitatibus fuga aut, corporis inventore ab reprehenderit magni eius!</p>
-                    <h6 class="mt-4">Merokok</h6>
-                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Exercitationem, possimus natus magni adipisci sequi, quos iure hic dolor ducimus quisquam facere molestiae eum quia inventore dignissimos incidunt. Ratione officia est enim culpa totam? Vitae, cumque soluta quas repellat assumenda asperiores provident necessitatibus fuga aut, corporis inventore ab reprehenderit magni eius!</p>
+                    <p>Dilarang Merokok di ruang tidur, Namun telah disediakan Ruangan Khusus Merokok untuk perokok aktif.</p>
+                    <h6 class="mt-4">Denda</h6>
+                    <p>Checkout tidak boleh melebihi Jam yang telah di tentukan, Jika Pelanggan Checkout melewati Jam yang di tentukan akan dikenakan Charge sebanyak Rp 100.000/Jam</p>
+                </div>
+            </div>
+
+            <div class="d-flex">
+                <div class="col-md-4 mt-4">
+                    <h5>Fasilitas</h5>
+                </div>
+                <div class="col-md-8">
+                    <h6 class="mt-4">Breakfast</h6>
+                    <p>Kami memiliki tambahan pelayanan gratis breakfast kepada para pelanggan, Dengan beberapa menu, pelanggan dapat memilih menu breakfast.</p>
+
+                    <h6 class="mt-4">Free Wifi</h6>
+                    <p>Fasilitas terbaik yang ada pada Hotel kami, Kami menyediakan Fasilitas free wifi dengan kecepatan yang tinggi.</p>
+
+                    <h6 class="mt-4">Swimming Pool</h6>
+                    <p>Fasilitas kolam renang yang Luas, Bersih dan Memiliki kedalaman untuk semua umur</p>
+
+                    <h6 class="mt-4">Lunch</h6>
+                    <p>Kami memiliki tambahan pelayanan gratis Lunch kepada para pelanggan, Dengan beberapa menu, pelanggan dapat memilih menu Lunch.</p>
+
                 </div>
             </div>
         </div>
         <div class="col-md-12">
             <hr class="border border-secondary opacity-25 w-100">
         </div>
-
-        <div class="col-md-12">
-            <h4 class="mt-5 mb-4"> Fasilitas </h4>
-
-        </div>
-        <div class="col-md-12">
-            <hr class="border border-secondary opacity-25 w-100">
-        </div>
-
         <div class="col-md-12 mb-5">
             <div class="d-flex justify-content-between mt-4 mb-3">
                 <h4> Lokasi </h4>

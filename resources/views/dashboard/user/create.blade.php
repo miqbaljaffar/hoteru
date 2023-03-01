@@ -1,6 +1,6 @@
 @extends('dashboard.layout.main')
 @section('title')
-<title>Dashboard</title>
+<title>Dashboard | Buat User</title>
 @endsection
 @section('content')
 <div class="row">
@@ -30,33 +30,38 @@
                                                 </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-6 mt-3">
+                                            <div class="col-md-4 mt-3">
                                                 <label for="password" class="form-label">Password <span style="font-style: italic;">(required)</span></label>
                                                 <input type="password" class="form-control" id="password" name ='password' required placeholder="***********">
                                           </div>
+                                          <div class="col-md-4 mt-3">
+                                            <label for="job" class="form-label">Job </label>
+                                            <input type="name" class="form-control" id="job" name ='job'  placeholder="ex IT SOFTWARE">
+                                        </div>
+                                          <div class="col-md-4 mt-3">
+                                                <label for="birthdate" class="form-label">Birthdate </label>
+                                                <input type="date" class="form-control" id="birthdate" name ='birthdate'  placeholder="ex Jamal">
+                                            </div>
+
                                             {{-- <div class="col-md-6 mt-3">
                                                 <label for="password" class="form-label">Password <span style="font-style: italic;">(required)</span></label>
                                                 <input type="password" class="form-control" id="password" name ='password'  placeholder="******as*****">
                                           </div> --}}
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-5 mt-3">
+                                            <div class="col-md-7 mt-3">
                                                 <label for="address" class="form-label">Address</label>
-                                                <input type="text" class="form-control" id="address" name ='address'  placeholder="ex Jamal">
+                                                <input type="text" class="form-control" id="address" name ='address'  placeholder="ex Grand kahuripan">
                                             </div>
 
-                                            <div class="col-md-4 mt-3">
+                                            <div class="col-md-5 mt-3">
                                                 <label for="telp" class="form-label">Telp </label>
-                                                <input type="text" class="form-control" id="telp" name ='telp' placeholder="ex Jamal">
+                                                <input type="number" class="form-control" id="telp" name ='telp' placeholder="ex 0998213">
                                             </div>
 
 
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-4 mt-3">
-                                                <label for="birthdate" class="form-label">Birthdate </label>
-                                                <input type="date" class="form-control" id="birthdate" name ='birthdate'  placeholder="ex Jamal">
-                                            </div>
 
                                             <div class="col-md-4 mt-3">
                                                 <label for="jk" class="form-label">Jenis kelamin </label>
@@ -66,8 +71,6 @@
                                                     <option value="P">Wanita</option>
                                                   </select>
                                             </div>
-                                        </div>
-                                        <div class="row">
                                             <div class="col-md-5 mt-3">
                                                 <label for="is_admin" class="form-label">Is admin<span style="font-style: italic;">(required)</span></label>
                                                 <select class="form-select" name="is_admin" id="is_admin">
@@ -76,6 +79,7 @@
                                                   </select>
                                             </div>
                                         </div>
+                                 
 
                                          <div class="row">
                                              <div class="col-md-10">

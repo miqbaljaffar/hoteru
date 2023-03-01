@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Hotel Booking Website - About Us</title>
+	<title>DONQUIXOTE | About</title>
 	<!-- CSS only -->
 @include('frontend.inc.links')
 <link
@@ -20,22 +20,9 @@
 <body>
 
     @include('frontend.inc.header')
+    @include('frontend.inc.logout')
 
-
-<div class="my-5 px-4">
-  <h2 class="fw-bold h-font text-center">ABOUT US</h2>
-
-  <div class="h-line bg-dark"></div>
-  {{-- <p class="text-center mt-3">
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-    consequat.
-  </p> --}}
-</div>
-
-
-<div class="container mt-5 mb-5">
+<div class="container mt-5 mb-5" style="margin-bottom:100px">
     <div class="row d-flex justify-content-center">
     <div class="col-lg-3 col-md-6 mb-4 px-4">
       <div class="bg-white rounded shadow p-4 border-top border-4 text-center box">
@@ -50,14 +37,6 @@
         <h4 class="mt-3">{{$c}}+ CUSTOMERS</h4>
       </div>
     </div>
-
-    {{-- <div class="col-lg-3 col-md-6 mb-4 px-4">
-        <div class="bg-white rounded shadow p-4 border-top border-4 text-center box">
-            <img src="/nyoba/images/about/rating.svg" width="70px">
-            <h4 class="mt-3">150+ REVIEWS</h4>
-        </div>
-    </div>
---}}
     <div class="col-lg-3 col-md-6 mb-4 px-4">
         <div class="bg-white rounded shadow p-4 border-top border-4 text-center box">
             <img src="/nyoba/images/about/t.png" width="70px">
@@ -67,26 +46,27 @@
 
 </div>
 </div>
-<div class="container mt-5 mb-5">
-  <div class="row justify-content-between align-items-center">
-    <div class="col-lg-6 col-md-5 mb-4 order-lg-1 order-md-1 order-2">
-      <h3 class="mb-3">Lorem Ipsum doler sit</h3>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-        consequat.
-      </p>
-    </div>
-    <div class="col-lg-5 col-md-5 mb-4 order-lg-2 order-md-2 order-1">
-      <img src="/nyoba/images/carousel/1.png" class="w-100 d-block">
-      <img src="/nyoba/images/carousel/2.png" class="w-100 d-block">
-      <img src="/nyoba/images/carousel/3.png" class="w-100 d-block">
+
+
+<div class="container mt-5 mb-5" style="margin-bottom:100px">
+    <div class="row justify-content-between align-items-center">
+      <div class="col-lg-6 col-md-5 mb-4 order-lg-1 order-md-1 order-2">
+        <h3 class="mb-3">About us</h3>
+        <p>
+          Perusahaan Donquixote telah berdiri sejak tahun 2022, Dimulai dari satu bangunan hotel yang tidak terlalu besar dan hanya menyewakan beberapa kamar.
+          Namun kini Perusahaan Donquixote telah mempunyai Kamar lebih dari 20 Kamar. Fasilitas yang ada di Perusahaan Donquixote diantara lain adalah Kolam renang pribadi, Ruangan Merokok, Gratis Wifi, Sarapan, dan Makan Siang.
+        </p>
+      </div>
+      <div class="col-lg-5 col-md-5 mb-4 order-lg-2 order-md-2 order-1">
+        <img src="/nyoba/images/carousel/1.png" class="w-100 d-block">
+        <img src="/nyoba/images/carousel/2.png" class="w-100 d-block">
+        <img src="/nyoba/images/carousel/3.png" class="w-100 d-block">
+      </div>
     </div>
   </div>
-</div>
 
-<h3 class="my-5 fw-bold h-font text-center">MANAGEMENT TEAM</h3>
+
+{{-- <h3 class="my-5 fw-bold h-font text-center">MANAGEMENT TEAM</h3>
 
 <div class="container px-4">
    <div class="swiper mySwiper">
@@ -123,7 +103,7 @@
       </div>
       <div class="swiper-pagination"></div>
     </div>
-</div>
+</div> --}}
 @include('frontend.inc.footer')
 @include('vendor.sweetalert.alert')
 

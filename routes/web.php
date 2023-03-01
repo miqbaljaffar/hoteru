@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 // Route::get('/', function () {
 //     return view('index');
-// });q22222222222222222222222222222222
+// });
 route::get('/tes', function(){
     return view('p');
 });
@@ -76,14 +76,14 @@ Route::get('/dashboard/data/type/create', [TypeController::class, 'create']);
 Route::get('/dashboard/data/type/{id}/edit', [TypeController::class, 'edit']);
 Route::post('/dashboard/data/type/post', [TypeController::class, 'post']);
 Route::post('/dashboard/data/type/{id}/update', [TypeController::class, 'update']);
-Route::any('/dashboard/data/type/{id}/delete', [TypeController::class, 'delete']);
+Route::post('/dashboard/data/type/delete', [TypeController::class, 'delete']);
 
 Route::get('/dashboard/user', [UserController::class, 'index']);
 Route::get('/dashboard/user/create', [UserController::class, 'create']);
 Route::get('/dashboard/user/{user:username}/edit', [UserController::class, 'edit']);
 // Route::get('/dashboard/user/{user:username}/show', [UserController::class, 'p']);
 Route::post('/dashboard/user/post', [UserController::class, 'post']);
-Route::post('/dashboard/user/{id}/update', [UserController::class, 'update']);
+Route::post('/dashboard/user/update', [UserController::class, 'update']);
 Route::post('/myaccount/{id}/update', [UserController::class, 'updatefront']);
 Route::any('/dashboard/user/{id}/delete', [UserController::class, 'delete']);
 

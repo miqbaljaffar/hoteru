@@ -15,17 +15,6 @@ class ImageRoomSeeder extends Seeder
      */
     public function run()
     {
-        ImageRoom::create([
-            'room_id' => 1,
-            'image' => 'Beach',
-        ]);
-        ImageRoom::create([
-            'room_id' => '1',
-            'image' => 'Beach',
-        ]);
-        ImageRoom::create([
-            'room_id' => 1,
-            'image' => 'Beach',
-        ]);
+       
     }
 }

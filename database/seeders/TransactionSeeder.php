@@ -35,6 +35,22 @@ class TransactionSeeder extends Seeder
             'nama' => 'BCA',
             'no_rek' => '5221-8420-7788-2024',
         ]);
+        PaymentMethod::create([
+            'nama' => 'BRI',
+            'no_rek' => '7632-01-007520-53-0',
+        ]);
+        PaymentMethod::create([
+            'nama' => 'BNI',
+            'no_rek' => '099-5653-265',
+        ]);
+        PaymentMethod::create([
+            'nama' => 'BTN',
+            'no_rek' => '00461-01-50-0029320-0',
+        ]);
+         PaymentMethod::create([
+            'nama' => 'Mandiri',
+            'no_rek' => '113-00-1522616-4',
+        ]);
 
         Transaction::create([
             'c_id' => 1,

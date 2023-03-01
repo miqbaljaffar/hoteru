@@ -1,6 +1,6 @@
 @extends('dashboard.layout.main')
 @section('title')
-<title>Dashboard</title>
+<title>Dashboard | User</title>
 @endsection
 @section('content')
                     <!-- Page Heading -->
@@ -37,13 +37,14 @@
                                             <thead class="table-secondary">
                                                 <tr>
                                                     <th width="5%">#</th>
-                                                    <th width="5%">Id</th>
+                                                    {{-- <th width="5%">Id</th> --}}
                                                     <th width="5%">Name</th>
                                                     <th>Username</th>
                                                     <th>Telp</th>
                                                     <th>Birthdate</th>
                                                     <th>Jk</th>
                                                     <th>Email</th>
+                                                    <th>Nik</th>
                                                     <th>Address</th>
                                                     <th>Action</th>
                                                 </tr>
@@ -54,60 +55,43 @@
                                                 @endphp
                                                 @foreach ($user as $u)
                                                 <tr>
-                                                    <td>{{ $loop->iteration }}</td>
+                                                    {{-- <td>{{ $loop->iteration }}</td> --}}
                                                     <td>{{ $u->id }}</td>
-                                                    <td>{{ $u->customer->name }}</td>
-                                                    <td>{{ $u->username }}</td>
-                                                    <td>{{ $u->telp }}</td>
-                                                    <td>{{ $u->customer->birthdate }}</td>
-                                                    <td>{{ $u->customer->jk }}</td>
-                                                    <td>{{ $u->email }}</td>
-                                                    <td>{{ $u->customer->address }}</td>
+                                                    <td>{{ $u->Customer->name ?? '-' }}</td>
+                                                    <td>{{ $u->username ?? '-' }}</td>
+                                                    <td>{{ $u->telp ?? '-' }}</td>
+                                                    <td>{{ $u->Customer->birthdate ?? '-' }}</td>
+                                                    <td>{{ $u->Customer->jk ?? '-'}}</td>
+                                                    <td>{{ $u->email ?? '-' }}</td>
+                                                    <td>{{ $u->Customer->nik ?? '-'}}</td>
+                                                    <td>{{ $u->Customer->address ?? '-' }}</td>
                                                     <td>
-                                                        <a href="/dashboard/user/{{ $u->username }}/edit" class="btn btn-outline-success"><i class="fas fa-pen"></i></a>
-                                                        <a class="btn btn-outline-danger me-1" href="#" data-toggle="modal" data-target="#deletemodal">
-                                                            <i class="fas fa-trash"></i>
-                                                        </a>
+                                                        <div class="d-flex">
+                                                            <a href="/dashboard/user/{{ $u->username }}/edit" class="btn btn-success"><i class="fas fa-pen"></i></a>
+                                                            <a class="btn btn-danger me-1 ms-1" href="/dashboard/user/{{$u->id}}/delete" >
+                                                                <i class="fas fa-trash"></i>
+                                                            </a>
 
-                                                        <a href="user/{{$u->no}}" class="btn btn-outline-warning"><i class="fas fa-eye"></i></i></i> </a>
+
+                                                        </div>
 
                                                     </td>
                                                 </tr>
 
-                                                <div class="modal fade" id="deletemodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                                                aria-hidden="true">
-                                                <div class="modal-dialog" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">Are you sure to delete this data?</h5>
-                                                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                                                <span aria-hidden="true">×</span>
-                                                            </button>
-                                                        </div>
-                                                        <div class="modal-body">Select "Delete" below if you are ready to delete.</div>
-                                                        <div class="modal-footer">
-                                                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                                                            <form action="/dashboard/data/user/{{ $u->id }}/delete" method="post">
-                                                                @csrf
-                                                                <button  class="btn btn-danger me-1" type="submit">Delete</button>
-                                                            </form>
-                                                            {{-- <a class="btn btn-primary" href="/logout">Logout</a> --}}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                </div>
+
                                                 @endforeach
                                             </tbody>
                                             <tfoot class="table-secondary">
                                                 <tr>
                                                     <th width="5%">#</th>
-                                                    <th width="5%">Id</th>
+                                                    {{-- <th width="5%">Id</th> --}}
                                                     <th width="5%">Name</th>
                                                     <th>Username</th>
                                                     <th>Telp</th>
                                                     <th>Birthdate</th>
                                                     <th>Jk</th>
                                                     <th>Email</th>
+                                                    <th>Nik</th>
                                                     <th>Address</th>
                                                     <th>Action</th>
                                                 </tr>

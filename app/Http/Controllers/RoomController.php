@@ -135,7 +135,7 @@ class RoomController extends Controller
             'room_id' => $request->room_id,
             'image' => $image
         ]);
-        Alert::success('succes', 'p');
+        Alert::success('Success', 'Foto Telah Ditambahkan');
         return back();
     }
 
@@ -148,7 +148,7 @@ class RoomController extends Controller
         unlink($path);
     }
         $image->delete();
-        Alert::success('success', 'Success gambar berhasil di hapus');
+        Alert::success('Success', 'Success gambar berhasil di hapus');
         return back();
     }
 
@@ -163,7 +163,6 @@ class RoomController extends Controller
         $customer = null;
         }
 
-        // dd($customer);
         return view('frontend.room', compact('room', 'customer', 'request'));
     }
     public function roomshowpost(Request $request){
@@ -172,7 +171,7 @@ class RoomController extends Controller
         $checkout = Carbon::parse($request->to);
         if($request->customer){
             $customer = Auth()->user()->customer->id;
-      } else {
+        } else {
         $customer = null;
         }
         $room = Room::where('no', $request->no)->first();

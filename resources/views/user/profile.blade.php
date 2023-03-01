@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Hotel Booking Website</title>
+	<title>DONQUIXOTE | Profile Edit</title>
 	<!-- CSS only -->
 @include('frontend.inc.links')
 
@@ -13,14 +13,14 @@
 <body>
 
 @include('frontend.inc.header')
-
+@include('frontend.inc.logout')
 <section style="background-color: #eee;margin-bottom:65px">
     <div class="container py-5">
       <div class="row">
         <div class="col-lg-4">
           <div class="card mb-4">
             <div class="card-body text-center">
-                @if($user->image == null) 
+                @if($user->image == null)
                     <img src="/img/default-user.jpg" alt="avatar"
                       class="rounded-circle img-fluid" style="width: 150px;height:150px">
                  @else
@@ -58,7 +58,7 @@
             <div class="card-body">
               <div class="row">
                 <div class="col-sm-3">
-                  <p class="mb-0">Name</p>
+                  <p class="mb-0">Name <span style="color:red">*</span> </p>
                 </div>
                 <div class="col-sm-9">
                     <input type="text" class="form-control  mb-0" name="name" id="name" value="{{ $user->Customer->name }}">
@@ -71,10 +71,10 @@
               <hr>
               <div class="row">
                 <div class="col-sm-3">
-                  <p class="mb-0">Username</p>
+                  <p class="mb-0">Username <span style="color:red">*</span></p>
                 </div>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control  mb-0" name="username" id="username" value="{{ $user->username }}">
+                    <input type="text" class="form-control  mb-0" name="username" required id="username" value="{{ $user->username }}">
                 </div>
               </div>
               <hr>
@@ -82,17 +82,28 @@
 
               <div class="row">
                 <div class="col-sm-3">
-                  <p class="mb-0">Email</p>
+                  <p class="mb-0">Email <span style="color:red">*</span></p>
                 </div>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control  mb-0" name="email" id="email" value="{{ $user->email }}">
+                    <input type="text" class="form-control  mb-0" name="email" required id="email" value="{{ $user->email }}">
                 </div>
               </div>
+
+              <hr class="mt-3">
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">NIK <span style="color:red">*</span></p>
+                </div>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control " name="nik" id="nik" required value="{{ $user->Customer->nik }}">
+                </div>
+              </div>
+
               <hr>
 
               <div class="row">
                 <div class="col-sm-3">
-                  <p class="mb-0">Phone</p>
+                  <p class="mb-0">Phone <span style="color:red">*</span></p>
                 </div>
                 <div class="col-sm-9">
                     <input type="text" class="form-control  mb-0" name="telp" id="telp" value="{{ $user->telp }}">
@@ -169,12 +180,14 @@
 
               <div class="row">
                 <div class="col-sm-3">
-                  <p class="mb-0">Card Number</p>
+                  <p class="mb-0">Card Number </p>
                 </div>
                 <div class="col-sm-9">
                     <input type="text" class="form-control " name="card_number" id="card_number" value="{{ $user->card_number }}">
                 </div>
               </div>
+
+
 
               <div class="d-flex justify-content-end mt-4">
                       <button type="submit" class="btn btn-primary"> Update! </button>

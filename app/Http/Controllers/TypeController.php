@@ -11,8 +11,6 @@ class TypeController extends Controller
 {
 
     public function index(){
-        $type = Type::get();
-        $p = $type->count();
         // dd($p);
         if(auth()->guest()){
             return redirect('/login');
@@ -20,6 +18,9 @@ class TypeController extends Controller
         if(auth()->user()->is_admin == 0){
             abort(404);
         }
+        $type = Type::orderBy('id', 'desc')->get();
+        $p = $type->count();
+        // dd($type);
         return view('dashboard.type.index', compact('p','type'));
     }
 
@@ -69,9 +70,10 @@ class TypeController extends Controller
         return redirect('/dashboard/data/type');
     }
 
-    public function delete($id){
-        $p = Type::findOrFail($id);
-        // dd($id);
+    public function delete(Request $request){
+        // $p = Type::findOrFail($request->id);
+        $p = Type::where('id', $request->id)->first();
+        // dd($request->id);
         $p->delete();
         Alert::success('Success', 'Data berhasil dihapus');
         return back();

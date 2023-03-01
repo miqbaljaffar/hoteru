@@ -7,6 +7,7 @@ use App\Models\Payment;
 use App\Models\Transaction;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Notifications\Notification;
 use RealRashid\SweetAlert\Facades\Alert;
 use Termwind\Components\Raw;
 
@@ -20,7 +21,7 @@ class DashboardController extends Controller
             abort(404);
         }
 
-        $p = Payment::get();
+        $p = Payment::where('status', 'Down Payment')->get();
         $hasil = 0;
         foreach($p as $pp){
             $hasil += $pp->price;
@@ -32,30 +33,36 @@ class DashboardController extends Controller
         $chart = $p->groupby(function($chart){
             return Carbon::parse($chart->created_at)->format('M');
         });
-
+        // dd($chart->count());
         $months = [];
         $count = [];
+        $qty = [];
+        $pp =[];
         foreach($chart as $month => $value){
             $months[] = $month;
             $total = 0;
             foreach($value as $pay){
                 $total += $pay->price;
             }
+
+            $qty[] = $value->count();
             $count[$month] = $total;
         }
-        // dd($count);
         $now = Carbon::now()->format('M');
         $monthcount = $count[$now];
-
         $n = Carbon::now()->format('m');
         $beforenow = $n - 1 - 1;
+        $tran = Transaction::where('status', 'Reservation')->count();
         $tomonth = Carbon::parse($beforenow)->format('M');
         $countbefore = $count[$tomonth];
+        $persen = $monthcount / $countbefore * 100;
 
-        $persen = $monthcount / $countbefore * 10;
-        // dd($persen);
-
-        return view('dashboard.index', compact('alltime', 'count', 'monthcount', 'months', 'persen'));
+        if($persen > 100){
+            $kiri = 100 / $persen * 100;
+            $kanan = ($persen - 100) / $persen * 100;
+            // dd($kanan);
+        }
+        return view('dashboard.index', compact('tran','kiri', 'kanan','qty','alltime','months', 'count', 'monthcount', 'months', 'persen'));
     }
     public function notifiable(Request $request){
         // dd($request);
@@ -77,7 +84,7 @@ class DashboardController extends Controller
             $n->read_at = Carbon::now();
             $n->save();
         }
-        Alert::success('success', 'sucess');
+        Alert::success('Success', 'Notif Telah Terbaca!');
         return redirect('/dashboard/order');
     }
 }

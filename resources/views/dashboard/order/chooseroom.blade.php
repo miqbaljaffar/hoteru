@@ -1,6 +1,6 @@
 @extends('dashboard.layout.main')
 @section('title')
-<title>Dashboard</title>
+<title>Dashboard | Chooseroom</title>
 @endsection
 @section('content')
 <!-- Page Heading -->
@@ -174,6 +174,14 @@
                             </td>
                             <td>
                                 {{ $customer->address }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:center"><i class="far fa-id-card"></i></td>
+                            <td>
+                                <span>
+                                    {{ $customer->nik ?? '-' }}
+                                </span>
                             </td>
                         </tr>
                     </table>

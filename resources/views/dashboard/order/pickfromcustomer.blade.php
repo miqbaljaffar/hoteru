@@ -1,6 +1,6 @@
 @extends('dashboard.layout.main')
 @section('title')
-<title>Dashboard</title>
+<title>Dashboard | Pick From Customer</title>
 @endsection
 @section('content')
                     <!-- Page Heading -->
@@ -117,6 +117,15 @@
                                                                             <td>
                                                                                 <span>
                                                                                     {{ $customer->birthdate }}
+                                                                                </span>
+                                                                            </td>
+                                                                        </tr>
+
+                                                                        <tr>
+                                                                            <td><i class="far fa-id-card"></i></td>
+                                                                            <td>
+                                                                                <span>
+                                                                                    {{ $customer->nik ?? '-' }}
                                                                                 </span>
                                                                             </td>
                                                                         </tr>

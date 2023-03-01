@@ -17,9 +17,10 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->longText('address')->nullable();
-            $table->enum('jk', ['L','P'])->nullable();
+            $table->enum('jk', ['?','L','P'])->default('?')->nullable();
             $table->string('job')->nullable();
             $table->date('birthdate')->nullable();
+            $table->string('nik')->nullable();
             $table->timestamps();
         });
     }

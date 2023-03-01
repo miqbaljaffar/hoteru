@@ -1,6 +1,6 @@
 @extends('dashboard.layout.main')
 @section('title')
-<title>Dashboard</title>
+<title>Dashboard | Edit Type {{ $type->name }}</title>
 @endsection
 @section('content')
 <div class="row">

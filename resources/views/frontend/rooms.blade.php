@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Hotel Booking Website</title>
+	<title>DONQUIXOTE | Cari Kamar</title>
 	<!-- CSS only -->
 @include('frontend.inc.links')
 <link
@@ -16,7 +16,7 @@
 <body>
 
 @include('frontend.inc.header')
-
+@include('frontend.inc.logout')
 <div class="my-5 px-4">
   <h2 class="fw-bold h-font text-center">OUR ROOMS</h2>
   <p class="h5 mt-3 text-center">{{$roomsCount}} Rooms Availlable</p>
@@ -91,7 +91,11 @@
 <div class="card mb-4 border-0 shadow">
     <div class="row g-0 p-3 align-items-center">
     <div class="col-md-5 mb-lg-0 mb-md-0 mb-3">
-      <img src="/nyoba/images/rooms/1.jpg" class="img-fluid rounded">
+        @if($r->images->count() > 0)
+            <img src="{{asset('storage/'.$r->images[0]->image)}}" class="img-fluid rounded">
+            @else
+            <img src="/nyoba/images/rooms/1.jpg" class="img-fluid rounded">
+        @endif
     </div>
     <div class="col-md-5 px-lg-3 px-md-3 px-0">
       <h5 class="mb-3">{{ $r->type->name }} #{{ $r->no }} </h5>

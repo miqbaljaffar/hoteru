@@ -1,6 +1,6 @@
 @extends('dashboard.layout.main')
 @section('title')
-<title>Dashboard</title>
+<title>Dashboard | Order</title>
 @endsection
 @section('content')
 {{-- < Page Heading --> --}}

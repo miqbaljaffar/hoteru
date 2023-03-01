@@ -1,6 +1,6 @@
 @extends('dashboard.layout.main')
 @section('title')
-<title>Dashboard</title>
+<title>Dashboard | Kamar</title>
 @endsection
 @section('content')
                     <!-- Page Heading -->
@@ -60,11 +60,11 @@
                                                     <td>{{ $r->capacity }}</td>
                                                     <td>Rp.{{ number_format($r->price) }}</td>
                                                     <td class="d-flex">
-                                                        <a href="room/{{ $r->id }}/edit" class="btn btn-outline-success me-1"><i class="fas fa-pen"></i></a>
-                                                        <a class="btn btn-outline-danger me-1" href="#" data-toggle="modal" data-target="#deletemodal">
+                                                        <a href="room/{{ $r->id }}/edit" class="btn btn-success me-1"><i class="fas fa-pen"></i></a>
+                                                        <a class="btn btn-danger me-1" href="#" data-toggle="modal" data-target="#deletemodal">
                                                             <i class="fas fa-trash"></i>
                                                         </a>
-                                                        <a href="/dashboard/data/room/{{$r->no}}" class="btn btn-outline-warning me-1"><i class="fas fa-eye"></i></i></i> </a>
+                                                        <a href="/dashboard/data/room/{{$r->no}}" class="btn btn-warning text-light me-1"><i class="fas fa-eye"></i></i></i> </a>
 
                                                     </td>
                                                 </tr>

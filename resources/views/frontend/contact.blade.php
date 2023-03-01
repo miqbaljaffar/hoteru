@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Hotel Booking Website</title>
+	<title>DONQUIXOTE | Contact</title>
 	<!-- CSS only -->
 @include('frontend.inc.links')
 <link
@@ -15,7 +15,7 @@
 </head>
 <body>
     @include('frontend.inc.header')
-
+    @include('frontend.inc.logout')
 
 <div class="my-5 px-4">
   <h2 class="fw-bold h-font text-center">CONTACT US</h2>

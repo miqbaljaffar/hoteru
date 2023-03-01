@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Hotel Booking Website</title>
+	<title>DONQUIXOTE | BOOKING HOTEL</title>
 	<!-- CSS only -->
 @include('frontend.inc.links')
 <link
@@ -10,7 +10,7 @@
 />
 <link rel="stylesheet" type="text/css" href="/nyoba/css/common.css">
 <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
-
+{{-- <link rel="shortcut icon" href="/img/logo.png"> --}}
 <style type="text/css">
 
 	.availability-form{
@@ -32,6 +32,7 @@
 
 @include('frontend.inc.header')
 <!-- Swiper Carousal-->
+@include('frontend.inc.logout')
  <div class="container-fluid px-lg-4 mt-4">
  	 <div class="swiper swiper-container">
       <div class="swiper-wrapper">
@@ -100,11 +101,11 @@
         @endphp --}}
         <div class="col-lg-4 col-md-6 my-3">
             <div class="card border-0 shadow" style="max-width: 350px; margin: auto;">
-                @if ($r->image)
-                <img src="/nyoba/images/rooms/1.jpg" class="card-img-top" alt="...">
+                @if($r->images->count() > 0)
+                <img src="{{asset('storage/'.$r->images[0]->image)}}" class="img-fluid rounded" style="height: 250px">
                 @else
-                <img src="/img/default-room.png" alt="...">
-                @endif
+                <img src="/nyoba/images/rooms/1.jpg" class="img-fluid rounded">
+            @endif
              <div class="card-body">
                <h5 class="card-title">{{ $r->type->name }} #{{ $r->no }}</h5>
                <h6 class="mb-3 text-success">IDR {{ number_format($r->price) }} </h6>
