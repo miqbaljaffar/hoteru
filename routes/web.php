@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/', function () {
 //     return view('index');
 // });
-route::get('/tes', function(){
+route::get('/tes', function () {
     return view('p');
 });
 Route::get('/myaccount/edit', [UserController::class, 'cusedit']);
@@ -30,9 +30,9 @@ Route::post('/rooms', [IndexController::class, 'roompost']);
 Route::get('/facilities', [IndexController::class, 'facility']);
 Route::get('/contact', [IndexController::class, 'contact']);
 Route::get('/about', [IndexController::class, 'about']);
-Route::post('/order', [OrderController::class,'index']);
+Route::post('/order', [OrderController::class, 'index']);
 Route::get('/myaccount', [UserController::class, 'profile']);
-Route::post('/order/post', [OrderController::class,'order']);
+Route::post('/order/post', [OrderController::class, 'order']);
 Route::get('/pesan', [IndexController::class, 'pesan'])->name('pesan');
 Route::get('/bayar/{id}', [OrderController::class, 'pembayaran']);
 Route::post('/bayar', [OrderController::class, 'bayar']);
@@ -48,7 +48,7 @@ Route::get('/login', [LoginController::class, 'index'])->middleware('guest');
 Route::post('/login', [LoginController::class, 'authenticate']);
 Route::get('/register', [LoginController::class, 'register'])->middleware('guest');
 Route::post('/register', [LoginController::class, 'store']);
-Route::post('/logout', [LoginController::class, 'logout']);
+Route::any('/logout', [LoginController::class, 'logout']);
 
 Route::get('/dashboard', [DashboardController::class, 'index']);
 
@@ -99,7 +99,7 @@ Route::get('/dashboard/order/viewcountperson', [TransactionController::class, 'e
 Route::post('/dashboard/order/chooseroom', [TransactionController::class, 'chooseroom'])->name('chooseroom');
 Route::get('/dashboard/order/chooseroom', [TransactionController::class, 'errorget'])->name('chooseroomget');
 
-Route::get('/dashboard/order/pick', [TransactionController::class ,'pick'])->name('pick');
+Route::get('/dashboard/order/pick', [TransactionController::class, 'pick'])->name('pick');
 Route::post('/dashboard/order/confirmation', [TransactionController::class, 'confirmation'])->name('confirmation');
 Route::get('/dashboard/order/confirmation', [TransactionController::class, 'errorget'])->name('confirmationget');
 

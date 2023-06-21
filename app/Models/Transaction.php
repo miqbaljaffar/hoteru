@@ -16,13 +16,16 @@ class Transaction extends Model
         'check_out' => 'datetime',
     ];
 
-    public function Customer(){
+    public function Customer()
+    {
         return $this->belongsTo(Customer::class, 'c_id');
     }
-    public function Room(){
+    public function Room()
+    {
         return $this->belongsTo(Room::class, 'room_id');
     }
-    public function Payments(){
+    public function Payments()
+    {
         return $this->hasMany(Payment::class);
     }
 
@@ -45,15 +48,24 @@ class Transaction extends Model
     {
         $totalPayment = 0;
         foreach ($this->Payments as $payment) {
-            $totalPayment += $payment->price;
+            if ($payment->status == 'Pending') {
+                $totalPayment = 0;
+            } else {
+                $totalPayment += $payment->price;
+            }
         }
         return $totalPayment;
     }
 
     public function getMinimumDownPayment()
     {
-        $dayDifference =  $this->check_in->diffindays($this->check_out) ;
+        $dayDifference =  $this->check_in->diffindays($this->check_out);
         $minimumDownPayment = ($this->room->price * $dayDifference) * 0.15;
         return $minimumDownPayment;
+    }
+
+    public function User()
+    {
+        return $this->belongsTo(User::class, 'c_id');
     }
 }

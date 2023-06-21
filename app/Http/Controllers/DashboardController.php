@@ -13,63 +13,67 @@ use Termwind\Components\Raw;
 
 class DashboardController extends Controller
 {
-    public function index(){
-        if(auth()->guest()){
+    public function index()
+    {
+        if (auth()->guest()) {
             return redirect('/login');
         }
-        if(auth()->user()->is_admin == 0){
+        if (auth()->user()->is_admin == 0) {
             abort(404);
         }
+        // Menghitung total harga dari semua pembayaran dengan status "Down Payment"
+        $payments = Payment::where('status', 'Down Payment')->get();
+        $totalAmount = $payments->sum('price');
 
-        $p = Payment::where('status', 'Down Payment')->get();
-        $hasil = 0;
-        foreach($p as $pp){
-            $hasil += $pp->price;
-        }
-
-        $alltime = $hasil;
-        // dd($alltime);
-        // all time end --------------------------------
-        $chart = $p->groupby(function($chart){
-            return Carbon::parse($chart->created_at)->format('M');
+        // Menghitung total jumlah pembayaran per bulan
+        $paymentsPerMonth = $payments->groupBy(function ($payment) {
+            return Carbon::parse($payment->created_at)->format('M');
         });
-        // dd($chart->count());
+
         $months = [];
         $count = [];
         $qty = [];
-        $pp =[];
-        foreach($chart as $month => $value){
+
+        foreach ($paymentsPerMonth as $month => $paymentGroup) {
             $months[] = $month;
-            $total = 0;
-            foreach($value as $pay){
-                $total += $pay->price;
-            }
-
-            $qty[] = $value->count();
+            $total = $paymentGroup->sum('price');
             $count[$month] = $total;
+            $qty[] = $paymentGroup->count();
         }
-        $now = Carbon::now()->format('M');
-        $monthcount = $count[$now];
-        $n = Carbon::now()->format('m');
-        $beforenow = $n - 1 - 1;
-        $tran = Transaction::where('status', 'Reservation')->count();
-        $tomonth = Carbon::parse($beforenow)->format('M');
-        $countbefore = $count[$tomonth];
-        $persen = $monthcount / $countbefore * 100;
 
-        if($persen > 100){
-            $kiri = 100 / $persen * 100;
-            $kanan = ($persen - 100) / $persen * 100;
-            // dd($kanan);
+        $currentMonth = Carbon::now()->format('M');
+        $monthCount = isset($count[$currentMonth]) ? $count[$currentMonth] : 0;
+        $currentMonthNumber = Carbon::now()->format('m');
+        $previousMonthNumber = $currentMonthNumber - 2;
+        $previousMonth = Carbon::parse($previousMonthNumber)->format('M');
+
+        // dd($months);
+        $transactionCount = Transaction::where('status', 'Reservation')->count();
+        $countPreviousMonth = $count[$previousMonth];
+
+        $percentage = $countPreviousMonth > 0 ? ($monthCount / $countPreviousMonth) * 100 : 0;
+
+        $kiri = 0;
+        $kanan = 0;
+
+        if ($percentage > 100) {
+            $kiri = 100 / $percentage * 100;
+            $kanan = ($percentage - 100) / $percentage * 100;
+        } else if ($percentage == 0) {
+            $kiri = 0;
+            $kanan = 0;
         }
-        return view('dashboard.index', compact('tran','kiri', 'kanan','qty','alltime','months', 'count', 'monthcount', 'months', 'persen'));
+
+        return view('dashboard.index', compact('transactionCount', 'kiri', 'kanan', 'qty', 'totalAmount', 'months', 'count', 'monthCount', 'percentage'));
     }
-    public function notifiable(Request $request){
+
+    public function notifiable(Request $request)
+    {
         // dd($request);
-        if(auth()->guest()){
+        if (auth()->guest()) {
             return redirect('/login');
         }
-        if(auth()->user()->is_admin == 0){
+        if (auth()->user()->is_admin == 0) {
             abort(404);
         }
         // $no = json_decode($notif->data)->message[5] . json_decode($notif->data)->message[6] . json_decode($notif->data)->message[7];
@@ -77,9 +81,10 @@ class DashboardController extends Controller
         return redirect('/dashboard/order', compact('no'));
     }
 
-    public function markall(){
+    public function markall()
+    {
         $notif = Notifications::where('status', 'unread')->get();
-        foreach($notif as $n){
+        foreach ($notif as $n) {
             $n->status = 'read';
             $n->read_at = Carbon::now();
             $n->save();

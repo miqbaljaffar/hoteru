@@ -1,22 +1,7 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>DONQUIXOTE | Cari Kamar</title>
-	<!-- CSS only -->
-@include('frontend.inc.links')
-<link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"
-/>
-<link rel="stylesheet" type="text/css" href="/nyoba/css/common.css">
-<script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+@extends('frontend.inc.main')
+@section('title') <title>DONQUIXOTE | Cari Kamar</title> @endsection
 
-
-</head>
-<body>
-
-@include('frontend.inc.header')
-@include('frontend.inc.logout')
+@section('content')
 <div class="my-5 px-4">
   <h2 class="fw-bold h-font text-center">OUR ROOMS</h2>
   <p class="h5 mt-3 text-center">{{$roomsCount}} Rooms Availlable</p>
@@ -236,9 +221,5 @@
 
   </div>
 </div>
-@include('vendor.sweetalert.alert')
 
-@include('frontend.inc.footer')
-
-</body>
-</html>
+@endsection

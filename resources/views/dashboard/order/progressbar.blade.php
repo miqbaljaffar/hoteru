@@ -1,6 +1,6 @@
 <div class="row justify-content-center">
     <div class="col-lg-8">
-        <div class="card shadow-sm">
+        <div class="card shadow border-0">
             <div class="card-body">
                 <ul class="progress-indicator m-4">
                     <li

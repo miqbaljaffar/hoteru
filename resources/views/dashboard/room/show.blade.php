@@ -25,7 +25,7 @@
 
     <!-- Content Row -->
     <div class="container">
-        <div class="card">
+        <div class="card border-0 shadow">
             <div class="card-header">
                 <div class="d-flex">
                     <h5 class="">#{{ $room->id }} Status <h5 class="ms-1 me-5" @if ($room->status->code == 'V')
@@ -34,20 +34,16 @@
                 </div>
             </div>
             <div class="card-body">
-                <div class="d-flex">
-                    <div class="col-md-5">
-                        {{-- <img src="{{  }}" alt=""> --}}
+                <div class="row">
+                    <div class="col-md-5 col-lg-5 col-12 mb-sm-4">
                         @if ($room->images->count() > 0)
                         <img src="{{asset('storage/' . $cts->image)}}"
-                               class="bd-placeholder-img" alt="foto {{ $cts->room->no }}"" width="100%" fill="#777" focusable="false" aria-hidden="true" height="225">
+                               class="bd-placeholder-img" alt="foto {{ $cts->room->no }}" style="object-fit:cover;" width="100%" focusable="false" aria-hidden="true" height="225">
                                @else
                                <marquee class="h4" behavior="alternate" style="font-style: italic">Theres no image for this Room</marquee>
                         @endif
-
-                                    {{-- <img src="{{asset('storage/' . $cp->image)}}"
-                                    class="bd-placeholder-img" alt="{{ $cp->nm_category }}" width="100%" fill="#777" focusable="false" aria-hidden="true" height="225"> --}}
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-7 col-lg-7 col-12">
                     <table class="table table-sm table-bordered">
                         <thead class="table-secondary">
                             <tr>
@@ -65,7 +61,7 @@
                         </tbody>
                     </table>
                     <h5><a href="/dashboard/data/room/{{ $room->no }}/add-image" class="btn btn-success">Tambahkan foto</a></h5>
-                </div>
+                    </div>
                 </div>
             </div>
         </div>

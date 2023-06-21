@@ -18,41 +18,63 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class OrderController extends Controller
 {
-    //
 
-    public function index(Request $request){
-    //    dd($request->all());
-    if(auth()->guest()){
-        Alert::error('Please Login First!');
-        return redirect('/login');
-    }
+    public function index(Request $request)
+    {
+        if (auth()->guest()) {
+            Alert::error('Please Login First!');
+            return redirect('/login');
+        }
         $stayfrom = Carbon::parse($request->from);
-        // dd($request);
         $stayuntil = Carbon::parse($request->to);
         $room = Room::where('id', $request->room)->first();
-        if($request->customer == null){
+
+        $cektransaksi = Transaction::where('room_id', $request->room)->where([['check_in', '<=', $stayfrom], ['check_out', '>=', $stayuntil]])
+            ->orWhere([['check_in', '>=', $stayfrom], ['check_in', '<=', $stayuntil]])
+            ->orWhere([['check_out', '>=', $stayfrom], ['check_out', '<=', $stayuntil]])->get();
+        if ($cektransaksi->count() > 0) {
+            Alert::error('Kamar Tidak Tersedia');
+            return back();
+        }
+        if ($request->customer == null) {
             $auth = Auth()->user()->Customer->id;
-            // dd($auth);
             $customer = Customer::where('id', $auth)->first();
-            // dd($customer);
-        } else{
+        } else {
             $customer = Customer::where('id', $request->customer)->first();
         }
+
         $price = $room->price;
         $dayDifference = $stayfrom->diffindays($stayuntil);
         $total = $price * $dayDifference;
-        $id = [1];
-        $paymentmet = PaymentMethod::whereNotIn('id', $id)->get();
+        $paymentmethodnotid = [1];
+        $paymentmet = PaymentMethod::whereNotIn('id', $paymentmethodnotid)->get();
+
         return view('frontend.order', compact('customer', 'room', 'stayfrom', 'dayDifference', 'stayuntil', 'total', 'paymentmet'));
     }
 
-    public function order(Request $request){
+    public function order(Request $request)
+    {
         $rooms = Room::where('id', $request->room)->first();
         $customers = Customer::where('id', $request->customer)->first();
-        if($customers->nik == null){
+
+        //cek transaksi apakah kamar sudah ada booking
+        $stayfrom = Carbon::parse($request->check_in);
+        $stayuntil = Carbon::parse($request->check_out);
+        $cektransaksi = Transaction::where('room_id', $request->room)->where([['check_in', '<=', $stayfrom], ['check_out', '>=', $stayuntil]])
+            ->orWhere([['check_in', '>=', $stayfrom], ['check_in', '<=', $stayuntil]])
+            ->orWhere([['check_out', '>=', $stayfrom], ['check_out', '<=', $stayuntil]])->get();
+        if ($cektransaksi->count() > 0) {
+            Alert::error('Kamar Tidak Tersedia');
+            return back();
+        }
+        // ===========
+
+
+        if ($customers->nik == null) {
             Alert::error('Kesalahan Data', 'Mohon Isi Data NIK');
             return redirect('myaccount');
         }
+
         $transaction = $this->storetransaction($request, $rooms);
         $status = 'Pending';
         $payment = $this->storepayment($request, $transaction, $status);
@@ -66,40 +88,41 @@ class OrderController extends Controller
         }
         event(new RefreshDashboardEvent("Someone reserved a room"));
         $inv = Payment::where('c_id', $request->customer)->orderby('id', 'desc')->first();
-        // dd($inv);
-        // dd($inv->id);
-        Alert::success('Thanks!', 'Room '. $rooms->no .' Has been reservated'. ' Please Pay now!');
+        Alert::success('Thanks!', 'Room ' . $rooms->no . ' Has been reservated' . ' Please Pay now!');
         return redirect('/bayar/' . $inv->Transaction->id);
     }
 
-    public function invoice($id){
+    public function invoice($id)
+    {
         $p = Payment::where('id', $id)->with('Customer', 'Transaction', 'Methode')->first();
-        if($p->status == 'Pending'){
+        if ($p->status == 'Pending') {
             return abort(404);
         }
         // dd($p);
         return view('frontend.invoice', compact('p'));
     }
 
-    public function pembayaran($id){
+    public function pembayaran($id)
+    {
 
         $t = Transaction::findOrFail($id);
         // dd($t->Payments[0]->Methode->nama);
         $pmi = [1];
         $pay = $t->Payments->wherenotin('payment_method_id', $pmi)->first();
-        if($pay->status == 'Pending' and $pay->image != null){
+        if ($pay->status == 'Pending' and $pay->image != null) {
             return back();
         }
         // dd($pay->id);
         $price = Room::where('id', $t->Room->id)->first()->price;
-        return view('frontend.bayar',compact('t', 'price', 'pay'));
+        return view('frontend.bayar', compact('t', 'price', 'pay'));
     }
 
-    public function bayar(Request $request){
+    public function bayar(Request $request)
+    {
         $validatedData = $request->validate([
             'image' => 'required|image|file',
         ]);
-        if($request->file('image')){
+        if ($request->file('image')) {
             $image = $validatedData['image'] = $request->file('image')->store('bukti-images', 'public');
         }
         $payment = Payment::findOrFail($request->id);
@@ -111,12 +134,8 @@ class OrderController extends Controller
         return redirect('/history');
     }
 
-
-
-
-
-
-    private function storetransaction($request, $rooms){
+    private function storetransaction($request, $rooms)
+    {
         // dd($request->customer);
         $storetransaction = Transaction::create([
             // 'user_id' => auth()->user()->id,
@@ -129,8 +148,9 @@ class OrderController extends Controller
         return $storetransaction;
     }
 
-    private function storepayment($request, $transaction, string $status){
-      $price = $request->price;
+    private function storepayment($request, $transaction, string $status)
+    {
+        $price = $request->price;
         $count = Payment::count() + 1;
         $payment = Payment::create([
             'c_id' => $request->customer,
@@ -138,10 +158,9 @@ class OrderController extends Controller
             'price' => $price,
             'status' => $status,
             'payment_method_id' => $request->payment_method_id,
-            'invoice' =>  '0'. $request->customer. 'INV'. $count . Str::random(4)
+            'invoice' =>  '0' . $request->customer . 'INV' . $count . Str::random(4)
         ]);
 
         return $payment;
     }
-
 }

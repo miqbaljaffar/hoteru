@@ -20,125 +20,123 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class TransactionController extends Controller
 {
-    public function errorget(){
+    public function errorget()
+    {
         return $this->index();
     }
 
-    public function index(){
-        if(auth()->guest()){
+    public function index()
+    {
+        if (auth()->guest()) {
             return redirect('/login');
         }
-        if(auth()->user()->is_admin == 0){
+        if (auth()->user()->is_admin == 0) {
             abort(404);
         }
-        $p = Carbon::now()->isoFormat('Y-M-D');
-        $transaction = Transaction::with('Customer','Payments')->where('check_out', '>=' , $p)->orderby('id','desc')->get();
+        $today = Carbon::now()->isoFormat('Y-M-D');
+        $transaction = Transaction::with('Customer', 'Payments')->where('check_out', '>=', $today)->orderby('id', 'desc')->get();
         return view('dashboard.order.index', compact('transaction'));
     }
 
 
-
-    public function history(){
-        if(auth()->guest()){
+    public function history()
+    {
+        if (auth()->guest()) {
             return redirect('/login');
         }
-        if(auth()->user()->is_admin == 0){
+        if (auth()->user()->is_admin == 0) {
             abort(404);
         }
         $p = Carbon::now();
-        $transaction = Transaction::where('check_out', '>=' , $p)->get();
-        $transactionexpired = Transaction::where('check_out', '<' , $p)->get();
+        $transaction = Transaction::where('check_out', '>=', $p)->get();
+        $transactionexpired = Transaction::where('check_out', '<', $p)->get();
         return view('dashboard.order.historyorder', compact('transaction', 'transactionexpired', 'p'));
     }
 
-    public function create_identity(){
+    public function create_identity()
+    {
         $uri = Route::currentroutename();
-        if(auth()->guest()){
+        if (auth()->guest()) {
             return redirect('/login');
         }
-        if(auth()->user()->is_admin == 0){
+        if (auth()->user()->is_admin == 0) {
             abort(404);
         }
         return view('dashboard.order.createidentity', compact('uri'));
     }
 
-    // public function post_identity(Request $request){
-
-        //     // return Redirect::route('countperson', array('id' =>$c_id));
-        // }
-        public function pick(Request $request){
-            if(auth()->guest()){
-                return redirect('/login');
-            }
-            if(auth()->user()->is_admin == 0){
-                abort(404);
-            }
-            $uri = Route::currentroutename();
-            $customers = $this->get($request);
-            $customersCount = $this->count($request);
-            return view('dashboard.order.pickfromcustomer', compact('uri', 'customers', 'customersCount'));
+    public function pick(Request $request)
+    {
+        if (auth()->guest()) {
+            return redirect('/login');
         }
+        if (auth()->user()->is_admin == 0) {
+            abort(404);
+        }
+        $uri = Route::currentroutename();
+        $customers = $this->get($request);
+        $customersCount = $this->count($request);
+        return view('dashboard.order.pickfromcustomer', compact('uri', 'customers', 'customersCount'));
+    }
 
-    public function viewperson(Request $request){
+    public function viewperson(Request $request)
+    {
         //  dd($request->all());
-         if ($request['name']) {
-             $request->validate([
-                 'name' => 'required',
-                 'username' => 'required',
-                 'password' => 'required',
-                 'email' => 'required',
-                 'telp' => 'required',
-                 'birthdate' => 'nullable',
-                 'jk' => 'nullable',
-                 'job' => 'nullable',
-                 'nik' => 'nullable',
-                 'address' => 'nullable'
-             ]);
-             $cus = Customer::create([
-                 'name' => $request->name,
-                 'address' => $request->address,
-                 'jk' => $request->jk,
-                 'job' => $request->job,
-                 'birthdate' => $request->birthdate,
-                 'nik' => $request->nik
-             ]);
-             User::create([
-                 'c_id' => $cus->id,
-                 'username' => $request->username,
-                 'telp' => $request->telp,
-                 'email' => $request->email,
-                 'password' => $request->password,
-                 'is_admin' => 0,
-                ]);
-             $c_id = $cus->id;
-
-         }
-         else {
-             $c_id = $request->customer;
-            }
-            // Alert::success('Success', 'success');
-            $uri = Route::currentroutename();
-            $customer = Customer::where('id', $c_id)->first();
-            // dd($customer);
-            return view('dashboard.order.viewcountperson', compact('uri', 'c_id','customer'));
+        if ($request['name']) {
+            $request->validate([
+                'name' => 'required',
+                'username' => 'required',
+                'password' => 'required',
+                'email' => 'required',
+                'telp' => 'required',
+                'birthdate' => 'nullable',
+                'jk' => 'nullable',
+                'job' => 'nullable',
+                'nik' => 'nullable',
+                'address' => 'nullable'
+            ]);
+            $cus = Customer::create([
+                'name' => $request->name,
+                'address' => $request->address,
+                'jk' => $request->jk,
+                'job' => $request->job,
+                'birthdate' => $request->birthdate,
+                'nik' => $request->nik
+            ]);
+            User::create([
+                'c_id' => $cus->id,
+                'username' => $request->username,
+                'telp' => $request->telp,
+                'email' => $request->email,
+                'password' => $request->password,
+                'is_admin' => 0,
+            ]);
+            $c_id = $cus->id;
+        } else {
+            $c_id = $request->customer;
         }
+        // Alert::success('Success', 'success');
+        $uri = Route::currentroutename();
+        $customer = Customer::where('id', $c_id)->first();
+        // dd($customer);
+        return view('dashboard.order.viewcountperson', compact('uri', 'c_id', 'customer'));
+    }
 
-    public function chooseroom(ChooseRoomRequest $request){
-        // dd($request->all());
+    public function chooseroom(ChooseRoomRequest $request)
+    {
         $uri = Route::currentroutename();
         $stayfrom = Carbon::parse($request->from)->isoFormat('D MMM YYYY');
         $stayto = Carbon::parse($request->to)->isoFormat('D MMM YYYY');
-        // dd($stayfrom);
         $occupiedRoomId = $this->getOccupiedRoomID($request->from, $request->to);
         $rooms = $this->getUnocuppiedroom($request, $occupiedRoomId);
         $roomsCount = $this->countUnocuppiedroom($request, $occupiedRoomId);
         $customer = Customer::where('id', $request->c_id)->first();
-        // dd($rooms);
-        return view('dashboard.order.chooseroom', compact('uri','customer', 'roomsCount', 'rooms', 'stayfrom', 'stayto'));
+        return view('dashboard.order.chooseroom', compact('uri', 'customer', 'roomsCount', 'rooms', 'stayfrom', 'stayto'));
     }
 
 
-    public function confirmation(Request $request){
+    public function confirmation(Request $request)
+    {
         $uri = Route::currentroutename();
         $room = Room::where('id', $request->room)->with('Type')->first();
         $customer = Customer::where('id', $request->customer)->first();
@@ -148,18 +146,17 @@ class TransactionController extends Controller
         $dayDifference = $stayfrom->diffindays($stayuntil);
         $total = $price * $dayDifference;
         $downPayment = ($price * $dayDifference) * 0.5;
-        return view('dashboard.order.confirmation', compact('uri', 'dayDifference' , 'customer', 'room', 'stayfrom', 'stayuntil', 'total', 'downPayment'));
+        return view('dashboard.order.confirmation', compact('uri', 'dayDifference', 'customer', 'room', 'stayfrom', 'stayuntil', 'total', 'downPayment'));
     }
 
 
-    public function payDownPayment(Request $request){
-        // dd($request->all());
+    public function payDownPayment(Request $request)
+    {
         $checkin = Carbon::parse($request->check_in);
         $checkout = Carbon::parse($request->check_out);
         $dayDifference = $checkin->diffindays($checkout);
         $rooms = Room::where('id', $request->room)->first();
         $customers = Customer::where('id', $request->customer)->first();
-
         $minimumDownPayment = ($rooms->price * $dayDifference) * 0.5;
         $request->validate([
             'downPayment' => 'required|numeric|gte:' . $minimumDownPayment
@@ -169,7 +166,8 @@ class TransactionController extends Controller
         $occupiedRoomIdInArray = $occupiedRoomId->toArray();
 
         if (in_array($rooms->id, $occupiedRoomIdInArray)) {
-            return redirect()->back()->with('failed', 'Sorry, room ' . $rooms->no . ' already occupied');
+            Alert::error('Invalid', 'Sorry, Room Already Serve!');
+            return back();
         }
 
         $transaction = $this->storetransaction($request, $rooms);
@@ -185,8 +183,7 @@ class TransactionController extends Controller
         }
 
         event(new RefreshDashboardEvent("Someone reserved a room"));
-        // dd($customers->name);
-        Alert::success('Success', 'Room '. $rooms->no .' Has been reservated by '. $customers->name);
+        Alert::success('Success', 'Room ' . $rooms->no . ' Has been reservated by ' . $customers->name);
         return redirect()->route('transaction.index');
     }
 
@@ -194,10 +191,9 @@ class TransactionController extends Controller
 
 
 
-    private function storetransaction($request, $rooms){
-        // dd($request->customer);
+    private function storetransaction($request, $rooms)
+    {
         $storetransaction = Transaction::create([
-            // 'user_id' => auth()->user()->id,
             'room_id' => $rooms->id,
             'c_id' => $request->customer,
             'check_in' => $request->check_in,
@@ -207,8 +203,9 @@ class TransactionController extends Controller
         return $storetransaction;
     }
 
-    private function storepayment($request, $transaction, string $status){
-        if(!empty($request->downPayment)){
+    private function storepayment($request, $transaction, string $status)
+    {
+        if (!empty($request->downPayment)) {
             $price = $request->downPayment;
         } else {
             $price = $request->payment;
@@ -220,9 +217,8 @@ class TransactionController extends Controller
             'price' => $price,
             'status' => $status,
             'payment_method_id' => 1,
-            'invoice' =>  '0'. $request->customer. 'INV'. $count . Str::random(4)
+            'invoice' =>  '0' . $request->customer . 'INV' . $count . Str::random(4)
         ]);
-
         return $payment;
     }
 
@@ -235,11 +231,6 @@ class TransactionController extends Controller
         if (!empty($request->sort_name)) {
             $rooms = $rooms->orderBy($request->sort_name, $request->sort_type);
         }
-
-        // $rooms = $rooms
-        //     ->orderBy('capacity')
-        //     ->paginate(5);
-
         return $rooms->get();
     }
 

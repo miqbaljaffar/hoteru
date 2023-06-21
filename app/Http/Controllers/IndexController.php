@@ -15,8 +15,7 @@ class IndexController extends Controller
 {
     public function index(){
         $room = Room::paginate(3);
-        // $p = Room::where('');
-        // dd($room);
+        // dd(auth()->user());
         return view('index', compact('room'));
     }
 
@@ -32,7 +31,6 @@ class IndexController extends Controller
             $stayto = Carbon::parse($request->to)->isoFormat('D MMM YYYY');
             // dd($request->all());
             if($request->from and $request->to and $request->count != null){
-                // dd($request);
                 $occupiedRoomId = $this->getOccupiedRoomID($request->from, $request->to);
                 $rooms = $this->getUnocuppiedroom($request, $occupiedRoomId);
                 $roomsCount = $this->countUnocuppiedroom($request, $occupiedRoomId);
@@ -40,6 +38,7 @@ class IndexController extends Controller
                 $rooms = $this->getUnocuppiedroom2($request);
                 $roomsCount = $this->countUnocuppiedroom2($request);
             } else{
+                dd($request->all());
                 $occupiedRoomId = $this->getOccupiedRoomID($request->from, $request->to);
                 $rooms = $this->getUnocuppiedroom($request, $occupiedRoomId);
                 $roomsCount = $this->countUnocuppiedroom($request, $occupiedRoomId);
@@ -49,17 +48,7 @@ class IndexController extends Controller
             $roomsCount = Room::count();
             // dd($roomsCount);
         }
-        // foreach($rooms as $r){
-            // if($r->images->count() > 1){
 
-                // dd($rooms);
-            // }
-        // }
-        // if($rooms[0]->images){
-        //     // $images = images[0]->image;
-        //     dd($rooms[0]->images[0]->image);
-        // }
-        // dd($rooms[0]->images[0]->image);
         return view('frontend.rooms', compact('rooms', 'roomsCount', 'request'));
     }
 
@@ -131,7 +120,6 @@ class IndexController extends Controller
 
     private function getOccupiedRoomID($stayfrom, $stayto)
     {
-        // if($stayfrom and $stayto){}
         $occupiedRoomId = Transaction::where([['check_in', '<=', $stayfrom], ['check_out', '>=', $stayto]])
             ->orWhere([['check_in', '>=', $stayfrom], ['check_in', '<=', $stayto]])
             ->orWhere([['check_out', '>=', $stayfrom], ['check_out', '<=', $stayto]])
