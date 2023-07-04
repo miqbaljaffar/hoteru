@@ -41,16 +41,15 @@ class DashboardController extends Controller
             $qty[] = $paymentGroup->count();
         }
 
+        // dd($months);
         $currentMonth = Carbon::now()->format('M');
         $monthCount = isset($count[$currentMonth]) ? $count[$currentMonth] : 0;
-        $currentMonthNumber = Carbon::now()->format('m');
-        $previousMonthNumber = $currentMonthNumber - 2;
-        $previousMonth = Carbon::parse($previousMonthNumber)->format('M');
-
-        // dd($months);
+        $currentMonthNumber = Carbon::now()->format('m') - 0;
+        $previousMonthNumber = $currentMonthNumber - 1;
+        $previousMonth = Carbon::createFromDate(null, $previousMonthNumber)->format('M');
         $transactionCount = Transaction::where('status', 'Reservation')->count();
-        $countPreviousMonth = $count[$previousMonth];
-
+        $countPreviousMonth = $count["Jul"];
+        // dd($countPreviousMonth);
         $percentage = $countPreviousMonth > 0 ? ($monthCount / $countPreviousMonth) * 100 : 0;
 
         $kiri = 0;

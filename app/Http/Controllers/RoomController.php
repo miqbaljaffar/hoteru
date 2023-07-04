@@ -16,23 +16,25 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class RoomController extends Controller
 {
-    public function index(){
-       if(auth()->guest()){
+    public function index()
+    {
+        if (auth()->guest()) {
             return redirect('/login');
         }
-        if(auth()->user()->is_admin == 0){
+        if (auth()->user()->is_admin == 0) {
             abort(404);
         }
         $room = Room::orderBy('id', 'desc')->get();
         $p = Room::get()->count();
-        return view('dashboard.room.index', compact('room','p'));
+        return view('dashboard.room.index', compact('room', 'p'));
     }
 
-    public function create(){
-       if(auth()->guest()){
+    public function create()
+    {
+        if (auth()->guest()) {
             return redirect('/login');
         }
-        if(auth()->user()->is_admin == 0){
+        if (auth()->user()->is_admin == 0) {
             abort(404);
         }
         $status = RoomStatus::get();
@@ -40,7 +42,8 @@ class RoomController extends Controller
         // dd($type);
         return view('dashboard.room.create', compact('type', 'status'));
     }
-    public function post(Request $request){
+    public function post(Request $request)
+    {
         // dd($request);
         $request->validate([
             'no' => 'required',
@@ -66,68 +69,74 @@ class RoomController extends Controller
             // 'image' => $image
         ]);
 
-       Alert::success('Success','Data berhasil ditambahkan');
+        Alert::success('Success', 'Data berhasil ditambahkan');
         return redirect('/dashboard/data/room');
     }
 
-    public function delete($id){
+    public function delete($id)
+    {
         // dd($id);
         $p = Room::FindOrFail($id);
         $p->delete($p);
-        Alert::success('Success','Data berhasil dihapus');
+        Alert::success('Success', 'Data berhasil dihapus');
         return back();
     }
 
-    public function edit($id){
-       if(auth()->guest()){
+    public function edit($id)
+    {
+        if (auth()->guest()) {
             return redirect('/login');
         }
-        if(auth()->user()->is_admin == 0){
+        if (auth()->user()->is_admin == 0) {
             abort(404);
         }
         $status = RoomStatus::get();
         $type = Type::get();
         $p = Room::findOrFail($id);
         // dd($p);
-        return view('dashboard.room.edit', compact('status', 'type','p'));
+        return view('dashboard.room.edit', compact('status', 'type', 'p'));
     }
 
-    public function update(Request $request, $id){
+    public function update(Request $request, $id)
+    {
         $p = Room::findOrFail($id);
         $p->update($request->all());
-        Alert::success('Success','Data berhasil diedit');
+        Alert::success('Success', 'Data berhasil diedit');
         return redirect('/dashboard/data/room');
     }
 
-    public function show(Room $room){
-       if(auth()->guest()){
+    public function show(Room $room)
+    {
+        if (auth()->guest()) {
             return redirect('/login');
         }
-        if(auth()->user()->is_admin == 0){
+        if (auth()->user()->is_admin == 0) {
             abort(404);
         }
-        $cts = ImageRoom::where('room_id', $room->id)->orderby('id','desc')->first();
-        return view('dashboard.room.show', compact('room','cts'));
+        $cts = ImageRoom::where('room_id', $room->id)->orderby('id', 'desc')->first();
+        return view('dashboard.room.show', compact('room', 'cts'));
     }
 
-    public function addimage(Room $room){
+    public function addimage(Room $room)
+    {
         // $p = $room->images
-       if(auth()->guest()){
+        if (auth()->guest()) {
             return redirect('/login');
         }
-        if(auth()->user()->is_admin == 0){
+        if (auth()->user()->is_admin == 0) {
             abort(404);
         }
-        $cts = ImageRoom::where('room_id', $room->id)->orderby('id','desc')->get();
-        return view('dashboard.room.image', compact('room','cts'));
+        $cts = ImageRoom::where('room_id', $room->id)->orderby('id', 'desc')->get();
+        return view('dashboard.room.image', compact('room', 'cts'));
     }
 
-    public function storeimage(Request $request){
+    public function storeimage(Request $request)
+    {
         $validatedData = $request->validate([
             'room_id' => 'required',
             'image' => 'required|image|file',
         ]);
-        if($request->file('image')){
+        if ($request->file('image')) {
             $image = $validatedData['image'] = $request->file('image')->store('room-images', 'public');
         }
         // dd($validatedData);
@@ -139,14 +148,15 @@ class RoomController extends Controller
         return back();
     }
 
-    public function deleteimage($id){
-       $image = ImageRoom::findOrFail($id);
-       $path  = storage_path(). "/app/public/" . $image->image;
-    //    dd($path);
-       if (File::exists($path)) {
-          //File::delete($image_path);
-        unlink($path);
-    }
+    public function deleteimage($id)
+    {
+        $image = ImageRoom::findOrFail($id);
+        $path  = storage_path() . "/app/public/" . $image->image;
+        //    dd($path);
+        if (File::exists($path)) {
+            //File::delete($image_path);
+            unlink($path);
+        }
         $image->delete();
         Alert::success('Success', 'Success gambar berhasil di hapus');
         return back();
@@ -154,27 +164,34 @@ class RoomController extends Controller
 
 
 
-    public function roomshow(Request $request,$no){
-        $room = Room::where('no' , $no)->first();
-        if(Auth()->user()){
+    public function roomshow(Request $request, $no)
+    {
+        $room = Room::where('no', $no)->first();
+        if (Auth()->user()) {
             $customer = Auth()->user()->customer->id;
         } else {
-        $customer = null;
+            $customer = null;
+        }
+        if ($no == null) {
+            return back();
         }
 
         return view('frontend.room', compact('room', 'customer', 'request'));
     }
-    public function roomshowpost(Request $request){
+    public function roomshowpost(Request $request)
+    {
         // dd($request->all());
         $checkin = Carbon::parse($request->from);
         $checkout = Carbon::parse($request->to);
-        if($request->customer){
+        if ($request->customer) {
             $customer = Auth()->user()->customer->id;
         } else {
-        $customer = null;
+            $customer = null;
+        }
+        if ($request->no == null) {
+            return back();
         }
         $room = Room::where('no', $request->no)->first();
-        return view('frontend.room', compact('room','customer', 'request'));
+        return view('frontend.room', compact('room', 'customer', 'request'));
     }
-
 }

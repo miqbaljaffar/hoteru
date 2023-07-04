@@ -47,7 +47,7 @@ class TransactionSeeder extends Seeder
             'nama' => 'BTN',
             'no_rek' => '00461-01-50-0029320-0',
         ]);
-         PaymentMethod::create([
+        PaymentMethod::create([
             'nama' => 'Mandiri',
             'no_rek' => '113-00-1522616-4',
         ]);
@@ -55,8 +55,8 @@ class TransactionSeeder extends Seeder
         Transaction::create([
             'c_id' => 1,
             'room_id' => 2,
-            'check_in' => Carbon::createFromDate(2022,01,05),
-            'check_out' => Carbon::createFromDate(2022,01,07),
+            'check_in' => Carbon::createFromDate(2022, 1, 5),
+            'check_out' => Carbon::createFromDate(2022, 1, 7),
             'status' => 'Reservation'
         ]);
 
@@ -67,15 +67,15 @@ class TransactionSeeder extends Seeder
             'transaction_id' => 1,
             'price' => 2000000,
             'status' => 'Down Payment',
-            'created_at' => Carbon::createFromDate(2022,01,05),
+            'created_at' => Carbon::createFromDate(2022, 1, 5),
         ]);
 
 
         Transaction::create([
             'c_id' => 1,
             'room_id' => 2,
-            'check_in' => Carbon::createFromDate(2022,02,01),
-            'check_out' => Carbon::createFromDate(2022,02,02),
+            'check_in' => Carbon::createFromDate(2022, 2, 1),
+            'check_out' => Carbon::createFromDate(2022, 2, 2),
             'status' => 'Reservation'
         ]);
         Payments::create([
@@ -85,15 +85,15 @@ class TransactionSeeder extends Seeder
             'transaction_id' => 2,
             'price' => 2000000,
             'status' => 'Down Payment',
-            'created_at' => Carbon::createFromDate(2022,02,01),
+            'created_at' => Carbon::createFromDate(2022, 2, 1),
         ]);
 
 
         Transaction::create([
             'c_id' => 1,
             'room_id' => 2,
-            'check_in' => Carbon::createFromDate(2022,02,03),
-            'check_out' => Carbon::createFromDate(2022,02,04),
+            'check_in' => Carbon::createFromDate(2022, 2, 3),
+            'check_out' => Carbon::createFromDate(2022, 2, 4),
             'status' => 'Reservation'
         ]);
 
@@ -104,7 +104,7 @@ class TransactionSeeder extends Seeder
             'transaction_id' => 3,
             'price' => 2000000,
             'status' => 'Down Payment',
-            'created_at' => Carbon::createFromDate(2022,02,03),
+            'created_at' => Carbon::createFromDate(2022, 2, 3),
         ]);
 
 
@@ -112,8 +112,8 @@ class TransactionSeeder extends Seeder
         Transaction::create([
             'c_id' => 1,
             'room_id' => 2,
-            'check_in' => Carbon::createFromDate(2022,03,04),
-            'check_out' => Carbon::createFromDate(2022,03,05),
+            'check_in' => Carbon::createFromDate(2022, 3, 4),
+            'check_out' => Carbon::createFromDate(2022, 3, 5),
             'status' => 'Reservation'
         ]);
         Payments::create([
@@ -123,14 +123,14 @@ class TransactionSeeder extends Seeder
             'transaction_id' => 4,
             'price' => 2000000,
             'status' => 'Down Payment',
-            'created_at' => Carbon::createFromDate(2022,03,04),
+            'created_at' => Carbon::createFromDate(2022, 3, 4),
         ]);
 
         Transaction::create([
             'c_id' => 1,
             'room_id' => 2,
-            'check_in' => Carbon::createFromDate(2022,03,06),
-            'check_out' => Carbon::createFromDate(2022,03,07),
+            'check_in' => Carbon::createFromDate(2022, 3, 6),
+            'check_out' => Carbon::createFromDate(2022, 3, 7),
             'status' => 'Reservation'
         ]);
         Payments::create([
@@ -140,14 +140,14 @@ class TransactionSeeder extends Seeder
             'transaction_id' => 5,
             'price' => 2000000,
             'status' => 'Down Payment',
-            'created_at' => Carbon::createFromDate(2022,03,06),
+            'created_at' => Carbon::createFromDate(2022, 3, 6),
         ]);
 
         Transaction::create([
             'c_id' => 1,
             'room_id' => 2,
-            'check_in' => Carbon::createFromDate(2022,04,02),
-            'check_out' => Carbon::createFromDate(2022,04,03),
+            'check_in' => Carbon::createFromDate(2022, 4, 2),
+            'check_out' => Carbon::createFromDate(2022, 4, 3),
             'status' => 'Reservation'
         ]);
         Payments::create([
@@ -157,14 +157,14 @@ class TransactionSeeder extends Seeder
             'transaction_id' => 6,
             'price' => 2000000,
             'status' => 'Down Payment',
-            'created_at' => Carbon::createFromDate(2022,04,02),
+            'created_at' => Carbon::createFromDate(2022, 4, 2),
         ]);
 
         Transaction::create([
             'c_id' => 1,
             'room_id' => 2,
-            'check_in' => Carbon::createFromDate(2022,04,04),
-            'check_out' => Carbon::createFromDate(2022,04,05),
+            'check_in' => Carbon::createFromDate(2022, 4, 4),
+            'check_out' => Carbon::createFromDate(2022, 4, 5),
             'status' => 'Reservation'
         ]);
 
@@ -175,14 +175,14 @@ class TransactionSeeder extends Seeder
             'transaction_id' => 7,
             'price' => 2000000,
             'status' => 'Down Payment',
-            'created_at' => Carbon::createFromDate(2022,04,04),
+            'created_at' => Carbon::createFromDate(2022, 4, 4),
         ]);
 
         Transaction::create([
             'c_id' => 1,
             'room_id' => 2,
-            'check_in' => Carbon::createFromDate(2022,04,06),
-            'check_out' => Carbon::createFromDate(2022,04,07),
+            'check_in' => Carbon::createFromDate(2022, 4, 6),
+            'check_out' => Carbon::createFromDate(2022, 4, 7),
             'status' => 'Reservation'
         ]);
 
@@ -193,9 +193,151 @@ class TransactionSeeder extends Seeder
             'transaction_id' => 8,
             'price' => 2000000,
             'status' => 'Down Payment',
-            'created_at' => Carbon::createFromDate(2022,04,06),
+            'created_at' => Carbon::createFromDate(2022, 4, 6),
+        ]);
+
+        Transaction::create([
+            'c_id' => 1,
+            'room_id' => 2,
+            'check_in' => Carbon::createFromDate(2022, 5, 6),
+            'check_out' => Carbon::createFromDate(2022, 5, 7),
+            'status' => 'Reservation'
+        ]);
+
+        Payments::create([
+            'c_id' => 1,
+            'payment_method_id' => 1,
+            'invoice' => 'ngasal',
+            'transaction_id' => 8,
+            'price' => 2000000,
+            'status' => 'Down Payment',
+            'created_at' => Carbon::createFromDate(2022, 5, 6),
+        ]);
+
+        Transaction::create([
+            'c_id' => 1,
+            'room_id' => 2,
+            'check_in' => Carbon::createFromDate(2022, 6, 6),
+            'check_out' => Carbon::createFromDate(2022, 6, 7),
+            'status' => 'Reservation'
+        ]);
+
+        Payments::create([
+            'c_id' => 1,
+            'payment_method_id' => 1,
+            'invoice' => 'ngasal',
+            'transaction_id' => 8,
+            'price' => 2000000,
+            'status' => 'Down Payment',
+            'created_at' => Carbon::createFromDate(2022, 6, 6),
+        ]);
+
+        Transaction::create([
+            'c_id' => 1,
+            'room_id' => 2,
+            'check_in' => Carbon::createFromDate(2022, 7, 6),
+            'check_out' => Carbon::createFromDate(2022, 7, 7),
+            'status' => 'Reservation'
+        ]);
+
+        Payments::create([
+            'c_id' => 1,
+            'payment_method_id' => 1,
+            'invoice' => 'ngasal',
+            'transaction_id' => 8,
+            'price' => 2000000,
+            'status' => 'Down Payment',
+            'created_at' => Carbon::createFromDate(2022, 7, 6),
         ]);
 
 
+        Transaction::create([
+            'c_id' => 1,
+            'room_id' => 2,
+            'check_in' => Carbon::createFromDate(2022, 8, 8),
+            'check_out' => Carbon::createFromDate(2022, 8, 9),
+            'status' => 'Reservation'
+        ]);
+
+        Payments::create([
+            'c_id' => 1,
+            'payment_method_id' => 1,
+            'invoice' => 'ngasal',
+            'transaction_id' => 8,
+            'price' => 2000000,
+            'status' => 'Down Payment',
+            'created_at' => Carbon::createFromDate(2022, 8, 6),
+        ]);
+
+        Transaction::create([
+            'c_id' => 1,
+            'room_id' => 2,
+            'check_in' => Carbon::createFromDate(2022, 9, 6),
+            'check_out' => Carbon::createFromDate(2022, 9, 8),
+            'status' => 'Reservation'
+        ]);
+
+        Payments::create([
+            'c_id' => 1,
+            'payment_method_id' => 1,
+            'invoice' => 'ngasal',
+            'transaction_id' => 8,
+            'price' => 2000000,
+            'status' => 'Down Payment',
+            'created_at' => Carbon::createFromDate(2022, 9, 6),
+        ]);
+
+        Transaction::create([
+            'c_id' => 1,
+            'room_id' => 2,
+            'check_in' => Carbon::createFromDate(2022, 10, 6),
+            'check_out' => Carbon::createFromDate(2022, 10, 8),
+            'status' => 'Reservation'
+        ]);
+
+        Payments::create([
+            'c_id' => 1,
+            'payment_method_id' => 1,
+            'invoice' => 'ngasal',
+            'transaction_id' => 8,
+            'price' => 2000000,
+            'status' => 'Down Payment',
+            'created_at' => Carbon::createFromDate(2022, 10, 6),
+        ]);
+
+        Transaction::create([
+            'c_id' => 1,
+            'room_id' => 2,
+            'check_in' => Carbon::createFromDate(2022, 11, 6),
+            'check_out' => Carbon::createFromDate(2022, 11, 8),
+            'status' => 'Reservation'
+        ]);
+
+        Payments::create([
+            'c_id' => 1,
+            'payment_method_id' => 1,
+            'invoice' => 'ngasal',
+            'transaction_id' => 8,
+            'price' => 2000000,
+            'status' => 'Down Payment',
+            'created_at' => Carbon::createFromDate(2022, 11, 6),
+        ]);
+        Transaction::create([
+            'c_id' => 1,
+            'room_id' => 2,
+            'check_in' => Carbon::createFromDate(2022, 12, 6),
+            'check_out' => Carbon::createFromDate(2022, 12, 8),
+            'status' => 'Reservation'
+        ]);
+
+        Payments::create([
+            'c_id' => 1,
+            'payment_method_id' => 1,
+            'invoice' => 'ngasal',
+            'transaction_id' => 8,
+            'price' => 2000000,
+            'status' => 'Down Payment',
+            'created_at' => Carbon::createFromDate(2022, 12, 6),
+        ]);
     }
 }

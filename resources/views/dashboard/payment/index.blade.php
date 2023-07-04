@@ -46,7 +46,7 @@
                                         @if ($p->status == 'Pending' and $p->image == null)
                                             Tunggu Bukti Pembayaran
                                         @elseif ($p->status == 'Pending' and $p->image != null)
-                                            <form action="/payments/confirm" method="post" class="d-inline">
+                                            <form action="/dashboard/payment/confirm" method="post" class="d-inline">
                                                 @csrf
                                                 <input type="hidden" name="id" value="{{ $p->id }}">
                                                 <button class="badge bg-primary border-0"
@@ -54,7 +54,7 @@
                                                     <span>Konfirmasi</span>
                                                 </button>
                                             </form>
-                                            <form action="/payments/tolak" method="post" class="d-inline">
+                                            <form action="/dashboard/payment/tolak" method="post" class="d-inline">
                                                 @csrf
                                                 <input type="hidden" name="id" value="{{ $p->id }}">
                                                 <button class="badge bg-danger border-0"
