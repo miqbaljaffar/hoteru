@@ -28,16 +28,14 @@ Menyiapkan dan mensetting project hotel-app (laravel 9) require (Composer v2.2.4
 - Project Berhasil DiClone.
 
 ## Asset Foto
-![indexhome](https://user-images.githubusercontent.com/97875134/251057796-7ad740bb-8929-4a0b-a640-e4cfc3e69394.PNG)
-![2indexproduk](https://user-images.githubusercontent.com/97875134/251057841-fd3bd266-57e7-4fd7-a7ac-a71fbb744868.PNG)
-![3indexkategory](https://user-images.githubusercontent.com/97875134/251057909-6f68aa85-d360-43aa-b135-4f81298a061b.PNG)
-![4produk](https://user-images.githubusercontent.com/97875134/251058085-62c1c16c-3cf7-4aa9-80c8-058011e59855.PNG)
-![5dashboard](https://user-images.githubusercontent.com/97875134/251058198-d130f153-e0cb-48f3-9d5d-1a6461424ea5.PNG)
-![6cart](https://user-images.githubusercontent.com/97875134/251058211-688063c7-7ed5-467b-afe4-98586a7f061f.PNG)
-![7checkout](https://user-images.githubusercontent.com/97875134/251058221-eb3c64ff-e4b1-48ba-8526-f104cd89c8cb.PNG)
-![8editprofile](https://user-images.githubusercontent.com/97875134/251058231-0aa109f6-101b-4740-b165-7a5a50ea36dc.PNG)
-![9historycheckout](https://user-images.githubusercontent.com/97875134/251058236-131bf405-1c61-40ff-ad4c-9361e9404aaa.PNG)
-![10detailhistory](https://user-images.githubusercontent.com/97875134/251058247-8dbcf5fe-bf66-4f35-b4c0-df7dbe213712.PNG)
+![indexhome](https://user-images.githubusercontent.com/97875134/257033613-87be3c6b-8f0d-49c0-b6c7-f6c88c51a7ae.PNG)
+![indexhome2](https://user-images.githubusercontent.com/97875134/257033075-211bda89-eb41-4b5c-ae36-442620d8bfac.PNG)
+![kamars](https://user-images.githubusercontent.com/97875134/257033199-2a53e097-b386-43e6-8a2d-a733be593650.PNG)
+![kamar](https://user-images.githubusercontent.com/97875134/257033083-940fcb6a-144f-4b19-abc2-7eddf2adc472.PNG)
+![reservasi](https://user-images.githubusercontent.com/97875134/257033088-a17624e7-5cfd-4928-90fc-711e5c6e6a59.PNG)
+![dashboard](https://user-images.githubusercontent.com/97875134/257033092-d8dad41d-e120-484d-8ff6-e26e014bdf5e.PNG)
+![dataorder](https://user-images.githubusercontent.com/97875134/257033097-723f2a78-2d29-4d7f-84f6-eacb7625de6e.PNG)
+![myaccount](https://user-images.githubusercontent.com/97875134/257033089-a6f3c7e3-b59b-4993-8cb2-96c427fb31e1.PNG)
 
 
 ## License
