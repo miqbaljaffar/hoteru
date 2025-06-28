@@ -17,8 +17,8 @@ class CustomerSeeder extends Seeder
     public function run()
     {
         Customer::create([
-            'name' => 'cakra', 'address' => 'grand', 'jk' => 'L',
-            'job' => 'nganggur', 'birthdate' => Carbon::yesterday()->isoFormat('Y-M-D')
+            'name' => 'Mohammad Iqbal Jaffar', 'address' => 'grand', 'jk' => 'L',
+            'job' => 'Mahasiswa', 'birthdate' => Carbon::yesterday()->isoFormat('Y-M-D')
         ]);
         Customer::create([
             'name' => 'customer', 'address' => 'grand', 'jk' => 'L',

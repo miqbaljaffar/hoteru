@@ -4,19 +4,19 @@
     display: -moz-box;
     display: -ms-flexbox;
     display: -webkit-flex;
-    display: flex
+    display: flex;
 }
 
 .no-flexer,
 .progress-indicator.stacked {
-    display: block
+    display: block;
 }
 
 .no-flexer-element {
     -ms-flex: 0;
     -webkit-flex: 0;
     -moz-flex: 0;
-    flex: 0
+    flex: 0;
 }
 
 .flexer-element,
@@ -24,14 +24,14 @@
     -ms-flex: 1;
     -webkit-flex: 1;
     -moz-flex: 1;
-    flex: 1
+    flex: 1;
 }
 
 .progress-indicator {
     margin: 0 0 1em;
     padding: 0;
     font-size: 80%;
-    text-transform: uppercase
+    text-transform: uppercase;
 }
 
 .progress-indicator>li {
@@ -42,27 +42,27 @@
     margin: 0;
     position: relative;
     text-overflow: ellipsis;
-    color: #bbb;
-    display: block
+    color: #9E9E9E; /* Abu-abu lembut */
+    display: block;
 }
 
 .progress-indicator>li:hover {
-    color: #6f6f6f
+    color: #4B4B4B; /* Abu-abu lebih gelap */
 }
 
 .progress-indicator>li.completed,
 .progress-indicator>li.completed .bubble {
-    color: #65d074
+    color: #4CAF50; /* Hijau, melambangkan kelengkapan */
 }
 
 .progress-indicator>li .bubble {
     border-radius: 1000px;
     width: 20px;
     height: 20px;
-    background-color: #bbb;
+    background-color: #9E9E9E; /* Abu-abu lembut */
     display: block;
     margin: 0 auto .5em;
-    border-bottom: 1px solid #888
+    border-bottom: 1px solid #888; /* Sedikit lebih gelap */
 }
 
 .progress-indicator>li .bubble:after,
@@ -73,96 +73,96 @@
     width: 100%;
     height: 3px;
     content: '';
-    background-color: #bbb
+    background-color: #9E9E9E; /* Abu-abu lembut */
 }
 
 .progress-indicator>li.completed .bubble,
 .progress-indicator>li.completed .bubble:after,
 .progress-indicator>li.completed .bubble:before {
-    background-color: #65d074;
-    border-color: #247830
+    background-color: #4CAF50; /* Hijau */
+    border-color: #2B7A2F; /* Hijau lebih gelap */
 }
 
 .progress-indicator>li .bubble:before {
-    left: 0
+    left: 0;
 }
 
 .progress-indicator>li .bubble:after {
-    right: 0
+    right: 0;
 }
 
 .progress-indicator>li:first-child .bubble:after,
 .progress-indicator>li:first-child .bubble:before {
     width: 50%;
-    margin-left: 50%
+    margin-left: 50%;
 }
 
 .progress-indicator>li:last-child .bubble:after,
 .progress-indicator>li:last-child .bubble:before {
     width: 50%;
-    margin-right: 50%
+    margin-right: 50%;
 }
 
 .progress-indicator>li.active,
 .progress-indicator>li.active .bubble {
-    color: #337AB7
+    color: #3F51B5; /* Biru, melambangkan progres aktif */
 }
 
 .progress-indicator>li.active .bubble,
 .progress-indicator>li.active .bubble:after,
 .progress-indicator>li.active .bubble:before {
-    background-color: #337AB7;
-    border-color: #122a3f
+    background-color: #3F51B5; /* Biru */
+    border-color: #1A237E; /* Biru lebih gelap */
 }
 
 .progress-indicator>li a:hover .bubble,
 .progress-indicator>li a:hover .bubble:after,
 .progress-indicator>li a:hover .bubble:before {
     background-color: #5671d0;
-    border-color: #1f306e
+    border-color: #1f306e;
 }
 
 .progress-indicator>li a:hover .bubble {
-    color: #5671d0
+    color: #5671d0;
 }
 
 .progress-indicator>li.danger .bubble,
 .progress-indicator>li.danger .bubble:after,
 .progress-indicator>li.danger .bubble:before {
-    background-color: #d3140f;
-    border-color: #440605
+    background-color: #D32F2F; /* Merah, untuk bahaya */
+    border-color: #B71C1C; /* Merah gelap */
 }
 
 .progress-indicator>li.danger .bubble {
-    color: #d3140f
+    color: #D32F2F;
 }
 
 .progress-indicator>li.warning .bubble,
 .progress-indicator>li.warning .bubble:after,
 .progress-indicator>li.warning .bubble:before {
-    background-color: #edb10a;
-    border-color: #5a4304
+    background-color: #FFEB3B; /* Kuning cerah */
+    border-color: #F57F17; /* Kuning lebih gelap */
 }
 
 .progress-indicator>li.warning .bubble {
-    color: #edb10a
+    color: #FFEB3B;
 }
 
 .progress-indicator>li.info .bubble,
 .progress-indicator>li.info .bubble:after,
 .progress-indicator>li.info .bubble:before {
-    background-color: #5b32d6;
-    border-color: #25135d
+    background-color: #673AB7; /* Ungu, warna yang sering ditemukan di motif Jepang */
+    border-color: #512DA8; /* Ungu lebih gelap */
 }
 
 .progress-indicator>li.info .bubble {
-    color: #5b32d6
+    color: #673AB7;
 }
 
 .progress-indicator.stacked>li {
     text-indent: -10px;
     text-align: center;
-    display: block
+    display: block;
 }
 
 .progress-indicator.stacked>li .bubble:after,
@@ -170,7 +170,7 @@
     left: 50%;
     margin-left: -1.5px;
     width: 3px;
-    height: 100%
+    height: 100%;
 }
 
 .progress-indicator.stacked .stacked-text {
@@ -181,32 +181,32 @@
     width: 45% !important;
     display: inline-block;
     text-align: left;
-    line-height: 1.2em
+    line-height: 1.2em;
 }
 
 .progress-indicator.stacked>li a {
-    border: none
+    border: none;
 }
 
 .progress-indicator.stacked.nocenter>li .bubble {
     margin-left: 0;
-    margin-right: 0
+    margin-right: 0;
 }
 
 .progress-indicator.stacked.nocenter>li .bubble:after,
 .progress-indicator.stacked.nocenter>li .bubble:before {
-    left: 10px
+    left: 10px;
 }
 
 .progress-indicator.stacked.nocenter .stacked-text {
     width: auto !important;
     display: block;
-    margin-left: 40px !important
+    margin-left: 40px !important;
 }
 
 @media handheld,
-screen and (max-width:400px) {
+screen and (max-width: 400px) {
     .progress-indicator {
-        font-size: 60%
+        font-size: 60%;
     }
 }
