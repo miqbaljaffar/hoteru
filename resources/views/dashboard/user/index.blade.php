@@ -69,9 +69,13 @@
                                             <a href="/dashboard/user/{{ $u->username }}/edit" class="btn btn-success">
                                                 <i class="fas fa-pen"></i>
                                             </a>
-                                            <a class="btn btn-danger me-1 ms-1" href="/dashboard/user/{{ $u->id }}/delete">
-                                                <i class="fas fa-trash"></i>
-                                            </a>
+                                            <form action="{{ route('dashboard.users.destroy', $u->id) }}" method="POST" class="d-inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger me-1 ms-1" onclick="return confirm('Apakah Anda yakin ingin menghapus pengguna ini?')">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </form>
                                         </div>
                                     </td>
                                 </tr>

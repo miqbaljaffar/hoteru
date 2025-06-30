@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\RoomStatus;
+use App\Models\RoomStatus; // Model yang benar adalah RoomStatus
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -19,12 +19,11 @@ class StatusController extends Controller
         }
         $status = RoomStatus::orderBy('id','desc')->get();
         $p = $status->count();
-        // dd($p);
         return view('dashboard.status.index', compact('p','status'));
     }
 
     public function create(){
-                if(auth()->guest()){
+        if(auth()->guest()){
             return redirect('/login');
         }
         if(auth()->user()->is_admin == 0){
@@ -60,10 +59,17 @@ class StatusController extends Controller
         return redirect()->route('dashboard.statuses.index');
     }
 
-    public  function delete($id){
-        $p = RoomStatus::findOrFail($id);
-        $p->delete();
-        Alert::success('Success', 'Data berhasil dihapus');
-        return back();
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\RoomStatus  $status
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(RoomStatus $status) // <-- PERBAIKAN DI SINI
+    {
+        $status->delete();
+
+        Alert::success('Success', 'Data berhasil dihapus'); // Menggunakan SweetAlert
+        return redirect()->route('dashboard.statuses.index');
     }
 }

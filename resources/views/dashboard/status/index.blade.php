@@ -61,9 +61,13 @@
                                             <a href="{{ route('dashboard.statuses.edit', $r->id) }}" class="me-2 btn btn-success">
                                                 <i class="fas fa-pen"></i>
                                             </a>
-                                            <a class="me-2 btn btn-danger" href="#" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $r->id }}">
-                                                <i class="fas fa-trash"></i>
-                                            </a>
+                                            <form action="{{ route('dashboard.statuses.destroy', $r->id) }}" method="post" class="d-inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button class="btn btn-danger" type="submit" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </form>
                                         </div>
                                     </td>
                                 </tr>
@@ -98,16 +102,6 @@
                                 </div>
                             @endforeach
                         </tbody>
-                        <tfoot class="table-secondary">
-                            <tr>
-                                <th width="5%">#</th>
-                                <th width="5%">Id</th>
-                                <th>Name</th>
-                                <th>Code</th>
-                                <th width="48%">Desc</th>
-                                <th>Action</th>
-                            </tr>
-                        </tfoot>
                     </table>
                 </div>
             </div>

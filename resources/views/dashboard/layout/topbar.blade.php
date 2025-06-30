@@ -1,18 +1,14 @@
-<!-- Sidebar Toggle (Topbar) -->
 <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
     <i class="fa fa-bars"></i>
 </button>
 
-<!-- Topbar Navbar -->
 <ul class="navbar-nav ml-auto">
 
-    <!-- Nav Item - Search Dropdown (Visible Only XS) -->
     <li class="nav-item dropdown no-arrow d-sm-none">
         <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-search fa-fw"></i>
         </a>
-        <!-- Dropdown - Search -->
         <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
             <form class="form-inline mr-auto w-100 navbar-search">
                 <div class="input-group">
@@ -28,7 +24,6 @@
         </div>
     </li>
 
-    <!-- Nav Item - Alerts -->
     <li class="nav-item dropdown no-arrow mx-1">
         <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
@@ -45,55 +40,56 @@
             <span class="badge badge-danger badge-counter">{{ $countnotif }}</span>
         </a>
 
-        <!-- Dropdown - Alerts -->
         <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
             aria-labelledby="alertsDropdown">
             <h6 class="dropdown-header">Alerts Center</h6>
 
             @foreach ($notif as $n)
-                <form action="{{ json_decode($n->data)->url }}" method="get">
-                    @csrf
-                    <input type="hidden" name="nid" value="{{ $n->id }}">
-                    <button class="a dropdown-item d-flex align-items-center" type="submit">
-                        <div class="mr-3">
-                            <div class="icon-circle bg-primary">
-                                <i class="fas fa-file-alt text-white"></i>
+                @php
+                    $url = json_decode($n->data)->url;
+                    $parturl = explode('pay/', $url);
+                    // Tambahkan pengecekan untuk menghindari error jika 'pay/' tidak ditemukan
+                    $idpay = isset($parturl[1]) ? trim($parturl[1]) : null;
+                    $pay = $idpay ? App\Models\Payment::where('id', $idpay)->first() : null;
+
+                    $message = json_decode($n->data)->message;
+                    $partmessage = explode('.', $message);
+                    $datatrim = trim($partmessage[0]);
+                @endphp
+
+                {{-- Hanya proses jika data pembayaran dan transaksi valid --}}
+                @if ($pay && $pay->Transaction)
+                    <form action="{{ $url }}" method="get">
+                        @csrf
+                        <input type="hidden" name="nid" value="{{ $n->id }}">
+                        <button class="a dropdown-item d-flex align-items-center" type="submit">
+                            <div class="mr-3">
+                                <div class="icon-circle bg-primary">
+                                    <i class="fas fa-file-alt text-white"></i>
+                                </div>
                             </div>
-                        </div>
-                        <div>
-                            <div class="small text-gray-500">
-                                {{ $n->created_at->diffforhumans() }},
-                                {{ $n->created_at->isoformat('MMM D, Y') }}
-                            </div>
-
-                            @php
-                                $url = json_decode($n->data)->url;
-                                $parturl = explode('pay/', $url);
-                                $idpay = trim($parturl[1]);
-                                $pay = App\Models\Payment::where('id', $idpay)->first();
-
-                                $message = json_decode($n->data)->message;
-                                $partmessage = explode('.', $message);
-                                $datatrim = trim($partmessage[0]);
-
-                                $checkin = Carbon\Carbon::parse($pay->Transaction->check_in)->format('d M Y');
-                                $checkout = Carbon\Carbon::parse($pay->Transaction->check_out)->format('d M Y');
-                                $total = $pay->price;
-                                $invoice = $pay->invoice;
-                            @endphp
-
-                            @if ($pay->status == 'Pending')
+                            <div>
+                                <div class="small text-gray-500">
+                                    {{ $n->created_at->diffforhumans() }},
+                                    {{ $n->created_at->isoformat('MMM D, Y') }}
+                                </div>
                                 <span class="font-weight-bold">{{ $datatrim }}</span>
-                            @else
-                                <span class="font-weight-bold">{{ $message }}</span>
-                            @endif
 
-                            <div class="small text-gray-500">
-                                | Invoice {{ $invoice }} | Total IDR {{ number_format($total) }} | {{ $checkin }} - {{ $checkout }} |
+                                @php
+                                    // Pindahkan deklarasi variabel ke dalam sini
+                                    $checkin = Carbon\Carbon::parse($pay->Transaction->check_in)->format('d M Y');
+                                    $checkout = Carbon\Carbon::parse($pay->Transaction->check_out)->format('d M Y');
+                                    $total = $pay->price;
+                                    $invoice = $pay->invoice;
+                                @endphp
+
+                                <div class="small text-gray-500">
+                                    | Invoice {{ $invoice }} | Total IDR {{ number_format($total) }} | {{ $checkin }} - {{ $checkout }} |
+                                </div>
                             </div>
-                        </div>
-                    </button>
-                </form>
+                        </button>
+                    </form>
+                @endif
             @endforeach
 
             <a class="dropdown-item text-center small text-black-500" href="#">Show All Alerts</a>
@@ -103,7 +99,6 @@
 
     <div class="topbar-divider d-none d-sm-block"></div>
 
-    <!-- Nav Item - User Information -->
     <li class="nav-item dropdown no-arrow">
         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
@@ -111,7 +106,6 @@
             <i class="fa fa-user-circle img-profile rounded-circle fa-lg mt-3 me-2" aria-hidden="true"></i>
         </a>
 
-        <!-- Dropdown - User Information -->
         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
             <a class="dropdown-item" href="#">
                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -134,5 +128,3 @@
     </li>
 
 </ul>
-
-{{-- {{ dd(json_decode($notif[0]->data->url)) }} --}}

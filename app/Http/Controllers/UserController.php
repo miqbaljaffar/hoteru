@@ -189,10 +189,10 @@ class UserController extends Controller
         return redirect('/myaccount');
     }
 
-    public function delete($id){
+    public function destroy($id){
         $p = User::findORFail($id);
         // dd($p);
-        $p->delete();
+        $p->destroy();
         Alert::success('Success', 'Data berhasil di hapus');
         return back();
     }

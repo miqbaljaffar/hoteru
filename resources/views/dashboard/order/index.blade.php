@@ -89,20 +89,6 @@
                                 </tr>
                             @endforeach
                         </tbody>
-                        <tfoot>
-                            <tr>
-                                <th>#</th>
-                                <th>Customer</th>
-                                <th>Room</th>
-                                <th>Check in</th>
-                                <th>Check out</th>
-                                <th>Days</th>
-                                <th>Total Price</th>
-                                <th>Paid Off</th>
-                                <th>Debt</th>
-                                <th>Action</th>
-                            </tr>
-                        </tfoot>
                     </table>
                 </div>
             </div>

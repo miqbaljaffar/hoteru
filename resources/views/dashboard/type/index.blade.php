@@ -57,10 +57,10 @@
                                             <a href="{{ route('dashboard.types.edit', $r->id) }}" class="btn btn-success">
                                                 <i class="fas fa-pen"></i>
                                             </a>
-                                            <form action="/dashboard/data/type/delete" method="post">
+                                            <form action="{{ route('dashboard.types.destroy', $r->id) }}" method="post">
                                                 @csrf
-                                                <input type="hidden" name="id" value="{{ $r->id }}">
-                                                <button class="ms-2 btn btn-danger" type="submit">
+                                                @method('DELETE')
+                                                <button class="ms-2 btn btn-danger" type="submit" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
                                                     <i class="fas fa-trash"></i>
                                                 </button>
                                             </form>
@@ -69,15 +69,6 @@
                                 </tr>
                             @endforeach
                         </tbody>
-                        <tfoot class="table-secondary">
-                            <tr>
-                                <th width="5%">#</th>
-                                <th width="5%">Id</th>
-                                <th>Name</th>
-                                <th width="48%">Desc</th>
-                                <th>Action</th>
-                            </tr>
-                        </tfoot>
                     </table>
                 </div>
             </div>

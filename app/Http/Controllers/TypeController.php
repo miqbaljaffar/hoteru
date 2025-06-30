@@ -67,11 +67,14 @@ class TypeController extends Controller
         return redirect()->route('dashboard.types.index');
     }
 
-    public function delete(Request $request){
-        // $p = Type::findOrFail($request->id);
-        $p = Type::where('id', $request->id)->first();
-        // dd($request->id);
-        $p->delete();
+    public function destroy(Type $type) // Gunakan Route Model Binding di sini
+    {
+        // Karena kita menggunakan route model binding, Laravel secara otomatis
+        // akan menemukan 'Type' berdasarkan ID di URL.
+        // Jadi, kita tidak perlu lagi mencari manual dengan Type::where(...) atau Type::findOrFail(...)
+
+        $type->delete(); // Langsung panggil metode delete() pada instance $type
+
         Alert::success('Success', 'Data berhasil dihapus');
         return back();
     }

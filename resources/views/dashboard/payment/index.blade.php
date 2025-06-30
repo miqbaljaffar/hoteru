@@ -66,17 +66,6 @@
                                 </tr>
                             @endforeach
                         </tbody>
-                        <tfoot>
-                            <tr>
-                                <th width="4%">#</th>
-                                <th class="text-center">Customer</th>
-                                <th class="text-center">Kamar</th>
-                                <th class="text-center">Price</th>
-                                <th class="text-center">Date</th>
-                                <th class="text-center">Bukti</th>
-                                <th class="text-center">Action</th>
-                            </tr>
-                        </tfoot>
                     </table>
                 </div>
             </div>
@@ -118,17 +107,6 @@
                                 </tr>
                             @endforeach
                         </tbody>
-                        <tfoot>
-                            <tr>
-                                <th width="4%">#</th>
-                                <th class="text-center">Customer</th>
-                                <th class="text-center">Kamar</th>
-                                <th class="text-center">Price</th>
-                                <th class="text-center">Date</th>
-                                <th class="text-center">Status</th>
-                                <th class="text-center">Action</th>
-                            </tr>
-                        </tfoot>
                     </table>
                 </div>
             </div>

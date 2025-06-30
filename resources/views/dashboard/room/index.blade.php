@@ -60,10 +60,14 @@
                                         <a href="{{ route('dashboard.rooms.edit', $r->no) }}" class="btn btn-success btn-sm me-1" title="Edit">
                                             <i class="fas fa-pen"></i>
                                         </a>
-                                        {{-- Tombol untuk memicu modal hapus --}}
-                                        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-room-no="{{ $r->no }}" title="Delete">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
+                                        {{-- Form hapus langsung seperti di halaman 'type' --}}
+                                        <form action="{{ route('dashboard.rooms.destroy', $r->no) }}" method="POST" class="d-inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')" title="Delete">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach
