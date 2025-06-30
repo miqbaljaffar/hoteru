@@ -1,7 +1,7 @@
 @extends('dashboard.layout.main')
 
 @section('title')
-    <title>Dashboard</title>
+    <title>Dashboard | Type</title>
 @endsection
 
 @section('content')
@@ -30,7 +30,8 @@
     <div class="container">
         <div class="card shadow border-0">
             <div class="card-header">
-                <h5>Total data {{ $p }}</h5>
+                {{-- Menggunakan $type->total() untuk menampilkan jumlah data --}}
+                <h5>Total data {{ $type->total() }}</h5>
             </div>
             <div class="card-body">
                 <div class="col-md-auto">
@@ -45,10 +46,11 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @php $no = 1; @endphp
-                            @foreach ($type as $r)
+                            {{-- Menggunakan @forelse untuk menangani data kosong --}}
+                            @forelse ($type as $r)
                                 <tr>
-                                    <td>{{ $no++ }}</td>
+                                    {{-- Penomoran yang benar untuk paginasi --}}
+                                    <td>{{ ($type->currentPage() - 1) * $type->perPage() + $loop->iteration }}</td>
                                     <td>{{ $r->id }}</td>
                                     <td>{{ $r->name }}</td>
                                     <td>{{ $r->info }}</td>
@@ -57,7 +59,7 @@
                                             <a href="{{ route('dashboard.types.edit', $r->id) }}" class="btn btn-success">
                                                 <i class="fas fa-pen"></i>
                                             </a>
-                                            <form action="{{ route('dashboard.types.destroy', $r->id) }}" method="post">
+                                            <form action="{{ route('dashboard.types.destroy', $r->id) }}" method="post" class="d-inline">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button class="ms-2 btn btn-danger" type="submit" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
@@ -67,9 +69,17 @@
                                         </div>
                                     </td>
                                 </tr>
-                            @endforeach
+                            @empty
+                                <tr>
+                                    <td colspan="5" class="text-center">Tidak ada data</td>
+                                </tr>
+                            @endforelse
                         </tbody>
                     </table>
+                    {{-- Memindahkan link paginasi ke bawah tabel --}}
+                    <div class="d-flex justify-content-center">
+                        {!! $type->links() !!}
+                    </div>
                 </div>
             </div>
         </div>

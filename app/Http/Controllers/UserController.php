@@ -10,20 +10,17 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use RealRashid\SweetAlert\Facades\Alert;
+use App\Jobs\DeleteProfilePhoto;
 
 class UserController extends Controller
 {
-    public function index(){
-        if(auth()->guest()){
-            return redirect('/login');
-        }
-        if(auth()->user()->is_admin == 0){
-            abort(404);
-        }
-        $user = User::where('is_admin', 0)->get();
-        // dd($user);
-        $p = $user->count();
-        return view('dashboard.user.index', compact('p','user'));
+    public function index()
+    {
+        // Menggunakan paginate dan tidak lagi mengirimkan variabel $p
+        $user = User::where('is_admin', 0)->paginate(10);
+        return view('dashboard.user.index', [
+            'user' => $user
+        ]);
     }
 
     public function create(){
@@ -229,30 +226,26 @@ class UserController extends Controller
         Alert::success('Success', 'Image Successfully Update!');
         return back();
     }
-    public function delfoto($id){
+
+    public function delfoto($id)
+    {
         $user = User::findOrFail($id);
-        $image = $user->image;
-        $path  = storage_path(). "/app/public/" . $image;
-        //    dd($path);
-           if (File::exists($path)) {
-              //File::delete($image_path);
-            unlink($path);
-        }
-        $user->update([
-            'image' => null
-        ]);
-        Alert::success('Success', 'Image Successfully Deleted!');
-        return back();
+
         if ($user->image) {
-        // Gunakan Storage facade, lebih aman dan scalable
-        \Illuminate\Support\Facades\Storage::disk('public')->delete($user->image);
+            // Pindahkan proses penghapusan file ke background job
+            DeleteProfilePhoto::dispatch($user->image);
+
+            // Update kolom image menjadi null
+            $user->update(['image' => null]);
+
+            Alert::success('Success', 'Foto profil akan segera dihapus.');
+        } else {
+            Alert::info('Info', 'Tidak ada foto profil untuk dihapus.');
+        }
+
+        return back();
     }
 
-    $user->update(['image' => null]);
-
-    Alert::success('Success', 'Image Successfully Deleted!');
-    return back();
-    }
     public function history(){
         if(auth()->guest()){
             return redirect('/login');

@@ -10,16 +10,13 @@ use RealRashid\SweetAlert\Facades\Alert;
 class StatusController extends Controller
 {
 
-    public function index(){
-        if(auth()->guest()){
-            return redirect('/login');
-        }
-        if(auth()->user()->is_admin == 0){
-            abort(404);
-        }
-        $status = RoomStatus::orderBy('id','desc')->get();
-        $p = $status->count();
-        return view('dashboard.status.index', compact('p','status'));
+    public function index()
+    {
+        // Menggunakan paginate dan hanya mengirimkan variabel $status
+        $status = RoomStatus::orderBy('id','desc')->paginate(10);
+        return view('dashboard.status.index', [
+            'status' => $status
+        ]);
     }
 
     public function create(){

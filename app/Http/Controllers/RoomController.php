@@ -27,10 +27,11 @@ class RoomController extends Controller
      */
     public function index()
     {
-        $rooms = Room::with('type', 'status')->latest()->paginate(10); // REFAKTOR: Gunakan latest() & paginate
+        // Menggunakan eager loading dengan with(['type', 'status'])
+        $rooms = Room::with(['type', 'status'])->latest()->paginate(10);
         return view('dashboard.room.index', ['rooms' => $rooms]);
     }
-
+    
     /**
      * Menampilkan form untuk membuat kamar baru.
      */
@@ -138,7 +139,7 @@ class RoomController extends Controller
         Alert::success('Success', 'Data kamar berhasil diedit');
         return redirect()->route('dashboard.rooms.index');
     }
-    
+
     /**
      * Menghapus data kamar.
      * REFAKTOR: Menggunakan Route Model Binding (Room $room) dan method DELETE.

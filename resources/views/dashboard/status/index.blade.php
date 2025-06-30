@@ -30,7 +30,8 @@
     <div class="container">
         <div class="card border-0 shadow">
             <div class="card-header">
-                <h5>Total data {{ $p }}</h5>
+                {{-- Menggunakan $status->total() untuk menampilkan jumlah data --}}
+                <h5>Total data {{ $status->total() }}</h5>
             </div>
             <div class="card-body">
                 <div class="col-md-auto">
@@ -46,12 +47,11 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @php
-                                $no = 1;
-                            @endphp
-                            @foreach ($status as $r)
+                            {{-- Menggunakan @forelse untuk menangani data kosong --}}
+                            @forelse ($status as $r)
                                 <tr>
-                                    <td>{{ $no++ }}</td>
+                                    {{-- Penomoran yang benar untuk paginasi --}}
+                                    <td>{{ ($status->currentPage() - 1) * $status->perPage() + $loop->iteration }}</td>
                                     <td>{{ $r->id }}</td>
                                     <td>{{ $r->name }}</td>
                                     <td>{{ $r->code }}</td>
@@ -71,38 +71,17 @@
                                         </div>
                                     </td>
                                 </tr>
-
-                                <!-- Delete Modal -->
-                                <div class="modal fade" id="deleteModal{{ $r->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">
-                                                    Are you sure to delete this data?
-                                                </h5>
-                                                <button class="close" type="button" data-bs-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">×</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                Select "Delete" below if you are ready to delete.
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">
-                                                    Cancel
-                                                </button>
-                                                <form action="{{ route('dashboard.statuses.destroy', $r->id) }}" method="post">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button class="btn btn-danger me-1" type="submit">Delete</button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endforeach
+                            @empty
+                                <tr>
+                                    <td colspan="6" class="text-center">Tidak ada data</td>
+                                </tr>
+                            @endforelse
                         </tbody>
                     </table>
+                    {{-- Memindahkan link paginasi ke bawah tabel --}}
+                    <div class="d-flex justify-content-center">
+                        {!! $status->links() !!}
+                    </div>
                 </div>
             </div>
         </div>

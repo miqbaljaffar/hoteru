@@ -30,7 +30,8 @@
     <div class="container">
         <div class="card shadow border-0">
             <div class="card-header">
-                <h5>Total data {{ $p }}</h5>
+                {{-- Menggunakan $user->total() untuk menampilkan jumlah data pengguna yang dipaginasi --}}
+                <h5>Total data {{ $user->total() }}</h5>
             </div>
             <div class="card-body">
                 <div class="col-md-auto">
@@ -50,12 +51,11 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @php
-                                $no = 1;
-                            @endphp
-                            @foreach ($user as $u)
+                            {{-- Memeriksa apakah koleksi $user kosong --}}
+                            @forelse ($user as $u)
                                 <tr>
-                                    <td>{{ $u->id }}</td>
+                                    {{-- Penomoran yang benar untuk paginasi --}}
+                                    <td>{{ ($user->currentPage() - 1) * $user->perPage() + $loop->iteration }}</td>
                                     <td>{{ $u->Customer->name ?? '-' }}</td>
                                     <td>{{ $u->username ?? '-' }}</td>
                                     <td>{{ $u->telp ?? '-' }}</td>
@@ -69,6 +69,7 @@
                                             <a href="/dashboard/user/{{ $u->username }}/edit" class="btn btn-success">
                                                 <i class="fas fa-pen"></i>
                                             </a>
+                                            {{-- Form ini sudah berfungsi dengan `onclick` confirm --}}
                                             <form action="{{ route('dashboard.users.destroy', $u->id) }}" method="POST" class="d-inline">
                                                 @csrf
                                                 @method('DELETE')
@@ -79,7 +80,11 @@
                                         </div>
                                     </td>
                                 </tr>
-                            @endforeach
+                            @empty
+                                <tr>
+                                    <td colspan="10" class="text-center">Tidak ada data</td>
+                                </tr>
+                            @endforelse
                         </tbody>
                         <tfoot class="table-secondary">
                             <tr>
@@ -96,45 +101,14 @@
                             </tr>
                         </tfoot>
                     </table>
+                    {{-- Menempatkan link paginasi di bawah tabel --}}
+                    <div class="d-flex justify-content-center">
+                        {!! $user->links() !!}
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <script type="text/javascript">
-        function deleteConfirmation(id) {
-            swal({
-                title: "Delete?",
-                text: "Please ensure and then confirm!",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonText: "Yes, delete it!",
-                cancelButtonText: "No, cancel!",
-                reverseButtons: true
-            }).then(function(e) {
-                if (e.value === true) {
-                    var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-                    $.ajax({
-                        type: 'POST',
-                        url: "{{ url('room') }}/" + id,
-                        data: {
-                            _token: CSRF_TOKEN
-                        },
-                        dataType: 'JSON',
-                        success: function(results) {
-                            if (results.success === true) {
-                                swal("Done!", results.message, "success");
-                            } else {
-                                swal("Error!", results.message, "error");
-                            }
-                        }
-                    });
-                } else {
-                    e.dismiss;
-                }
-            }, function(dismiss) {
-                return false;
-            });
-        }
-    </script>
+    {{-- Script `deleteConfirmation` telah dihapus karena tidak digunakan dan mengandung error --}}
 @endsection

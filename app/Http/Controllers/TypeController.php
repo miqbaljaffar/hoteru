@@ -10,20 +10,15 @@ use RealRashid\SweetAlert\Facades\Alert;
 class TypeController extends Controller
 {
 
-    public function index(){
-        // dd($p);
-        if(auth()->guest()){
-            return redirect('/login');
-        }
-        if(auth()->user()->is_admin == 0){
-            abort(404);
-        }
-        $type = Type::orderBy('id', 'desc')->get();
-        $p = $type->count();
-        // dd($type);
-        return view('dashboard.type.index', compact('p','type'));
+    public function index()
+    {
+        // Menggunakan paginate dan hanya mengirimkan variabel $type
+        $type = Type::orderBy('id', 'desc')->paginate(10);
+        return view('dashboard.type.index', [
+            'type' => $type
+        ]);
     }
-
+    
     public function create(){
                 if(auth()->guest()){
             return redirect('/login');
