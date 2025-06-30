@@ -5,128 +5,99 @@ namespace App\Http\Controllers;
 use App\Models\Customer;
 use App\Models\Room;
 use App\Models\Transaction;
-use App\Models\User;
+use App\Models\Facility; // Pastikan ini di-import
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
 
 class IndexController extends Controller
 {
+    /**
+     * Menampilkan halaman utama (homepage).
+     */
     public function index()
     {
-        $room = Room::paginate(3);
-        // dd(auth()->user());
-        return view('index', compact('room'));
+        // Mengambil 3 kamar secara acak untuk ditampilkan di homepage
+        $rooms = Room::with('type', 'images')->inRandomOrder()->limit(3)->get();
+        $facilities = Facility::all();
+
+        return view('index', compact('rooms', 'facilities'));
     }
 
-    public function pesan()
-    {
-        $uri = Route::currentRouteName();
-        // dd($uri);
-        return view('pesan', compact('uri'));
-    }
+    /**
+     * REFAKTOR: Menampilkan halaman daftar kamar dengan filter pencarian.
+     * Logika pencarian yang kompleks kini ditangani oleh Query Scope di Model.
+     */
     public function room(Request $request)
     {
-        // dd($request->all());
-        if (!empty($request->from or $request->count)) {
-            $stayfrom = Carbon::parse($request->from)->isoFormat('D MMM YYYY');
-            $stayto = Carbon::parse($request->to)->isoFormat('D MMM YYYY');
-            // dd($request->all());
-            if ($request->from and $request->to and $request->count != null) {
-                $occupiedRoomId = $this->getOccupiedRoomID($request->from, $request->to);
-                $rooms = $this->getUnocuppiedroom($request, $occupiedRoomId);
-                $roomsCount = $this->countUnocuppiedroom($request, $occupiedRoomId);
-            } elseif ($request->count != null) {
-                $rooms = $this->getUnocuppiedroom2($request);
-                $roomsCount = $this->countUnocuppiedroom2($request);
-            } else {
-                $occupiedRoomId = $this->getOccupiedRoomID($request->from, $request->to);
-                $rooms = $this->getUnocuppiedroom($request, $occupiedRoomId);
-                $roomsCount = $this->countUnocuppiedroom($request, $occupiedRoomId);
-            }
-        } else {
-            $rooms = Room::paginate(20);
-            $roomsCount = Room::count();
+        // Validasi input dasar
+        $request->validate([
+            'from' => 'nullable|date',
+            'to' => 'nullable|date|after_or_equal:from',
+            'count' => 'nullable|integer|min:1',
+        ]);
+
+        // Memulai query builder untuk Room
+        $roomQuery = Room::query();
+
+        // Jika ada input tanggal, gunakan scope 'availableFor'
+        if ($request->filled('from') && $request->filled('to')) {
+            $roomQuery->availableFor($request->from, $request->to);
         }
 
-        return view('frontend.rooms', compact('rooms', 'roomsCount', 'request'));
+        // Jika ada input jumlah tamu, filter berdasarkan kapasitas
+        // 'when' hanya akan menjalankan closure jika kondisi pertama true.
+        $roomQuery->when($request->filled('count'), function ($query) use ($request) {
+            return $query->where('capacity', '>=', $request->count);
+        });
+
+        // Ambil hasil query dengan relasi dan paginasi
+        $rooms = $roomQuery->with('type', 'status', 'images')->latest()->paginate(9);
+
+        return view('frontend.rooms', [
+            'rooms' => $rooms,
+            'roomsCount' => $rooms->total(), // Menggunakan total dari paginator
+            'request' => $request // Kirim request untuk mengisi ulang form
+        ]);
     }
 
+    /**
+     * Menampilkan halaman fasilitas.
+     * Mengambil data dari database agar dinamis.
+     */
     public function facility()
     {
-        return view('frontend.facilities');
+        $facilities = Facility::latest()->get();
+        return view('frontend.facilities', compact('facilities'));
     }
+
+    /**
+     * Menampilkan halaman kontak.
+     */
     public function contact()
     {
         return view('frontend.contact');
     }
+
+    /**
+     * Menampilkan halaman "Tentang Kami" dengan statistik.
+     */
     public function about()
     {
-        $r = Room::count();
-        $c = Customer::count();
-        $t = Transaction::count();
-        // dd($r);
-        return view('frontend.about', compact('r', 'c', 't'));
+        $stats = [
+            'rooms' => Room::count(),
+            'customers' => Customer::count(),
+            'transactions' => Transaction::count(),
+        ];
+        return view('frontend.about', compact('stats'));
     }
 
-
-
-    private function getUnocuppiedroom($request, $occupiedRoomId)
+    /**
+     * (Asumsi) Menampilkan halaman untuk memesan, bisa dihapus jika tidak relevan.
+     */
+    public function pesan()
     {
-        if ($request->count != null) {
-            $rooms = Room::with('type', 'status')->where('capacity', '>=', $request->count)->whereNotIn('id', $occupiedRoomId);
-        } else {
-            $rooms = Room::with('type', 'status')->whereNotIn('id', $occupiedRoomId);
-        }
-        $rooms = $rooms
-            ->orderBy('capacity')
-            ->paginate(10);
-
-        return $rooms;
-    }
-    private function getUnocuppiedroom2($request)
-    {
-        $rooms = Room::with('type', 'status')->where('capacity', '>=', $request->count);
-        $rooms = $rooms
-            ->orderBy('capacity')
-            ->paginate(10);
-        return $rooms;
-    }
-    private function countUnocuppiedroom($request, $occupiedRoomId)
-    {
-        if ($request->count != null) {
-            $roomsCount = Room::with('type', 'status')
-                ->where('capacity', '>=', $request->count)
-                ->whereNotIn('id', $occupiedRoomId)
-                ->orderBy('price')
-                ->orderBy('capacity')
-                ->count();
-        } else {
-            $roomsCount =  Room::with('type', 'status')
-                ->whereNotIn('id', $occupiedRoomId)
-                ->orderBy('price')
-                ->orderBy('capacity')
-                ->count();
-        }
-        return $roomsCount;
-    }
-    private function countUnocuppiedroom2($request)
-    {
-        return Room::with('type', 'status')
-            ->where('capacity', '>=', $request->count)
-            ->orderBy('price')
-            ->orderBy('capacity')
-            ->count();
-    }
-
-
-    private function getOccupiedRoomID($stayfrom, $stayto)
-    {
-        $occupiedRoomId = Transaction::where([['check_in', '<=', $stayfrom], ['check_out', '>=', $stayto]])
-            ->orWhere([['check_in', '>=', $stayfrom], ['check_in', '<=', $stayto]])
-            ->orWhere([['check_out', '>=', $stayfrom], ['check_out', '<=', $stayto]])
-            ->pluck('room_id');
-        return $occupiedRoomId;
+        $uri = Route::currentRouteName();
+        return view('pesan', compact('uri'));
     }
 }

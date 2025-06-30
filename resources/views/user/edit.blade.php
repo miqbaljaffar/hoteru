@@ -63,7 +63,7 @@
                             <hr>
                             <div class="d-flex justify-content-start">
                                 <div class="col-md-12">
-                                    <form action="/myaccount/addimage" method="post" enctype="multipart/form-data">
+                                    <form action="{{ route('myaccount.photo.change') }}" method="post" enctype="multipart/form-data">
                                         @csrf
                                         <label for="bukti" class="mb-2"></label>
                                         <input type="hidden" name="id" value="{{ $user->id }}">

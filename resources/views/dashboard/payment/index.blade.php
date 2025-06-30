@@ -45,7 +45,7 @@
                                         @if ($p->status == 'Pending' && $p->image == null)
                                             Tunggu Bukti Pembayaran
                                         @elseif ($p->status == 'Pending' && $p->image != null)
-                                            <form action="/dashboard/payment/confirm" method="post" class="d-inline">
+                                            <form action="{{ route('dashboard.payments.confirm') }}" method="post" class="d-inline">
                                                 @csrf
                                                 <input type="hidden" name="id" value="{{ $p->id }}">
                                                 <button class="badge bg-primary border-0"
@@ -111,7 +111,7 @@
                                     <td class="text-center">{{ $p->created_at->isoformat('D MMMM Y') }}</td>
                                     <td class="text-center">{{ $p->status }}</td>
                                     <td class="text-center">
-                                        <a href="/dashboard/order/history-pay/{{ $p->id }}">
+                                        <a href="{{ route('dashboard.payments.invoice', $p->id) }}">
                                             <i class="fas fa-file-invoice"></i>
                                         </a>
                                     </td>

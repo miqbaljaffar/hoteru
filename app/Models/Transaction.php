@@ -16,56 +16,57 @@ class Transaction extends Model
         'check_out' => 'datetime',
     ];
 
-    public function Customer()
+    /**
+     * BARU: Menambahkan appends agar accessor otomatis disertakan.
+     */
+    protected $appends = ['total_price', 'total_payment', 'remaining_balance', 'minimum_down_payment'];
+
+    // --- RELASI ---
+
+    public function customer()
     {
         return $this->belongsTo(Customer::class, 'c_id');
     }
-    public function Room()
+
+    public function room()
     {
         return $this->belongsTo(Room::class, 'room_id');
     }
-    public function Payments()
+
+    public function payments()
     {
         return $this->hasMany(Payment::class);
     }
 
-    public function getTotalPrice()
-    {
-        $day = $this->check_in->diffindays($this->check_out);
-        $room_price = $this->room->price;
-        $total_price = $room_price * $day;
-        return $total_price;
-    }
+    // --- ACCESSORS (BARU) ---
 
-    public function getDateDifferenceWithPlural()
+    public function getTotalPriceAttribute(): float
     {
-        $day = $this->check_in->diffindays($this->check_out);
-        $plural = Str::plural('Day', $day);
-        return $day . ' ' . $plural;
-    }
-
-    public function getTotalPayment()
-    {
-        $totalPayment = 0;
-        foreach ($this->Payments as $payment) {
-            if ($payment->status == 'Pending') {
-                $totalPayment = 0;
-            } else {
-                $totalPayment += $payment->price;
-            }
+        if (!$this->room) {
+            return 0;
         }
-        return $totalPayment;
+        $days = $this->check_in->diffInDays($this->check_out);
+        return $this->room->price * $days;
     }
 
-    public function getMinimumDownPayment()
+    public function getTotalPaymentAttribute(): float
     {
-        $dayDifference =  $this->check_in->diffindays($this->check_out);
-        $minimumDownPayment = ($this->room->price * $dayDifference) * 0.15;
-        return $minimumDownPayment;
+        return $this->payments()->where('status', '!=', 'Pending')->sum('price');
     }
 
-    public function User()
+    public function getRemainingBalanceAttribute(): float
     {
-        return $this->belongsTo(User::class, 'c_id');
+        return $this->total_price - $this->total_payment;
+    }
+
+    public function getMinimumDownPaymentAttribute(): float
+    {
+        return $this->total_price * 0.5;
+    }
+
+    public function getDateDifferenceWithPlural(): string
+    {
+        $day = $this->check_in->diffInDays($this->check_out);
+        return $day . ' ' . Str::plural('Day', $day);
     }
 }

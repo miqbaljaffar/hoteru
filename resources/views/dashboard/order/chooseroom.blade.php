@@ -82,13 +82,13 @@
                                         </div>
                                         <div
                                             class="d-flex justify-content-center col-lg-4 col-md-12 col-12 order-1 order-md-1 order-lg-2">
-                                            @if (!$room->Images->count() > 0)
+                                            @if ($room->images->isEmpty())
                                                 <img src="/img/default-room.png" class="w-100" style="object-fit: cover;"
-                                                    class="justify-content-center" height="250" alt="">
+                                                    height="250" alt="Default Room Image">
                                             @else
-                                                <img src="{{ asset('storage/' . $room->images[0]->image) }}" class="w-100"
-                                                    style="object-fit: cover;" class="justify-content-center" height="250"
-                                                    alt="">
+                                                <img src="{{ asset('storage/' . $room->images->first()->image) }}" class="w-100"
+                                                    style="object-fit: cover;" height="250"
+                                                    alt="Room Image">
                                             @endif
                                         </div>
                                     </div>

@@ -2,165 +2,130 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\NewReservationEvent;
-use App\Events\RefreshDashboardEvent;
-use App\Models\Customer;
 use App\Models\Payment;
 use App\Models\PaymentMethod;
 use App\Models\Room;
 use App\Models\Transaction;
-use App\Models\User;
-use App\Notifications\NewRoomReservationDownPayment;
+use App\Services\ReservationService; // REFAKTOR
 use Carbon\Carbon;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class OrderController extends Controller
 {
+    protected $reservationService;
+
+    // REFAKTOR: Dependency injection untuk ReservationService
+    public function __construct(ReservationService $reservationService)
+    {
+        $this->middleware('auth');
+        $this->reservationService = $reservationService;
+    }
 
     public function index(Request $request)
     {
-        if (auth()->guest()) {
-            Alert::error('Please Login First!');
-            return redirect('/login');
-        }
-        $stayfrom = Carbon::parse($request->from);
-        $stayuntil = Carbon::parse($request->to);
-        $room = Room::where('id', $request->room)->first();
+        $stayFrom = Carbon::parse($request->from);
+        $stayUntil = Carbon::parse($request->to);
 
-        $cektransaksi = Transaction::where('room_id', $request->room)->where([['check_in', '<=', $stayfrom], ['check_out', '>=', $stayuntil]])
-            ->orWhere([['check_in', '>=', $stayfrom], ['check_in', '<=', $stayuntil]])
-            ->orWhere([['check_out', '>=', $stayfrom], ['check_out', '<=', $stayuntil]])->get();
-        if ($cektransaksi->count() > 0) {
-            Alert::error('Kamar Tidak Tersedia');
+        // REFAKTOR: Gunakan Query Scope 'availableFor'
+        if (!Room::availableFor($stayFrom, $stayUntil)->where('id', $request->room)->exists()) {
+            Alert::error('Kamar Tidak Tersedia', 'Maaf, kamar ini sudah dipesan pada rentang tanggal yang Anda pilih.');
             return back();
         }
-        if ($request->customer == null) {
-            $auth = Auth()->user()->Customer->id;
-            $customer = Customer::where('id', $auth)->first();
-        } else {
-            $customer = Customer::where('id', $request->customer)->first();
-        }
 
-        $price = $room->price;
-        $dayDifference = $stayfrom->diffindays($stayuntil);
-        $total = $price * $dayDifference;
-        $paymentmethodnotid = [1];
-        $paymentmet = PaymentMethod::whereNotIn('id', $paymentmethodnotid)->get();
+        $room = Room::findOrFail($request->room);
+        $customer = Auth::user()->customer;
+        $dayDifference = $stayFrom->diffInDays($stayUntil);
+        $totalPrice = $room->price * $dayDifference;
+        $paymentMethods = PaymentMethod::where('id', '!=', 1)->get(); // Ambil metode pembayaran selain 'OFFLINE'
 
-        return view('frontend.order', compact('customer', 'room', 'stayfrom', 'dayDifference', 'stayuntil', 'total', 'paymentmet'));
+        return view('frontend.order', [
+            'customer' => $customer,
+            'room' => $room,
+            'stayfrom' => $stayFrom,
+            'stayuntil' => $stayUntil,
+            'dayDifference' => $dayDifference,
+            'total' => $totalPrice,
+            'paymentmet' => $paymentMethods,
+        ]);
     }
 
     public function order(Request $request)
     {
-        $rooms = Room::where('id', $request->room)->first();
-        $customers = Customer::where('id', $request->customer)->first();
-
-        //cek transaksi apakah kamar sudah ada booking
-        $stayfrom = Carbon::parse($request->check_in);
-        $stayuntil = Carbon::parse($request->check_out);
-        $cektransaksi = Transaction::where('room_id', $request->room)->where([['check_in', '<=', $stayfrom], ['check_out', '>=', $stayuntil]])
-            ->orWhere([['check_in', '>=', $stayfrom], ['check_in', '<=', $stayuntil]])
-            ->orWhere([['check_out', '>=', $stayfrom], ['check_out', '<=', $stayuntil]])->get();
-        if ($cektransaksi->count() > 0) {
-            Alert::error('Kamar Tidak Tersedia');
-            return back();
-        }
-        // ===========
-
-
-        if ($customers->nik == null) {
-            Alert::error('Kesalahan Data', 'Mohon Isi Data NIK');
-            return redirect('myaccount');
-        }
-
-        $transaction = $this->storetransaction($request, $rooms);
-        $status = 'Pending';
-        $payment = $this->storepayment($request, $transaction, $status);
-
-        $superAdmins = User::where('is_admin', 1)->get();
-
-        foreach ($superAdmins as $superAdmin) {
-            $message = 'Reservation added by ' . $customers->name;
-            event(new NewReservationEvent($message, $superAdmin));
-            $superAdmin->notify(new NewRoomReservationDownPayment($transaction, $payment));
-        }
-        event(new RefreshDashboardEvent("Someone reserved a room"));
-        $inv = Payment::where('c_id', $request->customer)->orderby('id', 'desc')->first();
-        Alert::success('Thanks!', 'Room ' . $rooms->no . ' Has been reservated' . ' Please Pay now!');
-        return redirect('/bayar/' . $inv->Transaction->id);
+        // REFAKTOR: Controller hanya memanggil service.
+        return $this->reservationService->createFromCustomer($request);
     }
 
+    /**
+     * REFAKTOR: Menampilkan halaman invoice.
+     */
     public function invoice($id)
     {
-        $p = Payment::where('id', $id)->with('Customer', 'Transaction', 'Methode')->first();
-        if ($p->status == 'Pending') {
-            return abort(404);
+        // Pastikan user hanya bisa lihat invoice miliknya
+        $payment = Payment::with(['customer', 'transaction.room', 'methode'])
+            ->where('id', $id)
+            ->where('c_id', Auth::user()->customer->id)
+            ->firstOrFail();
+
+        // Jangan tampilkan invoice jika statusnya masih 'Pending'
+        if ($payment->status == 'Pending') {
+            return abort(404, 'Invoice Not Found');
         }
-        // dd($p);
-        return view('frontend.invoice', compact('p'));
+
+        return view('frontend.invoice', ['p' => $payment]);
     }
 
-    public function pembayaran($id)
+    /**
+     * REFAKTOR: Menampilkan halaman untuk melakukan pembayaran.
+     */
+    public function pembayaran($transaction_id)
     {
+        $transaction = Transaction::with('payments.methode', 'room')
+            ->where('id', $transaction_id)
+            ->where('c_id', Auth::user()->customer->id) // Pastikan user hanya bisa bayar transaksinya sendiri
+            ->firstOrFail();
 
-        $t = Transaction::findOrFail($id);
-        // dd($t->Payments[0]->Methode->nama);
-        $pmi = [1];
-        $pay = $t->Payments->wherenotin('payment_method_id', $pmi)->first();
-        if ($pay->status == 'Pending' and $pay->image != null) {
-            return back();
+        // Cari pembayaran yang pending dan bukan offline
+        $payment = $transaction->payments()
+            ->where('status', 'Pending')
+            ->where('payment_method_id', '!=', 1)
+            ->first();
+
+        // Jika tidak ada pembayaran pending atau sudah ada bukti upload, jangan tampilkan halaman ini.
+        if (!$payment || !is_null($payment->image)) {
+            Alert::info('Info', 'Tidak ada tagihan yang perlu dibayar atau Anda sudah mengupload bukti pembayaran.');
+            return redirect('/history');
         }
-        // dd($pay->id);
-        $price = Room::where('id', $t->Room->id)->first()->price;
-        return view('frontend.bayar', compact('t', 'price', 'pay'));
+
+        return view('frontend.bayar', [
+            't' => $transaction,
+            'price' => $transaction->total_price, // Gunakan accessor dari model
+            'pay' => $payment
+        ]);
     }
 
+    /**
+     * REFAKTOR: Menyimpan bukti pembayaran yang di-upload.
+     */
     public function bayar(Request $request)
     {
-        $validatedData = $request->validate([
-            'image' => 'required|image|file',
+        $validated = $request->validate([
+            'id' => 'required|exists:payments,id',
+            'image' => 'required|image|file|max:2048', // Batasi ukuran file
         ]);
-        if ($request->file('image')) {
-            $image = $validatedData['image'] = $request->file('image')->store('bukti-images', 'public');
+
+        $payment = Payment::findOrFail($validated['id']);
+
+        // Pastikan user hanya bisa upload bukti untuk pembayarannya sendiri
+        if ($payment->c_id !== Auth::user()->customer->id) {
+            return abort(403, 'Unauthorized Action');
         }
-        $payment = Payment::findOrFail($request->id);
-        // dd($request->all());
-        $payment->update([
-            'image' => $image,
-        ]);
-        Alert::success('Pembayaran Berhasil', 'Tunggu Konfirmasi!');
+
+        $imagePath = $request->file('image')->store('bukti-images', 'public');
+        $payment->update(['image' => $imagePath]);
+
+        Alert::success('Pembayaran Berhasil', 'Terima kasih! Mohon tunggu konfirmasi dari admin.');
         return redirect('/history');
-    }
-
-    private function storetransaction($request, $rooms)
-    {
-        // dd($request->customer);
-        $storetransaction = Transaction::create([
-            // 'user_id' => auth()->user()->id,
-            'room_id' => $rooms->id,
-            'c_id' => $request->customer,
-            'check_in' => $request->check_in,
-            'check_out' => $request->check_out,
-            'status' => 'Reservation'
-        ]);
-        return $storetransaction;
-    }
-
-    private function storepayment($request, $transaction, string $status)
-    {
-        $price = $request->price;
-        $count = Payment::count() + 1;
-        $payment = Payment::create([
-            'c_id' => $request->customer,
-            'transaction_id' => $transaction->id,
-            'price' => $price,
-            'status' => $status,
-            'payment_method_id' => $request->payment_method_id,
-            'invoice' =>  '0' . $request->customer . 'INV' . $count . Str::random(4)
-        ]);
-
-        return $payment;
     }
 }

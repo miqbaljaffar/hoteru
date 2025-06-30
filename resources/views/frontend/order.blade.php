@@ -51,7 +51,7 @@
                                     <hr>
 
                                     <div class="col-sm-12 mt-2">
-                                        <form method="POST" action="/order/post">
+                                        <form method="POST" action="{{ route('order.store') }}">
                                             @csrf
                                             <input type="hidden" name="customer" value="{{ $customer->id }}">
                                             <input type="hidden" name="room" value="{{ $room->id }}">

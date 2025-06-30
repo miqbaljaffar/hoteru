@@ -60,7 +60,7 @@
                                 <h6 class="mb-4 text-dark">{{ $h->created_at }}</h6>
 
                                 @if ($h->status == 'Pending' && $h->image == null)
-                                    <a class="btn btn-sm w-100 btn-danger shadow-none mb-2" href="/bayar/{{ $h->id }}">
+                                    <a class="btn btn-sm w-100 btn-danger shadow-none mb-2" href="{{ route('payment.form', ['transaction' => $h->transaction_id]) }}">
                                         Bayar Sekarang
                                     </a>
                                     <a class="btn btn-sm w-100 btn-secondary shadow-none"

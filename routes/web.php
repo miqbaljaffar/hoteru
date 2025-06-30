@@ -10,96 +10,99 @@ use App\Http\Controllers\StatusController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\TypeController;
 use App\Http\Controllers\UserController;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-// (Hotel) USER index
-Route::get('/myaccount/edit', [UserController::class, 'cusedit']);
-Route::post('/myaccount/addimage', [UserController::class, 'cusfoto']);
-Route::get('/myaccount/{id}/delete-foto', [UserController::class, 'delfoto']);
-Route::post('/myaccount/{id}/update', [UserController::class, 'updatefront']);
-Route::get('/myaccount', [UserController::class, 'profile']);
-Route::get('/history', [UserController::class, 'history']);
-// (Hotel) Index route
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Di sini Anda dapat mendaftarkan rute web untuk aplikasi Anda.
+| Rute-rute ini dimuat oleh RouteServiceProvider dalam sebuah grup
+| yang berisi grup middleware "web".
+|
+*/
+
+//== HALAMAN PUBLIK (FRONTEND) ==
 Route::get('/', [IndexController::class, 'index'])->name('index');
-Route::get('/rooms', [IndexController::class, 'room']);
-Route::post('/rooms', [IndexController::class, 'roompost']);
-Route::get('/facilities', [IndexController::class, 'facility']);
-Route::get('/contact', [IndexController::class, 'contact']);
-Route::get('/about', [IndexController::class, 'about']);
-Route::get('/pesan', [IndexController::class, 'pesan'])->name('pesan');
-// (Hotel) Order index
-Route::get('/invoice/{id}', [OrderController::class, 'invoice']);
-Route::post('/order', [OrderController::class, 'index']);
-Route::post('/order/post', [OrderController::class, 'order']);
-Route::get('/bayar/{id}', [OrderController::class, 'pembayaran']);
-Route::post('/bayar', [OrderController::class, 'bayar']);
-// (Hotel) Payment Dashboard Function & invoice
-Route::post('/dashboard/payment/tolak', [PaymentController::class, 'tolak']);
-Route::post('/dashboard/payment/confirm', [PaymentController::class, 'confirmation']);
-Route::get('/dashboard/payment/invoice', [TransactionController::class, 'paymentinvoice']);
-// (Hotel) Room Index
-Route::get('/rooms/{no}', [RoomController::class, 'roomshow']);
-Route::post('/rooms/{no}', [RoomController::class, 'roomshowpost']);
+Route::get('/rooms', [IndexController::class, 'room'])->name('rooms.index');
+Route::get('/facilities', [IndexController::class, 'facility'])->name('facilities');
+Route::get('/contact', [IndexController::class, 'contact'])->name('contact');
+Route::get('/about', [IndexController::class, 'about'])->name('about');
+Route::get('/rooms/{room:no}', [RoomController::class, 'roomshow'])->name('rooms.show');
+// CATATAN: Method POST untuk route ini telah dipindahkan ke proses order untuk kejelasan alur.
 
-// (Hotel) dashboard Index
-Route::get('/dashboard', [DashboardController::class, 'index']);
-// (Hotel) Room Dashboard Index & function CRUD data & image
-Route::get('/dashboard/data/room', [RoomController::class, 'index']);
-Route::get('/dashboard/data/room/{room:no}/add-image', [RoomController::class, 'addimage']);
-Route::post('/dashboard/data/room/{room:no}/store-image', [RoomController::class, 'storeimage']);
-Route::any('/dashboard/data/room/26D/image/{id}/delete', [RoomController::class, 'deleteimage']);
-Route::get('/dashboard/data/room/create', [RoomController::class, 'create']);
-Route::get('/dashboard/data/room/{id}/edit', [RoomController::class, 'edit']);
-Route::get('/dashboard/data/room/{room:no}', [RoomController::class, 'show']);
-Route::post('/dashboard/data/room/{id}/update', [RoomController::class, 'update']);
-Route::post('/dashboard/data/room/post', [RoomController::class, 'post']);
-Route::any('/dashboard/data/room/{id}/delete', [RoomController::class, 'delete'])->name('room.delete');
-// (Hotel) Status Dashboard Index & function CRUD data
-Route::get('/dashboard/data/status', [StatusController::class, 'index']);
-Route::get('/dashboard/data/status/create', [StatusController::class, 'create']);
-Route::post('/dashboard/data/status/post', [StatusController::class, 'post']);
-Route::get('/dashboard/data/status/{id}/edit', [StatusController::class, 'edit']);
-Route::post('/dashboard/data/status/{id}/update', [StatusController::class, 'update']);
-Route::any('/dashboard/data/status/{id}/delete', [StatusController::class, 'delete']);
-// (Hotel) Type Dashboard Index & function CRUD data
-Route::get('/dashboard/data/type', [TypeController::class, 'index']);
-Route::get('/dashboard/data/type/create', [TypeController::class, 'create']);
-Route::get('/dashboard/data/type/{id}/edit', [TypeController::class, 'edit']);
-Route::post('/dashboard/data/type/post', [TypeController::class, 'post']);
-Route::post('/dashboard/data/type/{id}/update', [TypeController::class, 'update']);
-Route::post('/dashboard/data/type/delete', [TypeController::class, 'delete']);
-// (Hotel) User Dashboard Index & function CRUD data
-Route::get('/dashboard/user', [UserController::class, 'index']);
-Route::get('/dashboard/user/create', [UserController::class, 'create']);
-Route::get('/dashboard/user/{user:username}/edit', [UserController::class, 'edit']);
-Route::post('/dashboard/user/post', [UserController::class, 'post']);
-Route::post('/dashboard/user/update', [UserController::class, 'update']);
-Route::any('/dashboard/user/{id}/delete', [UserController::class, 'delete']);
-// (Hotel) Ordering Dashboard (Order offline via admin) payment etc
-Route::get('/dashboard/order', [TransactionController::class, 'index'])->name('transaction.index');
-Route::get('/dashboard/order/history', [TransactionController::class, 'history']);
-Route::get('/dashboard/order/create-identity', [TransactionController::class, 'create_identity'])->name('createidentity');
-Route::post('/dashboard/order/viewcountperson', [TransactionController::class, 'viewperson'])->name('countperson');
-Route::get('/dashboard/order/viewcountperson', [TransactionController::class, 'errorget'])->name('countget');
-Route::post('/dashboard/order/chooseroom', [TransactionController::class, 'chooseroom'])->name('chooseroom');
-Route::get('/dashboard/order/chooseroom', [TransactionController::class, 'errorget'])->name('chooseroomget');
-Route::get('/dashboard/order/pick', [TransactionController::class, 'pick'])->name('pick');
-Route::post('/dashboard/order/confirmation', [TransactionController::class, 'confirmation'])->name('confirmation');
-Route::get('/dashboard/order/confirmation', [TransactionController::class, 'errorget'])->name('confirmationget');
-Route::post('/dashboard/order/pay', [TransactionController::class, 'payDownPayment'])->name('payDownPayment');
-// (Hotel) History payment & debt payment & invoice
-Route::get('/dashboard/order/history-pay', [PaymentController::class, 'index']);
-Route::get('/dashboard/order/history-pay/{id}', [PaymentController::class, 'invoice'])->name('payment.invoice');
-Route::get('/dashboard/order/{id}/pay-debt', [PaymentController::class, 'debt']);
-Route::post('/dashboard/order/debt', [PaymentController::class, 'pays'])->name('paydebt');
-// (Hotel) Notifiable dashboard
-Route::post('/dashboard/notif', [DashboardController::class, 'notifiable']);
-Route::get('/dashboard/markall', [DashboardController::class, 'markall']);
 
-// Login Register Logout
-Route::get('/login', [LoginController::class, 'index'])->middleware('guest');
-Route::post('/login', [LoginController::class, 'authenticate']);
-Route::get('/register', [LoginController::class, 'register'])->middleware('guest');
-Route::post('/register', [LoginController::class, 'store']);
-Route::any('/logout', [LoginController::class, 'logout']);
+//== HALAMAN YANG MEMBUTUHKAN OTENTIKASI (PENGGUNA LOGIN) ==
+Route::middleware('auth')->group(function () {
+    // Akun Pengguna
+    Route::prefix('myaccount')->name('myaccount.')->group(function () {
+        Route::get('/', [UserController::class, 'profile'])->name('profile');
+        Route::get('/edit', [UserController::class, 'cusedit'])->name('edit');
+        Route::put('/{id}/update', [UserController::class, 'updatefront'])->name('update'); // REFAKTOR: Gunakan PUT untuk update
+        Route::post('/change-photo', [UserController::class, 'cusfoto'])->name('photo.change'); // REFAKTOR: Penamaan lebih jelas
+        Route::delete('/delete-photo', [UserController::class, 'delfoto'])->name('photo.delete'); // REFAKTOR: Gunakan DELETE
+    });
+
+    // Proses Order & Pembayaran
+    Route::get('/history', [UserController::class, 'history'])->name('history');
+    Route::post('/order', [OrderController::class, 'index'])->name('order.index');
+    Route::post('/order/create', [OrderController::class, 'order'])->name('order.store');
+    Route::get('/payment/{transaction}', [OrderController::class, 'pembayaran'])->name('payment.form'); // REFAKTOR: Route model binding
+    Route::post('/payment', [OrderController::class, 'bayar'])->name('payment.store');
+    Route::get('/invoice/{transaction}', [OrderController::class, 'invoice'])->name('invoice'); // REFAKTOR: Route model binding
+
+    // Logout
+    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+});
+
+
+//== HALAMAN ADMIN (DASHBOARD) ==
+Route::prefix('dashboard')->middleware(['auth', 'admin'])->name('dashboard.')->group(function () {
+    Route::get('/', [DashboardController::class, 'index'])->name('index');
+
+    // Data Master
+    Route::resource('rooms', RoomController::class)->parameters(['rooms' => 'room:no']);
+    Route::resource('statuses', StatusController::class)->except(['show']);
+    Route::resource('types', TypeController::class)->except(['show']);
+    Route::resource('users', UserController::class);
+
+    // Manajemen Gambar Kamar (Sub-resource dari Rooms)
+    Route::prefix('rooms/{room:no}/images')->name('rooms.images.')->group(function() {
+        Route::get('/create', [RoomController::class, 'addimage'])->name('create');
+        Route::post('/', [RoomController::class, 'storeimage'])->name('store');
+        Route::delete('/{image}', [RoomController::class, 'deleteimage'])->name('destroy');
+    });
+
+    // Manajemen Order Admin
+    Route::prefix('orders')->name('orders.')->group(function() {
+        Route::get('/', [TransactionController::class, 'index'])->name('index');
+        Route::get('/history', [TransactionController::class, 'history'])->name('history');
+        Route::get('/create', [TransactionController::class, 'create_identity'])->name('create');
+        Route::post('/select-room', [TransactionController::class, 'chooseroom'])->name('select_room');
+        Route::post('/confirmation', [TransactionController::class, 'confirmation'])->name('confirmation');
+        Route::post('/pay', [TransactionController::class, 'payDownPayment'])->name('pay');
+    });
+
+    // Manajemen Pembayaran Admin
+    Route::prefix('payments')->name('payments.')->group(function() {
+        Route::get('/history', [PaymentController::class, 'index'])->name('history');
+        Route::get('/invoice/{payment}', [PaymentController::class, 'invoice'])->name('invoice');
+        Route::get('/{transaction}/pay-debt', [PaymentController::class, 'debt'])->name('debt');
+        Route::post('/pay-debt', [PaymentController::class, 'pays'])->name('paydebt.store');
+        Route::post('/confirm', [PaymentController::class, 'confirmation'])->name('confirm');
+        Route::post('/reject', [PaymentController::class, 'tolak'])->name('reject');
+    });
+
+    // Notifikasi
+    Route::post('/notifications/read', [DashboardController::class, 'notifiable'])->name('notifications.read');
+    Route::get('/notifications/mark-all-as-read', [DashboardController::class, 'markall'])->name('notifications.markall');
+});
+
+//== HALAMAN LOGIN & REGISTER (UNTUK TAMU) ==
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [LoginController::class, 'index'])->name('login');
+    Route::post('/login', [LoginController::class, 'authenticate']);
+    Route::get('/register', [LoginController::class, 'register'])->name('register');
+    Route::post('/register', [LoginController::class, 'store']);
+});

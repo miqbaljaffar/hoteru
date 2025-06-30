@@ -10,7 +10,7 @@
         <div class="col-md-6">
             <div class="d-flex align-items-center mb-4">
                 <h1 class="h2 mb-0 text-dark-1000">Type</h1>
-                <a href="type/create" class="btn btn-sm shadow border ms-2 mt-1 p-2">
+                <a href="{{ route('dashboard.types.create') }}" class="btn btn-sm shadow border ms-2 mt-1 p-2">
                     <i class="fas fa-plus"></i>
                 </a>
             </div>
@@ -54,12 +54,9 @@
                                     <td>{{ $r->info }}</td>
                                     <td>
                                         <div class="d-flex">
-                                            <form method="get" action="/dashboard/data/type/{{ $r->id }}/edit">
-                                                <button class="btn btn-success" type="submit">
-                                                    <i class="fas fa-pen"></i>
-                                                </button>
-                                            </form>
-
+                                            <a href="{{ route('dashboard.types.edit', $r->id) }}" class="btn btn-success">
+                                                <i class="fas fa-pen"></i>
+                                            </a>
                                             <form action="/dashboard/data/type/delete" method="post">
                                                 @csrf
                                                 <input type="hidden" name="id" value="{{ $r->id }}">

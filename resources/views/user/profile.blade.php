@@ -25,6 +25,7 @@
 
                 <div class="col-lg-8">
                     <form action="/myaccount/{{ $user->id }}/update" method="post">
+                        @method('PUT')
                         @csrf
                         <div class="card mb-4">
                             <div class="card-body">
@@ -158,6 +159,7 @@
                     <div class="row mt-4">
                         <h5>CHANGE PASSWORD</h5>
                         <form action="/myaccount/{{ $user->id }}/update" method="post">
+                            @method('PUT')
                             @csrf
                             <div class="row mt-3">
                                 <div class="col-sm-3">

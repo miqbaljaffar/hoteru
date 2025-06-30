@@ -38,12 +38,12 @@
                                     <h6>Jl. Pegangsaan Timur No.1, <br> Jakarta 40375</h6>
                                     <h6>INVOICE #{{ $pay->invoice }}</h6>
                                 </div>
-                                
+
                                 <div class="d-flex justify-content-between">
                                     <h6>+6281388679954</h6>
                                     <h6 class="mb-5">{{ Carbon\Carbon::parse($pay->created_at) }}</h6>
                                 </div>
-                                
+
                                 <p class="mb-4">Bukti Pembayaran transaksi (INVOICE) dengan transaksi ID #{{ $pay->Transaction->id }}</p>
 
                                 <!-- Invoice Details Table -->
@@ -74,7 +74,7 @@
                                         <td>Status: {{ $pay->status }}</td>
                                     </tr>
                                     <tr>
-                                        <th>Total Price IDR {{ number_format($pay->Transaction->getTotalPrice()) }}</th>
+                                        <th>Total Price IDR {{ number_format($pay->Transaction->total_price) }}</th>
                                     </tr>
                                 </table>
 
@@ -100,7 +100,7 @@
                     <div class="card-body">
                         <h1>INVOICE</h1>
                         <div class="d-flex">
-                            <h5>#{{ $pay->invoice }} 
+                            <h5>#{{ $pay->invoice }}
                                 <a href="" onclick="window.print()">
                                     <i class="fas fa-print" style="margin-top: 5px"></i>
                                 </a>

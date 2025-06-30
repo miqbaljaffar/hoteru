@@ -5,7 +5,6 @@
 @endsection
 
 @section('content')
-    <!-- Page Heading -->
     <div class="container">
         <div class="col-md-6">
             <div class="d-sm-flex align-items-center mb-4">
@@ -23,17 +22,16 @@
         </div>
     </div>
 
-    <!-- Content Row -->
     <div class="container">
         <div class="card border-0 shadow">
             <div class="card-header">
-                <div class="d-flex">
-                    <h5 class="mb-0">#{{ $room->id }} Status</h5>
-                    <h5 class="ms-1 me-5" 
-                        @if ($room->status->code == 'V') 
-                            style="color: green;" 
-                        @else 
-                            style="color: red" 
+                <div class="d-flex align-items-center">
+                    <h5 class="mb-0 me-3">#{{ $room->id }} Status:</h5>
+                    <h5 class="mb-0"
+                        @if ($room->status->code == 'V')
+                            style="color: green;"
+                        @else
+                            style="color: red;"
                         @endif>
                         {{ $room->status->name }}
                     </h5>
@@ -43,17 +41,16 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-5 col-lg-5 col-12 mb-sm-4">
+                        {{-- FIX: Menggunakan $room->images->first() untuk menampilkan gambar pertama --}}
                         @if ($room->images->count() > 0)
-                            <img src="{{ asset('storage/' . $cts->image) }}" 
-                                 class="bd-placeholder-img" 
-                                 alt="foto {{ $cts->room->no }}" 
-                                 style="object-fit:cover;" 
-                                 width="100%" 
-                                 height="225">
+                            <img src="{{ asset('storage/' . $room->images->first()->image) }}"
+                                 class="img-fluid rounded"
+                                 alt="Foto kamar {{ $room->no }}"
+                                 style="object-fit:cover; width:100%; height:225px;">
                         @else
-                            <marquee class="h4" behavior="alternate" style="font-style: italic">
-                                There's no image for this Room
-                            </marquee>
+                            <div class="d-flex justify-content-center align-items-center bg-light rounded" style="width:100%; height:225px;">
+                                <p class="text-muted">Tidak ada gambar untuk kamar ini</p>
+                            </div>
                         @endif
                     </div>
 
@@ -61,25 +58,23 @@
                         <table class="table table-sm table-bordered">
                             <thead class="table-secondary">
                                 <tr>
-                                    <th>Capacity</th>
-                                    <th>Price/day</th>
-                                    <th>Type</th>
+                                    <th>Kapasitas</th>
+                                    <th>Harga/Hari</th>
+                                    <th>Tipe</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>{{ $room->capacity }}</td>
+                                    <td>{{ $room->capacity }} Orang</td>
                                     <td>Rp.{{ number_format($room->price) }}</td>
                                     <td>{{ $room->type->name }}</td>
                                 </tr>
                             </tbody>
                         </table>
 
-                        <h5>
-                            <a href="/dashboard/data/room/{{ $room->no }}/add-image" class="btn btn-success">
-                                Tambahkan foto
-                            </a>
-                        </h5>
+                        {{-- BAGIAN YANG DIHAPUS --}}
+                        {{-- Tombol 'Tambahkan foto' sudah dihapus dari sini --}}
+
                     </div>
                 </div>
             </div>

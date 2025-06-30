@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class UserController extends Controller
@@ -88,22 +89,22 @@ class UserController extends Controller
         return view('dashboard.user.edit', compact('user'));
     }
     public function update(Request $request){
-        // dd($request->all());
         $p = User::findOrFail($request->id);
         $c = Customer::findOrFail($p->Customer->id);
-        // dd($c);
+
         $request->validate([
             'name' => 'nullable',
-            'username' => 'nullable',
-            'email' => 'nullable',
+            'username' => 'nullable|unique:users,username,' . $p->id,
+            'email' => 'nullable|email|unique:users,email,' . $p->id,
             'telp' => 'nullable',
             'address' => 'nullable',
             'jk' => 'nullable',
             'job' => 'nullable',
             'birthdate' => 'nullable',
             'card_number' => 'nullable',
-
+            'image' => 'nullable|image|file|max:2048' // Validasi untuk gambar
         ]);
+
         $c->update([
             'name' => $request->name,
             'address' => $request->address,
@@ -112,13 +113,29 @@ class UserController extends Controller
             'birthdate'=>$request->birthdate
         ]);
 
-        $p->update([
+        $userData = [
             'username' => $request->username,
             'email' => $request->email,
             'telp' => $request->telp,
             'card_number' => $request->card_number,
+        ];
 
-        ]);
+        // Cek jika ada password baru
+        if ($request->filled('password')) {
+            $userData['password'] = bcrypt($request->password);
+        }
+
+        // Cek jika ada file gambar baru
+        if ($request->file('image')) {
+            // Hapus gambar lama jika ada
+            if ($request->oldImage) {
+                Storage::disk('public')->delete($request->oldImage);
+            }
+            // Simpan gambar baru
+            $userData['image'] = $request->file('image')->store('user-images', 'public');
+        }
+
+        $p->update($userData);
 
         Alert::success('Success', 'Data berhasil di edit');
         return redirect('/dashboard/user');
@@ -130,7 +147,7 @@ class UserController extends Controller
         // dd($c);\
         if($request->newpassword){
             // dd($request->all());
-            $request->validate(['newpassword' => 'min:3']);
+            $request->validate(['newpassword' => 'required|min:3|confirmed']);
             if($request->confirmation != $request->newpassword){
                 Alert::error('Gagal', 'Password Tidak Sama!');
                 // dd($request->all());
@@ -226,6 +243,15 @@ class UserController extends Controller
         ]);
         Alert::success('Success', 'Image Successfully Deleted!');
         return back();
+        if ($user->image) {
+        // Gunakan Storage facade, lebih aman dan scalable
+        \Illuminate\Support\Facades\Storage::disk('public')->delete($user->image);
+    }
+
+    $user->update(['image' => null]);
+
+    Alert::success('Success', 'Image Successfully Deleted!');
+    return back();
     }
     public function history(){
         if(auth()->guest()){

@@ -102,7 +102,7 @@
                             </div>
                             <div class="row justify-content-start mt-4">
                                 <div class="col-md-12">
-                                    <form action="/bayar" method="post" enctype="multipart/form-data">
+                                    <form action="{{ route('payment.store') }}" method="post" enctype="multipart/form-data">
                                         @csrf
                                         <label for="image" class="mb-2">Upload Bukti <span class="fst-italic">(Max 3mb)</span></label>
                                         <input required type="file" class="form-control mb-3" name="image" id="image">

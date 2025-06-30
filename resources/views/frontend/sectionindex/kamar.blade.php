@@ -1,7 +1,7 @@
 <h2 class="mt-5 pt-4 mb-4 text-center fw-bold h-font">OUR ROOMS</h2>
 <div class="container">
     <div class="row">
-        @foreach ($room as $r)
+        @foreach ($rooms as $r)
             <div class="col-lg-4 col-md-6 my-3">
                 <div class="card border-0 shadow" style="max-width: 350px; margin: auto;">
                     @if ($r->images->count() > 0)

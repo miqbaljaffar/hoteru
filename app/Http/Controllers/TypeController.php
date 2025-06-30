@@ -35,21 +35,19 @@ class TypeController extends Controller
         return view('dashboard.type.create', compact('p'));
     }
 
-    public function post(Request $request){
+    public function store(Request $request){
         $request->validate([
             'name' => 'required',
-            // 'code' => 'required',
             'info' => 'required'
         ]);
 
         Type::create([
             'name' => $request->name,
-            // 'code' => $request->code,
             'info' => $request->info
         ]);
 
         Alert::success('Success', 'Data berhasil Ditambahkan');
-        return redirect('/dashboard/data/type');
+        return redirect()->route('dashboard.types.index');
     }
 
     public function edit($id){
@@ -63,11 +61,10 @@ class TypeController extends Controller
         return view('dashboard.type.edit', compact('type'));
     }
 
-    public function update(Request $request, $id){
-        $p = Type::findOrFail($id);
-        $p->update($request->all());
+    public function update(Request $request, Type $type){ // Gunakan Route Model Binding
+        $type->update($request->all());
         Alert::success('Success', 'Data berhasil Diedit');
-        return redirect('/dashboard/data/type');
+        return redirect()->route('dashboard.types.index');
     }
 
     public function delete(Request $request){

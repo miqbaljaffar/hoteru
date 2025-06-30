@@ -15,7 +15,7 @@
                     <h4>Tambah Data Kamar</h4>
                 </div>
                 <div class="card-body">
-                    <form action="/dashboard/data/room/post" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('dashboard.rooms.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="col-md-2">
@@ -53,6 +53,12 @@
                             <div class="col-md-10 mt-3">
                                 <label for="info" class="form-label">Description <span style="font-style: italic;">(required)</span></label>
                                 <textarea placeholder="Beach view" name="info" id="info" rows="3" class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10 mt-3">
+                                <label for="image" class="form-label">Room Image <span style="font-style: italic;">(required)</span></label>
+                                <input type="file" class="form-control" id="image" name="image" required>
                             </div>
                         </div>
                         <button class="btn btn-dark mt-4" type="submit">SUBMIT</button>

@@ -1,7 +1,5 @@
-<!-- Sidebar -->
 <ul class="navbar-nav bg-gradient-dark sidebar sidebar-dark accordion" id="accordionSidebar">
 
-    <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/dashboard/">
         <div class="sidebar-brand-icon">
             <i class="fas fa-building"></i>
@@ -9,25 +7,20 @@
         <div class="sidebar-brand-text mx-3">Aurora Haven</div>
     </a>
 
-    <!-- Divider -->
     <hr class="sidebar-divider my-0">
 
-    <!-- Nav Item - Dashboard -->
     <li class="nav-item {{ Request::is('dashboard') ? 'active' : '' }}">
-        <a class="nav-link" href="/dashboard">
+        <a class="nav-link" href="{{ route('dashboard.index') }}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span>
         </a>
     </li>
 
-    <!-- Divider -->
     <hr class="sidebar-divider">
 
-    <!-- Heading -->
     <div class="sidebar-heading">Interface</div>
 
-    <!-- Nav Item - Data Collapse Menu -->
-    <li class="nav-item {{ Request::is('dashboard/data*') ? 'active' : '' }}">
+    <li class="nav-item {{ Request::is('dashboard/rooms*') || Request::is('dashboard/statuses*') || Request::is('dashboard/types*') ? 'active' : '' }}">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
            aria-expanded="true" aria-controls="collapseTwo">
             <i class="fas fa-fw fa-cog"></i>
@@ -36,36 +29,25 @@
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Inner</h6>
-                <a class="collapse-item" href="/dashboard/data/room">Room</a>
-                <a class="collapse-item" href="/dashboard/data/status">Status Room</a>
-                <a class="collapse-item" href="/dashboard/data/type">Type Room</a>
+                <a class="collapse-item" href="{{ route('dashboard.rooms.index') }}">Room</a>
+                <a class="collapse-item" href="{{ route('dashboard.statuses.index') }}">Status Room</a>
+                <a class="collapse-item" href="{{ route('dashboard.types.index') }}">Type Room</a>
             </div>
         </div>
     </li>
 
-    <!-- Nav Item - User Collapse Menu -->
-    <li class="nav-item {{ Request::is('dashboard/user*') ? 'active' : '' }}">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseuser"
-           aria-expanded="true" aria-controls="collapseuser">
+    <li class="nav-item {{ Request::is('dashboard/users*') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('dashboard.users.index') }}">
             <i class="fas fa-fw fa-wrench"></i>
             <span>User</span>
         </a>
-        <div id="collapseuser" class="collapse" aria-labelledby="headinguser" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Data</h6>
-                <a class="collapse-item" href="/dashboard/user">User</a>
-            </div>
-        </div>
     </li>
 
-    <!-- Divider -->
     <hr class="sidebar-divider">
 
-    <!-- Heading -->
     <div class="sidebar-heading">Addons</div>
 
-    <!-- Nav Item - Order Collapse Menu -->
-    <li class="nav-item {{ Request::is('dashboard/order*') ? 'active' : '' }}">
+    <li class="nav-item {{ Request::is('dashboard/orders*') || Request::is('dashboard/payments*') ? 'active' : '' }}">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
            aria-expanded="true" aria-controls="collapsePages">
             <i class="fas fa-fw fa-folder"></i>
@@ -74,33 +56,17 @@
         <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Order now:</h6>
-                <a class="collapse-item" href="/dashboard/order">Order</a>
+                <a class="collapse-item" href="{{ route('dashboard.orders.index') }}">Order</a>
                 <h6 class="collapse-header">Data Transactions:</h6>
-                <a class="collapse-item" href="/dashboard/order/history-pay">History Payment</a>
+                <a class="collapse-item" href="{{ route('dashboard.payments.history') }}">History Payment</a>
             </div>
         </div>
     </li>
 
-    <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
 
-    <!-- Sidebar Toggler -->
     <div class="text-center d-none d-md-inline">
         <button class="rounded-circle border-0" id="sidebarToggle"></button>
     </div>
 
-    {{--
-    <!-- Optional Sidebar Message -->
-    <div class="sidebar-card d-none d-lg-flex">
-        <img class="sidebar-card-illustration mb-2" src="img/undraw_rocket.svg" alt="...">
-        <p class="text-center mb-2">
-            <strong>SB Admin Pro</strong> is packed with premium features, components, and more!
-        </p>
-        <a class="btn btn-success btn-sm" href="https://startbootstrap.com/theme/sb-admin-pro">
-            Upgrade to Pro!
-        </a>
-    </div>
-    --}}
-
 </ul>
-<!-- End of Sidebar -->

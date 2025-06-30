@@ -48,8 +48,8 @@
                                                                 <div class="modal-header">
                                                                     <h5 class="modal-title me-auto">Image #{{ $loop->iteration }}</h5>
                                                                     <div>
-                                                                        <a href="/dashboard/data/room/26D/image/{{ $c->id }}/delete" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this Image?');"> 
-                                                                            Delete &nbsp;<i class="fas fa-trash"></i> 
+                                                                        <a href="{{ route('dashboard.rooms.images.destroy', ['room' => $room->no, 'image' => $c->id]) }}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this Image?');">
+                                                                            Delete &nbsp;<i class="fas fa-trash"></i>
                                                                         </a>
                                                                         <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                                                                     </div>

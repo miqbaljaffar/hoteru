@@ -33,7 +33,7 @@ class StatusController extends Controller
         return view('dashboard.status.create');
     }
 
-    public function post(Request $request){
+    public function store(Request $request){
         $request->validate([
             'name' => 'required',
             'code' => 'required',
@@ -47,25 +47,17 @@ class StatusController extends Controller
         ]);
 
         Alert::success('Success', 'Data berhasil Ditambahkan');
-        return redirect('/dashboard/data/status');
+        return redirect()->route('dashboard.statuses.index');
     }
 
-    public function edit($id){
-                if(auth()->guest()){
-            return redirect('/login');
-        }
-        if(auth()->user()->is_admin == 0){
-            abort(404);
-        }
-        $status = RoomStatus::findOrFail($id);
+    public function edit(RoomStatus $status){
         return view('dashboard.status.edit', compact('status'));
     }
 
-    public function update(Request $request, $id){
-        $p = RoomStatus::findOrFail($id);
-        $p->update($request->all());
+    public function update(Request $request, RoomStatus $status){
+        $status->update($request->all());
         Alert::success('Success', 'Data berhasil Diedit');
-        return redirect('/dashboard/data/status');
+        return redirect()->route('dashboard.statuses.index');
     }
 
     public  function delete($id){

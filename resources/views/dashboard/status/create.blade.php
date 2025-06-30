@@ -16,7 +16,7 @@
                 </div>
                 <div class="card-body">
                     <div class="col-md-auto">
-                        <form action="/dashboard/data/status/post" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('dashboard.statuses.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
                                 <div class="col-md-5">

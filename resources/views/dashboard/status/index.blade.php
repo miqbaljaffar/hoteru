@@ -10,7 +10,7 @@
         <div class="col-md-6">
             <div class="d-flex align-items-center mb-4">
                 <h1 class="h2 mb-0 text-dark-1000">Status</h1>
-                <a href="status/create" class="btn btn-sm shadow border ms-2 mt-1 p-2">
+                <a href="{{ route('dashboard.statuses.create') }}" class="btn btn-sm shadow border ms-2 mt-1 p-2">
                     <i class="fas fa-plus"></i>
                 </a>
             </div>
@@ -58,11 +58,10 @@
                                     <td>{{ $r->info }}</td>
                                     <td>
                                         <div class="d-flex">
-                                            <a href="status/{{ $r->id }}/edit" class="me-2 btn btn-success">
+                                            <a href="{{ route('dashboard.statuses.edit', $r->id) }}" class="me-2 btn btn-success">
                                                 <i class="fas fa-pen"></i>
                                             </a>
-                                            <a class="me-2 btn btn-danger" href="#" data-toggle="modal"
-                                                data-target="#deletemodal">
+                                            <a class="me-2 btn btn-danger" href="#" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $r->id }}">
                                                 <i class="fas fa-trash"></i>
                                             </a>
                                         </div>
@@ -70,16 +69,14 @@
                                 </tr>
 
                                 <!-- Delete Modal -->
-                                <div class="modal fade" id="deletemodal" tabindex="-1" role="dialog"
-                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal fade" id="deleteModal{{ $r->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="exampleModalLabel">
                                                     Are you sure to delete this data?
                                                 </h5>
-                                                <button class="close" type="button" data-dismiss="modal"
-                                                    aria-label="Close">
+                                                <button class="close" type="button" data-bs-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">×</span>
                                                 </button>
                                             </div>
@@ -87,12 +84,12 @@
                                                 Select "Delete" below if you are ready to delete.
                                             </div>
                                             <div class="modal-footer">
-                                                <button class="btn btn-secondary" type="button" data-dismiss="modal">
+                                                <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">
                                                     Cancel
                                                 </button>
-                                                <form action="/dashboard/data/status/{{ $r->id }}/delete"
-                                                    method="post">
+                                                <form action="{{ route('dashboard.statuses.destroy', $r->id) }}" method="post">
                                                     @csrf
+                                                    @method('DELETE')
                                                     <button class="btn btn-danger me-1" type="submit">Delete</button>
                                                 </form>
                                             </div>
