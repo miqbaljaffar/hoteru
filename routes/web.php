@@ -92,6 +92,7 @@ Route::prefix('dashboard')->middleware(['auth', 'admin'])->name('dashboard.')->g
         Route::post('/pay-debt', [PaymentController::class, 'pays'])->name('paydebt.store');
         Route::post('/confirm', [PaymentController::class, 'confirmation'])->name('confirm');
         Route::post('/reject', [PaymentController::class, 'tolak'])->name('reject');
+        Route::get('/export', [PaymentController::class, 'exportSuccess'])->name('export'); // Rute baru
     });
 
     // Notifikasi

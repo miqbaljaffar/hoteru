@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Str;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\PaymentsExport;
 
 class PaymentController extends Controller
 {
@@ -110,5 +112,9 @@ class PaymentController extends Controller
         $transaction->delete();
         Alert::success('Success', 'Payment Telah Di tolak');
         return redirect('/dashboard/order/history-pay');
+    }
+    public function exportSuccess()
+    {
+        return Excel::download(new PaymentsExport, 'payments_success.xlsx');
     }
 }
