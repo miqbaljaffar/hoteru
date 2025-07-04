@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
@@ -10,22 +9,37 @@ use Illuminate\Support\Str;
 class Transaction extends Model
 {
     use HasFactory;
+
     protected $guarded = ['id'];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
     protected $casts = [
         'check_in' => 'datetime',
         'check_out' => 'datetime',
     ];
 
     /**
-     * BARU: Menambahkan appends agar accessor otomatis disertakan.
+     * The accessors to append to the model's array form.
+     *
+     * @var array
      */
-    protected $appends = ['total_price', 'total_payment', 'remaining_balance', 'minimum_down_payment'];
+    protected $appends = [
+        'total_price',
+        'total_payment',
+        'remaining_balance'
+    ];
 
-    // --- RELASI ---
+
+    // --- RELASI DATABASE ---
 
     public function customer()
     {
-        return $this->belongsTo(Customer::class, 'c_id');
+        // Pastikan foreign key 'customer_id' sudah benar sesuai tabel database Anda
+        return $this->belongsTo(Customer::class, 'customer_id');
     }
 
     public function room()
@@ -38,35 +52,37 @@ class Transaction extends Model
         return $this->hasMany(Payment::class);
     }
 
-    // --- ACCESSORS (BARU) ---
+
+    // --- ACCESSORS ---
+    // Atribut ini bisa dipanggil seperti properti biasa, contoh: $transaksi->total_price
 
     public function getTotalPriceAttribute(): float
     {
-        if (!$this->room) {
-            return 0;
-        }
+        // Menghitung selisih hari
         $days = $this->check_in->diffInDays($this->check_out);
+
+        // Mengembalikan total harga (harga kamar * jumlah hari)
         return $this->room->price * $days;
     }
 
     public function getTotalPaymentAttribute(): float
     {
+        // Menjumlahkan semua pembayaran yang statusnya tidak 'Pending'
         return $this->payments()->where('status', '!=', 'Pending')->sum('price');
     }
 
     public function getRemainingBalanceAttribute(): float
     {
+        // Menghitung sisa tagihan
         return $this->total_price - $this->total_payment;
     }
 
-    public function getMinimumDownPaymentAttribute(): float
-    {
-        return $this->total_price * 0.5;
-    }
+
+    // --- METHOD BANTU ---
 
     public function getDateDifferenceWithPlural(): string
     {
-        $day = $this->check_in->diffInDays($this->check_out);
-        return $day . ' ' . Str::plural('Day', $day);
+        $days = $this->check_in->diffInDays($this->check_out);
+        return $days . ' ' . Str::plural('Day', $days);
     }
 }

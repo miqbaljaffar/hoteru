@@ -94,7 +94,7 @@ class PaymentController extends Controller
             'status' => 'Down Payment'
         ]);
         Alert::success('Success', 'Payment Berhasil Di terima');
-        return redirect('/dashboard/order/history-pay');
+        return redirect()->route('dashboard.payments.history');
     }
 
     public function tolak(Request $request)
@@ -111,8 +111,9 @@ class PaymentController extends Controller
         $transaction = Transaction::findOrFail($pay->Transaction->id);
         $transaction->delete();
         Alert::success('Success', 'Payment Telah Di tolak');
-        return redirect('/dashboard/order/history-pay');
+        return redirect()->route('dashboard.payments.history');
     }
+
     public function exportSuccess()
     {
         return Excel::download(new PaymentsExport, 'payments_success.xlsx');

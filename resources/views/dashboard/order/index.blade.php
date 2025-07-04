@@ -42,7 +42,7 @@
                             <i class="fas fa-plus"></i>
                         </a>
                         <a href="order/history" class="btn btn-sm btn-white ms-1 "><i class="fa fa-history"></i></a>
-                        <a href="order/history-pay" class="btn btn-sm btn-white ms-1 "><i
+                        <a href="{{ route('dashboard.payments.history') }}" class="btn btn-sm btn-white ms-1 "><i
                                 class="fas fa-money-bill-wave"></i></a>
                     </div>
                 </div>
@@ -69,22 +69,21 @@
                             @foreach ($transaction as $t)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $t->Customer->name ?? '-' }}</td>
-                                    <td>{{ $t->Room->no }}</td>
+                                    <td>{{ $t->customer->name ?? '-' }}</td>
+                                    <td>{{ $t->room->no }}</td>
                                     <td>{{ $t->check_in->isoFormat('D MMM Y') }}</td>
                                     <td>{{ $t->check_out->isoFormat('D MMM Y') }}</td>
-                                    <td>{{ $t->check_in->diffindays($t->check_out) }} Day</td>
-                                    <td>Rp.{{ number_format($t->getTotalPrice()) }}</td>
-                                    <td>Rp. {{ number_format($t->getTotalPayment()) }}</td>
-                                    <td>Rp. {{ number_format($t->getTotalPrice() - $t->getTotalPayment()) }}</td>
+                                    <td>{{ $t->getDateDifferenceWithPlural() }}</td>
+                                    <td>Rp. {{ number_format($t->total_price) }}</td>
+                                    <td>Rp. {{ number_format($t->total_payment) }}</td>
+                                    <td>Rp. {{ number_format($t->remaining_balance) }}</td>
                                     <td>
-                                        @php
-                                            $insufficient = $t->getTotalPrice() - $t->getTotalPayment();
-                                        @endphp
-                                        <a @if ($insufficient <= 0) style="pointer-events: none;
-                                                        cursor: default;color:gray" @endif
-                                            href="/dashboard/order/{{ $t->id }}/pay-debt"><i
-                                                class="fas fa-money-bill-wave"></i></a>
+                                        <a @if ($t->remaining_balance <= 0)
+                                                style="pointer-events: none; cursor: default; color: gray;"
+                                            @endif
+                                            href="/dashboard/order/{{ $t->id }}/pay-debt">
+                                            <i class="fas fa-money-bill-wave"></i>
+                                        </a>
                                     </td>
                                 </tr>
                             @endforeach
