@@ -1,40 +1,41 @@
-<div class="container mt-5">
-  <div class="row">
-    
-    <!-- Informasi Hotel -->
-    <div class="col-lg-4 p-4 order-lg-1 order-md-2 order-2">
-      <h3 class="h-font fw-bold fs-3 mb-2">Aurora Haven</h3>
-      <p>
-        Aurora Haven adalah hotel modern yang menawarkan kenyamanan terbaik untuk setiap tamu. Dengan fasilitas lengkap dan pelayanan berkualitas, hotel ini memastikan pengalaman menginap yang menyenangkan dan tak terlupakan.
-      </p>
+<footer class="bg-dark text-white pt-5 pb-4">
+    <div class="container text-center text-md-start">
+        <div class="row text-center text-md-start">
+
+            <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+                <h5 class="text-uppercase mb-4 fw-bold text-success">Aurora Haven</h5>
+                <p>Pengalaman menginap modern dan nyaman yang tak terlupakan menanti Anda dengan fasilitas terbaik dan pelayanan berkualitas.</p>
+            </div>
+
+            <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
+                <h5 class="text-uppercase mb-4 fw-bold text-success">Navigasi</h5>
+                <p><a href="/" class="text-white text-decoration-none">Home</a></p>
+                <p><a href="/rooms" class="text-white text-decoration-none">Kamar</a></p>
+                <p><a href="/facilities" class="text-white text-decoration-none">Fasilitas</a></p>
+                <p><a href="/about" class="text-white text-decoration-none">Tentang Kami</a></p>
+            </div>
+
+            <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
+                <h5 class="text-uppercase mb-4 fw-bold text-success">Kontak</h5>
+                <p><i class="bi bi-geo-alt-fill me-3"></i>Jl. Pegangsaan Timur No.1</p>
+                <p><i class="bi bi-envelope-fill me-3"></i>info@aurorahaven.com</p>
+                <p><i class="bi bi-telephone-fill me-3"></i>+62 81 388 670 054</p>
+            </div>
+        </div>
+
+        <hr class="mb-4">
+
+        <div class="row align-items-center">
+            <div class="col-md-7 col-lg-8">
+                <p>&copy; {{ date('Y') }} Mohammad Iqbal Jaffar. All rights reserved.</p>
+            </div>
+            <div class="col-md-5 col-lg-4">
+                <div class="text-center text-md-end">
+                    <a href="#" class="btn btn-outline-light btn-floating m-1"><i class="bi bi-facebook"></i></a>
+                    <a href="#" class="btn btn-outline-light btn-floating m-1"><i class="bi bi-twitter"></i></a>
+                    <a href="#" class="btn btn-outline-light btn-floating m-1"><i class="bi bi-instagram"></i></a>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <!-- Link Navigasi -->
-    <div class="col-lg-4 p-4 order-lg-3 order-md-1 order-1">
-      <h5 class="mb-3">Link</h5>
-      <a href="#" class="d-inline-block mb-2 text-dark text-decoration-none">Home</a><br>
-      <a href="#" class="d-inline-block mb-2 text-dark text-decoration-none">Rooms</a><br>
-      <a href="#" class="d-inline-block mb-2 text-dark text-decoration-none">Facilities</a><br>
-      <a href="#" class="d-inline-block mb-2 text-dark text-decoration-none">Contact Us</a><br>
-      <a href="#" class="d-inline-block mb-2 text-dark text-decoration-none">About</a>
-    </div>
-
-    <!-- Sosial Media -->
-    <div class="col-lg-4 p-4 order-lg-2 order-md-3 order-3">
-      <h5 class="mb-3">Follow us</h5>
-      <a href="#" class="d-inline-block text-dark text-decoration-none mb-2">
-        <i class="bi bi-twitter me-1"></i>Twitter
-      </a><br>
-      <a href="#" class="d-inline-block text-dark text-decoration-none mb-2">
-        <i class="bi bi-facebook me-1"></i>Facebook
-      </a><br>
-      <a href="https://www.instagram.com/miqbaljaffar_/" class="d-inline-block text-dark text-decoration-none">
-        <i class="bi bi-instagram me-1"></i>Instagram
-      </a><br>
-    </div>
-
-  </div>
-</div>
-
-<!-- Footer -->
-<h6 class="text-center bg-dark text-white p-3 m-0">&copy; Mohammad Iqbal Jaffar, 2025</h6>
+</footer>

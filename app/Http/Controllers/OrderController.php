@@ -68,11 +68,6 @@ class OrderController extends Controller
             ->where('c_id', Auth::user()->customer->id)
             ->firstOrFail();
 
-        // Jangan tampilkan invoice jika statusnya masih 'Pending'
-        if ($payment->status == 'Pending') {
-            return abort(404, 'Invoice Not Found');
-        }
-
         return view('frontend.invoice', ['p' => $payment]);
     }
 

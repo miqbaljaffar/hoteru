@@ -1,125 +1,132 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>INVOICE | {{$p->invoice}}</title>
-    <link rel="stylesheet" href="/bs/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/invoice/style.css" media="all" />
-    <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <style>
-        @media print {
-            body * {
-                visibility: hidden;
-            }
-            #print * {
-                visibility: visible;
-                zoom: 110%;
-            }
-            #print {
-                position: absolute;
-                left: 0;
-                top: 0;
-            }
+@extends('frontend.inc.main')
+
+@section('title')
+    <title>Aurora Haven | Invoice #{{ $p->invoice }}</title>
+@endsection
+
+@push('styles')
+<style>
+    .invoice-header {
+        background-color: #f8f9fa;
+    }
+    .invoice-body {
+        font-size: 0.95rem;
+    }
+    .invoice-table th {
+        font-weight: 600;
+    }
+    @media print {
+        body > *:not(#invoice-wrapper) {
+            display: none !important;
         }
-    </style>
-</head>
-<body>
-    <div class="container mt-4">
-        <div class="row justify-content-md-center">
+        #invoice-wrapper {
+            display: block !important;
+            margin: 0;
+            padding: 0;
+        }
+        .invoice-card {
+            box-shadow: none !important;
+            border: none !important;
+        }
+    }
+</style>
+@endpush
 
-            <div class="col-md-4 mt-2">
-                <div class="card shadow">
-                    <div class="card-body">
-                        <h2>INVOICE
-                            @if ($p->status == 'Pending')
-                                <span class="h5 text-danger">{{ $p->status }}</span>
-                            @else
-                                <span class="h5 text-success">{{ $p->status }}</span>
-                            @endif
-                        </h2>
-                        <div class="d-flex">
-                            <h5>#{{$p->invoice}}
+@section('content')
+<div class="container my-5" id="invoice-page">
+    <div class="row">
+        {{-- Kolom Aksi --}}
+        <div class="col-12 text-end mb-4">
+            <button onclick="window.print()" class="btn btn-dark"><i class="bi bi-printer-fill me-2"></i>Cetak</button>
+            {{-- Tombol download bisa ditambahkan jika ada fungsionalitasnya --}}
+            {{-- <a href="#" class="btn btn-success"><i class="bi bi-download me-2"></i>Unduh PDF</a> --}}
+        </div>
+
+        {{-- Konten Invoice --}}
+        <div class="col-12" id="invoice-wrapper">
+            <div class="card border-0 shadow-sm invoice-card">
+                <div class="card-body p-4 p-md-5">
+                    {{-- Header Invoice --}}
+                    <div class="row align-items-center mb-5">
+                        <div class="col-sm-6">
+                            <img src="/img/logo.png" style="height: 40px;" alt="Aurora Haven Logo">
+                            <span class="fs-4 fw-bold ms-2">Aurora Haven</span>
+                        </div>
+                        <div class="col-sm-6 text-sm-end">
+                            <h2 class="mb-0">INVOICE</h2>
+                            <p class="text-muted mb-0">#{{ $p->invoice }}</p>
+                        </div>
+                    </div>
+
+                    {{-- Informasi Pengirim & Penerima --}}
+                    <div class="row mb-4">
+                        <div class="col-sm-6">
+                            <h6 class="fw-bold">Ditagihkan Kepada:</h6>
+                            <p class="mb-0">{{ $p->transaction->customer->name }}</p>
+                            <p class="mb-0">{{ $p->transaction->customer->address }}</p>
+                            <p class="mb-0">{{ $p->transaction->customer->user->email }}</p>
+                        </div>
+                        <div class="col-sm-6 text-sm-end mt-3 mt-sm-0">
+                             <h6 class="fw-bold">Detail Pembayaran:</h6>
+                             <p class="mb-0"><strong>Tanggal Invoice:</strong> {{ $p->created_at->format('d M Y') }}</p>
+                             <p class="mb-0"><strong>Status:</strong>
                                 @if ($p->status == 'Pending')
-                                    <a href="" style="pointer-events: none; cursor: default;" onclick="window.print()">
-                                        <i class="fas fa-print" style="margin-top: 5px"></i>
-                                    </a>
+                                    <span class="badge bg-warning text-dark">{{ $p->status }}</span>
                                 @else
-                                    <a href="" onclick="window.print()">
-                                        <i class="fas fa-print" style="margin-top: 5px"></i>
-                                    </a>
+                                    <span class="badge bg-success">{{ $p->status }}</span>
                                 @endif
-                            </h5>
+                             </p>
                         </div>
+                    </div>
+
+                    {{-- Tabel Item --}}
+                    <div class="table-responsive invoice-body">
+                        <table class="table invoice-table">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Deskripsi</th>
+                                    <th class="text-center">Lama Menginap</th>
+                                    <th class="text-end">Harga per Malam</th>
+                                    <th class="text-end">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <strong>Pemesanan Kamar {{ $p->transaction->room->type->name }} #{{ $p->transaction->room->no }}</strong><br>
+                                        <small class="text-muted">
+                                            Check-in: {{ Carbon\Carbon::parse($p->transaction->check_in)->isoformat('D MMM Y') }} |
+                                            Check-out: {{ Carbon\Carbon::parse($p->transaction->check_out)->isoformat('D MMM Y') }}
+                                        </small>
+                                    </td>
+                                    <td class="text-center">{{ $p->transaction->check_in->diffInDays($p->transaction->check_out) }} Malam</td>
+                                    <td class="text-end">IDR {{ number_format($p->transaction->room->price) }}</td>
+                                    <td class="text-end">IDR {{ number_format($p->price) }}</td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="2"></td>
+                                    <td class="text-end"><strong>Subtotal</strong></td>
+                                    <td class="text-end">IDR {{ number_format($p->price) }}</td>
+                                </tr>
+                                <tr class="fs-5 text-success">
+                                    <td colspan="2"></td>
+                                    <td class="text-end fw-bold">Grand Total</td>
+                                    <td class="text-end fw-bold">IDR {{ number_format($p->price) }}</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+
+                    {{-- Catatan Kaki --}}
+                    <hr>
+                    <div class="text-center text-muted">
+                        <p>Terima kasih telah memilih Aurora Haven. Kami berharap dapat melayani Anda kembali.</p>
                     </div>
                 </div>
             </div>
-
-            <div class="col-md-8 mt-2">
-                <div class="prints">
-                    <div class="card shadow" id="print">
-                        <div class="card-body" style="margin-bottom: 100px">
-                            <div class="col-md-12">
-                                <header class="clearfix">
-                                    <h1 class="mb-5" style="text-align: center">INVOICE <span class="h4">#{{ $p->invoice }}</span></h1>
-                                    <div id="company" class="clearfix">
-                                        <div>Mohammad Iqbal Jaffar</div>
-                                        <div>Aurora Haven<br /> Jakarta</div>
-                                        <div>+62 81388670054</div>
-                                        <div><a>iqbaljaffar1108@gmail.com</a></div>
-                                    </div>
-                                    <div id="project">
-                                        <div><span>Booking</span> ROOM {{$p->transaction->room->no}}</div>
-                                        <div><span>CLIENT</span> {{$p->transaction->customer->name}}</div>
-                                        <div><span>ADDRESS</span> {{$p->transaction->customer->address}}</div>
-                                        <div><span>EMAIL</span> <a>{{$p->transaction->customer->user->email}}</a></div>
-                                        <div><span>DATE</span> {{Carbon\Carbon::parse($p->transaction->check_in)->isoformat('D MMM YYYY')}}</div>
-                                        <div><span>DUE DATE</span>{{ Carbon\Carbon::parse($p->transaction->check_out)->isoformat('D MMM YYYY')}}</div>
-                                    </div>
-                                </header>
-
-                                <main class="overflow-auto">
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th width="15%">ROOM</th>
-                                                <th>CHECK IN</th>
-                                                <th>CHECK OUT</th>
-                                                <th>DAY</th>
-                                                <th>PRICE</th>
-                                                <th>TOTAL</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td class="text-center">{{$p->transaction->room->type->name}} # {{$p->transaction->room->no}}</td>
-                                                <td class="text-center">{{Carbon\Carbon::parse($p->transaction->check_in)->isoformat('D MMM YYYY')}}</td>
-                                                <td class="text-center">{{Carbon\Carbon::parse($p->transaction->check_out)->isoformat('D MMM YYYY')}}</td>
-                                                <td class="unit text-center">{{ $p->transaction->check_in->diffInDays($p->transaction->check_out) }} Days</td>
-                                                <td class="qty text-center">{{number_format($p->transaction->room->price)}}</td>
-                                                <td class="total text-center">{{ number_format($p->price) }}</td>
-                                            </tr>
-
-                                            <tr>
-                                                <td colspan="4"></td>
-                                                <td class="text-center">SUBTOTAL</td>
-                                                <td class="total text-center">Rp.{{number_format($p->transaction->room->price)}}</td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="4"></td>
-                                                <td class="grand total text-center">GRAND TOTAL</td>
-                                                <td class="grand total text-center">Rp. {{number_format($p->price)}}</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </main>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </div>
     </div>
-    @include('vendor.sweetalert.alert')
-</body>
-</html>
+</div>
+@endsection

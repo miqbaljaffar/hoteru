@@ -1,86 +1,51 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aurora Haven | Edit Fotor Profile</title>
-    <!-- CSS only -->
-    @include('frontend.inc.links')
-    <link rel="stylesheet" href="/css/common.css">
-    <!-- <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script> -->
-    <link rel="stylesheet" href="/bs/css/bootstrap.min.css">
-</head>
-<body>
+@extends('frontend.inc.main')
 
-    @include('frontend.inc.header')
-    @include('frontend.inc.logout')
+@section('title')
+    <title>Aurora Haven | Edit Foto Profil</title>
+@endsection
 
-    <section style="background-color: #eee; margin-bottom: 65px;">
-        <div class="container py-5">
-            <div class="row">
-                <div class="col-lg-4">
-                    <div class="card mb-4">
-                        <div class="card-body text-center">
-                            @if($user->image == null)
-                                <img src="/img/default-user.jpg" alt="avatar" class="rounded-circle img-fluid" style="width: 150px; height: 150px;">
-                            @else
-                                <img src="{{ asset('storage/' . $user->image) }}" alt="avatar" class="rounded-circle img-fluid" style="width: 150px; height: 150px;">
-                            @endif
-                            <h5 class="my-3">{{ $user->Customer->name }}</h5>
-                            <p class="text-muted mb-1">
-                                @if ($user->Customer->job)
-                                    {{ $user->Customer->job }}
+@section('content')
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <div class="text-center mb-4">
+                        <img src="{{ $user->image ? asset('storage/' . $user->image) : '/img/default-user.jpg' }}"
+                             alt="avatar"
+                             class="rounded-circle img-fluid"
+                             style="width: 150px; height: 150px; object-fit: cover;">
+                        <h4 class="mt-3">{{ $user->Customer->name }}</h4>
+                    </div>
+
+                    <h5 class="mb-3">
+                        @if ($user->image)
+                            Ubah Foto Profil
+                        @else
+                            Tambah Foto Profil
+                        @endif
+                    </h5>
+
+                    <form action="{{ route('myaccount.photo.change') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <input type="hidden" name="id" value="{{ $user->id }}">
+                        <div class="mb-3">
+                            <label for="image" class="form-label">Pilih file gambar (maks: 5MB)</label>
+                            <input class="form-control" type="file" name="image" id="image" required>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <a href="{{ url('/myaccount') }}" class="btn btn-secondary">Kembali ke Profil</a>
+                            <div>
+                                @if ($user->image)
+                                    <a href="/myaccount/{{$user->id}}/delete-foto" class="btn btn-outline-danger">Hapus Foto</a>
                                 @endif
-                            </p>
-                            <p class="text-muted mb-4">
-                                @if ($user->Customer->address)
-                                    {{ $user->Customer->address }}
-                                @endif
-                            </p>
-                            <div class="d-flex justify-content-center mb-2">
-                                <a href="/myaccount" class="btn btn-primary">Back</a>
-                                @if ($user->image != null)
-                                    <a href="/myaccount/{{$user->id}}/delete-foto" class="btn btn-danger ms-2">Hapus Foto</a>
-                                @endif
+                                <button type="submit" class="btn btn-dark">Simpan</button>
                             </div>
                         </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-8">
-                    <div class="card mb-4">
-                        <div class="card-body">
-                            <div class="d-flex">
-                                <h4>
-                                    @if ($user->image == null)
-                                        Tambah
-                                    @else
-                                        Edit
-                                    @endif
-                                    Foto <span class="fst-italic">(Max 5mb)</span>
-                                </h4>
-                            </div>
-                            <hr>
-                            <div class="d-flex justify-content-start">
-                                <div class="col-md-12">
-                                    <form action="{{ route('myaccount.photo.change') }}" method="post" enctype="multipart/form-data">
-                                        @csrf
-                                        <label for="bukti" class="mb-2"></label>
-                                        <input type="hidden" name="id" value="{{ $user->id }}">
-                                        <input type="file" class="form-control mb-3" required name="image" id="bukti">
-                                        <button class="btn btn-primary justify-content-end" type="submit">Kirim</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
-    </section>
-
-    @include('vendor.sweetalert.alert')
-    @include('frontend.inc.footer')
-
-</body>
-</html>
+    </div>
+</div>
+@endsection

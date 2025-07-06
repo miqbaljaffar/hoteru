@@ -1,189 +1,127 @@
 @extends('frontend.inc.main')
 
 @section('title')
-    <title>Aurora Haven | PROFILE EDIT</title>
+    <title>Aurora Haven | Akun Saya</title>
 @endsection
 
+@push('styles')
+<style>
+    .profile-header {
+        background: linear-gradient(to right, #6a82fb, #fc5c7d);
+        padding: 2rem;
+        color: white;
+        border-radius: .5rem .5rem 0 0;
+    }
+    .profile-avatar {
+        width: 120px;
+        height: 120px;
+        border: 4px solid white;
+        margin-top: -60px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    .nav-pills .nav-link {
+        color: #6c757d;
+    }
+    .nav-pills .nav-link.active {
+        background-color: #343a40;
+        color: white;
+    }
+</style>
+@endpush
+
 @section('content')
-    <section style="background-color: #eee; margin-bottom: 65px;">
-        <div class="container py-5">
-            <div class="row">
-                <div class="col-lg-4">
-                    <div class="card mb-4">
-                        <div class="card-body text-center">
-                            <img src="{{ $user->image ? asset('storage/' . $user->image) : '/img/default-user.jpg' }}" alt="avatar" class="rounded-circle img-fluid" style="width: 150px; height: 150px">
-                            <h3 class="mt-2">{{ $user->Customer->name }}</h3>
-                            <h5>{{ $user->username }}</h5>
-                            <p class="mb-1">{{ $user->Customer->job ?? '' }}</p>
-                            <p class="mb-4">{{ $user->Customer->address ?? '' }}</p>
-                            <div class="d-flex justify-content-center mb-2">
-                                <a href="/myaccount/edit" class="btn btn-primary me-2">{{ $user->image ? 'Edit Foto' : 'Tambah Foto' }}</a>
-                            </div>
-                        </div>
-                    </div>
+<div class="container my-5">
+    <div class="row">
+        <div class="col-lg-4 col-md-12 mb-4">
+            {{-- Kartu Profil Pengguna --}}
+            <div class="card border-0 shadow-sm text-center">
+                <div class="profile-header"></div>
+                <div class="card-body pt-0">
+                    <img src="{{ $user->image ? asset('storage/' . $user->image) : '/img/default-user.jpg' }}"
+                         alt="avatar"
+                         class="rounded-circle img-fluid profile-avatar">
+                    <h4 class="mt-3 mb-0">{{ $user->Customer->name }}</h4>
+                    <p class="text-muted">{{ '@' . $user->username }}</p>
+                    <a href="{{ route('myaccount.edit') }}" class="btn btn-dark btn-sm">
+                        <i class="bi bi-pencil-square me-1"></i> {{ $user->image ? 'Ubah Foto' : 'Tambah Foto' }}
+                    </a>
                 </div>
+            </div>
+        </div>
 
-                <div class="col-lg-8">
-                    <form action="/myaccount/{{ $user->id }}/update" method="post">
-                        @method('PUT')
-                        @csrf
-                        <div class="card mb-4">
-                            <div class="card-body">
-                                <!-- Name -->
+        <div class="col-lg-8 col-md-12">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    {{-- Navigasi Tab --}}
+                    <ul class="nav nav-pills mb-4" id="pills-tab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="true">Edit Profil</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="pills-password-tab" data-bs-toggle="pill" data-bs-target="#pills-password" type="button" role="tab" aria-controls="pills-password" aria-selected="false">Ubah Password</button>
+                        </li>
+                    </ul>
+
+                    {{-- Konten Tab --}}
+                    <div class="tab-content" id="pills-tabContent">
+                        {{-- Tab Edit Profil --}}
+                        <div class="tab-pane fade show active" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                            <h5 class="mb-3">Informasi Akun</h5>
+                            <form action="/myaccount/{{ $user->id }}/update" method="POST">
+                                @method('PUT')
+                                @csrf
                                 <div class="row">
-                                    <div class="col-sm-3">
-                                        <p class="mb-0">Name <span style="color: red">*</span></p>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Nama Lengkap</label>
+                                        <input type="text" class="form-control" name="name" value="{{ $user->Customer->name }}">
                                     </div>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control mb-0" name="name" id="name" value="{{ $user->Customer->name }}">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Username</label>
+                                        <input type="text" class="form-control" name="username" value="{{ $user->username }}" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Email</label>
+                                        <input type="email" class="form-control" name="email" value="{{ $user->email }}" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Telepon</label>
+                                        <input type="text" class="form-control" name="telp" value="{{ $user->telp }}">
+                                    </div>
+                                     <div class="col-md-6 mb-3">
+                                        <label class="form-label">NIK</label>
+                                        <input type="text" class="form-control" name="nik" value="{{ $user->Customer->nik }}" required>
                                     </div>
                                 </div>
                                 <hr>
-
-                                <!-- Username -->
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        <p class="mb-0">Username <span style="color: red">*</span></p>
-                                    </div>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control mb-0" name="username" required id="username" value="{{ $user->username }}">
-                                    </div>
+                                <div class="text-end">
+                                    <button type="submit" class="btn btn-dark">Simpan Perubahan</button>
                                 </div>
-                                <hr>
-
-                                <!-- Email -->
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        <p class="mb-0">Email <span style="color: red">*</span></p>
-                                    </div>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control mb-0" name="email" required id="email" value="{{ $user->email }}">
-                                    </div>
-                                </div>
-                                <hr>
-
-                                <!-- NIK -->
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        <p class="mb-0">NIK <span style="color: red">*</span></p>
-                                    </div>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="nik" id="nik" required value="{{ $user->Customer->nik }}">
-                                    </div>
-                                </div>
-                                <hr>
-
-                                <!-- Phone -->
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        <p class="mb-0">Phone <span style="color: red">*</span></p>
-                                    </div>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control mb-0" name="telp" id="telp" value="{{ $user->telp }}">
-                                    </div>
-                                </div>
-                                <hr>
-
-                                <!-- Birthday -->
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        <p class="mb-0">Birthday</p>
-                                    </div>
-                                    <div class="col-sm-9">
-                                        <input type="date" class="form-control" name="birthdate" id="birthdate" value="{{ $user->Customer->birthdate }}">
-                                    </div>
-                                </div>
-                                <hr>
-
-                                <!-- Address -->
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        <p class="mb-0">Address</p>
-                                    </div>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control mb-0" name="address" id="address" value="{{ $user->Customer->address }}">
-                                    </div>
-                                </div>
-                                <hr>
-
-                                <!-- Gender -->
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        <p class="mb-0">Gender</p>
-                                    </div>
-                                    <div class="col-sm-9">
-                                        <div class="d-flex">
-                                            <div class="ms-1 form-check">
-                                                <input class="form-check-input" type="radio" name="jk" value="L" id="jkpria" {{ $user->Customer->jk == 'L' ? 'checked' : '' }}>
-                                                <label class="form-check-label" for="jkpria">Pria</label>
-                                            </div>
-                                            <div class="ms-3 form-check">
-                                                <input class="form-check-input" type="radio" name="jk" value="P" id="jkwanita" {{ $user->Customer->jk == 'P' ? 'checked' : '' }}>
-                                                <label class="form-check-label" for="jkwanita">Wanita</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <hr>
-
-                                <!-- Job -->
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        <p class="mb-0">Job</p>
-                                    </div>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="job" id="job" value="{{ $user->Customer->job }}">
-                                    </div>
-                                </div>
-                                <hr>
-
-                                <!-- Card Number -->
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        <p class="mb-0">Card Number</p>
-                                    </div>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="card_number" id="card_number" value="{{ $user->card_number }}">
-                                    </div>
-                                </div>
-                                <hr>
-
-                                <div class="d-flex justify-content-end mt-4">
-                                    <button type="submit" class="btn btn-primary">Update!</button>
-                                </div>
-                            </div>
+                            </form>
                         </div>
-                    </form>
 
-                    <!-- Change Password -->
-                    <div class="row mt-4">
-                        <h5>CHANGE PASSWORD</h5>
-                        <form action="/myaccount/{{ $user->id }}/update" method="post">
-                            @method('PUT')
-                            @csrf
-                            <div class="row mt-3">
-                                <div class="col-sm-3">
-                                    <p class="mb-0">New Password</p>
+                        {{-- Tab Ubah Password --}}
+                        <div class="tab-pane fade" id="pills-password" role="tabpanel" aria-labelledby="pills-password-tab">
+                            <h5 class="mb-3">Ubah Password</h5>
+                            <form action="/myaccount/{{ $user->id }}/update-password" method="POST">
+                                @method('PUT')
+                                @csrf
+                                <div class="mb-3">
+                                    <label class="form-label">Password Baru</label>
+                                    <input type="password" class="form-control" name="newpassword" required>
                                 </div>
-                                <div class="col-sm-9">
-                                    <input type="password" class="form-control" name="newpassword" id="newpassword" required>
+                                <div class="mb-3">
+                                    <label class="form-label">Konfirmasi Password Baru</label>
+                                    <input type="password" class="form-control" name="confirmation" required>
                                 </div>
-                            </div>
-                            <div class="row mt-3">
-                                <div class="col-sm-3">
-                                    <p class="mb-0">Confirmation Password</p>
+                                <div class="text-end">
+                                    <button type="submit" class="btn btn-danger">Ubah Password</button>
                                 </div>
-                                <div class="col-sm-9">
-                                    <input type="password" class="form-control" name="confirmation" id="confirmation" required>
-                                </div>
-                            </div>
-                            <div class="d-flex justify-content-end mt-4">
-                                <button type="submit" class="btn btn-danger">Change Password!</button>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</div>
 @endsection

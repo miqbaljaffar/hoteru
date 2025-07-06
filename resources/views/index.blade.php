@@ -1,32 +1,32 @@
 @extends('frontend.inc.main')
 
 @section('title')
-    <title>Aurora Haven | HOTEL MODERN DAN NYAMAN</title>
+    <title>Aurora Haven | Hotel Modern dan Nyaman</title>
 @endsection
 
 @section('content')
-    <!-- Swiper Image Content -->
-    <section class="swiper-image-content">
+    {{-- Swiper Image & Form Pencarian --}}
+    {{-- Bagian ini digabungkan agar form bisa "tumpang tindih" dengan swiper untuk efek modern --}}
+    <div style="position: relative;">
         @include('frontend.sectionindex.swiper')
-    </section>
-
-    <!-- Check Availability Form -->
-    <section class="form" id="form">
         @include('frontend.sectionindex.form')
-    </section>
+    </div>
 
-    <!-- Rooms -->
-    <section class="kamar-index py-5" id="kamar-index">
+    {{-- Bagian Kamar Unggulan --}}
+    <section class="container my-5 py-5">
         @include('frontend.sectionindex.kamar')
     </section>
 
-    <!-- Facilities -->
-    <section class="facility-index py-5 bg-custom" id="facility-index">
-        @include('frontend.sectionindex.facility')
+    {{-- Bagian Fasilitas --}}
+    {{-- Diberi latar belakang berbeda untuk memisahkan section secara visual --}}
+    <section class="bg-light py-5">
+        <div class="container">
+            @include('frontend.sectionindex.facility')
+        </div>
     </section>
 
-    <!-- Contact -->
-    <section class="contact-index py-5" id="contact-index">
+    {{-- Bagian Kontak & Peta --}}
+    <section class="container my-5 py-5">
         @include('frontend.sectionindex.contact')
     </section>
 @endsection

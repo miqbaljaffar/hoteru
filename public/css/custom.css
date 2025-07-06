@@ -1,0 +1,25 @@
+/* Styling dasar untuk Navbar */
+.navbar {
+    transition: background-color 0.4s ease-out;
+}
+
+/* State saat di-scroll atau di halaman non-utama */
+.navbar.scrolled,
+.navbar.navbar-solid {
+    background-color: #a8c686; /* Warna matcha-green solid */
+}
+
+/* Styling untuk offcanvas/menu mobile */
+.offcanvas {
+    background-color: #a8c686;
+}
+/* Menambahkan padding pada main content agar tidak tertutup navbar */
+main {
+    padding-top: 80px; /* Sesuaikan nilai ini dengan tinggi header Anda */
+}
+
+/* Jika ada halaman tertentu yang tidak memiliki header fixed,
+   Anda bisa membuat class khusus */
+.content-with-fixed-header {
+    padding-top: 80px; /* Sesuaikan nilai ini dengan tinggi header Anda */
+}

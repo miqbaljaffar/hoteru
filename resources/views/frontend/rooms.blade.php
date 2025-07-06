@@ -6,134 +6,125 @@
 
 @section('content')
     <div class="my-5 px-4">
-        <h2 class="fw-bold h-font text-center">OUR ROOMS</h2>
-        <p class="h5 mt-3 text-center">{{ $roomsCount }} Rooms Available</p>
-        <div class="h-line bg-dark"></div>
+        <h2 class="fw-bold h-font text-center">KAMAR KAMI</h2>
+        <p class="h5 mt-3 text-center text-muted">{{ $roomsCount }} Kamar Tersedia</p>
     </div>
 
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-3 col-md-12 mb-lg-0 mb-4 px-0">
-                <nav class="navbar navbar-expand-lg navbar-light bg-white rounded shadow">
-                    <div class="container-fluid flex-lg-column align-items-stretch">
-                        <h4 class="mt-2">FILTERS</h4>
-                        <button class="navbar-toggler shadow-none" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#filterDropdown" aria-controls="navbarNav" aria-expanded="false"
-                            aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
+
+            {{-- Kolom Filter --}}
+            <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
+                <nav class="navbar navbar-expand-lg navbar-light bg-white rounded shadow sticky-top" style="top: 80px;">
+                    <div class="container-fluid flex-lg-column align-items-stretch p-3">
+                        <h4 class="mt-2 d-none d-lg-block">Filter</h4>
+                        {{-- Tombol untuk Tampilan Mobile --}}
+                        <button class="navbar-toggler shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#filterDropdown" aria-controls="filterDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                           <span>FILTER PENCARIAN</span>
                         </button>
                         <div class="collapse navbar-collapse flex-column align-items-stretch mt-2" id="filterDropdown">
                             <form action="/rooms" method="GET">
-                                @csrf
+                                {{-- Filter Ketersediaan --}}
                                 <div class="border bg-light p-3 rounded mb-3">
-                                    <h5 class="mb-3" style="font-size: 18px;">CHECK AVAILABILITY</h5>
-                                    <label class="form-label">Check-in</label>
-                                    <input type="date" name="from" class="form-control shadow-none mb-3">
-                                    <label class="form-label">Check-out</label>
-                                    <input type="date" name="to" class="form-control shadow-none">
+                                    <h5 class="mb-3" style="font-size: 18px;">Ketersediaan</h5>
+                                    <label class="form-label" style="font-weight: 500;">Check-in</label>
+                                    <input type="date" name="from" class="form-control shadow-none mb-3" value="{{ $request->from ?? '' }}">
+                                    <label class="form-label" style="font-weight: 500;">Check-out</label>
+                                    <input type="date" name="to" class="form-control shadow-none" value="{{ $request->to ?? '' }}">
                                 </div>
-
+                                {{-- Filter Jumlah Tamu --}}
                                 <div class="border bg-light p-3 rounded mb-3">
-                                    <h5 class="mb-3" style="font-size: 18px;">Person</h5>
-                                    <div class="d-flex">
-                                        <div class="me-2">
-                                            <label class="form-label">How many persons?</label>
-                                            <input type="number" name="count" class="form-control shadow-none" value="1">
-                                        </div>
+                                    <h5 class="mb-3" style="font-size: 18px;">Jumlah Tamu</h5>
+                                    <div class="me-2">
+                                        <label class="form-label" style="font-weight: 500;">Orang</label>
+                                        <input type="number" name="count" class="form-control shadow-none" min="1" value="{{ $request->count ?? 1 }}">
                                     </div>
                                 </div>
-
-                                <div class="container">
-                                    <div class="row">
-                                        <button class="btn border" type="submit">SEARCH</button>
-                                    </div>
-                                </div>
+                                <button class="btn btn-dark w-100 shadow-none" type="submit">Cari</button>
                             </form>
                         </div>
                     </div>
                 </nav>
             </div>
 
-            <div class="col-lg-9 col-md-12 px-4">
-                @foreach ($rooms as $r)
-                    <div class="card mb-4 border-0 shadow">
-                        <div class="row g-0 p-3 align-items-center">
-                            <div class="col-md-5 mb-lg-0 mb-md-0 mb-3">
+            {{-- Kolom Daftar Kamar --}}
+            <div class="col-lg-9 col-md-12">
+                @forelse ($rooms as $r)
+                    <div class="card mb-4 border-0 shadow-sm room-card-hover">
+                        <div class="row g-0">
+                            {{-- Gambar Kamar --}}
+                            <div class="col-md-4">
                                 @if ($r->images->count() > 0)
-                                    <img src="{{ asset('storage/' . $r->images[0]->image) }}" style="max-height:170px; object-fit:cover; width:100%;" class="img-fluid rounded">
+                                    <img src="{{ asset('storage/' . $r->images[0]->image) }}" class="img-fluid rounded-start h-100" style="object-fit: cover;" alt="Gambar {{ $r->type->name }}">
                                 @else
-                                    <img src="/img/kamar 1.jpg" style="max-height:150px; object-fit:cover; width:100%;" class="img-fluid rounded">
+                                    <img src="/img/default_room.jpg" class="img-fluid rounded-start h-100" style="object-fit: cover;" alt="Gambar Default">
                                 @endif
                             </div>
+                            {{-- Detail Kamar --}}
+                            <div class="col-md-8">
+                                <div class="card-body d-flex flex-column h-100">
+                                    <div class="d-flex justify-content-between">
+                                        <h5 class="card-title">{{ $r->type->name }} #{{ $r->no }}</h5>
+                                        <h6 class="text-success fw-bold">IDR {{ number_format($r->price) }}/malam</h6>
+                                    </div>
 
-                            <div class="col-md-5 px-lg-3 px-md-3 px-0">
-                                <h5 class="mb-3">{{ $r->type->name }} #{{ $r->no }} </h5>
-                                <div class="guests">
-                                    <h6 class="mb-1">Guests</h6>
-                                    <span class="badge rounded-pill bg-light text-dark text-wrap">{{ $r->capacity }}</span>
-                                </div>
-                                <div class="features mb-3 mt-3">
-                                    <h6 class="mb-1">Features</h6>
-                                    @if ($r->capacity <= 5)
-                                        <span class="badge rounded-pill bg-light text-dark text-wrap">2 Rooms</span>
-                                        <span class="badge rounded-pill bg-light text-dark text-wrap">1 Bathroom</span>
-                                        <span class="badge rounded-pill bg-light text-dark text-wrap">1 Balcony</span>
-                                        <span class="badge rounded-pill bg-light text-dark text-wrap">2 Sofa</span>
-                                    @elseif ($r->capacity <= 10)
-                                        <span class="badge rounded-pill bg-light text-dark text-wrap">3 Rooms</span>
-                                        <span class="badge rounded-pill bg-light text-dark text-wrap">2 Bathrooms</span>
-                                        <span class="badge rounded-pill bg-light text-dark text-wrap">2 Balconies</span>
-                                        <span class="badge rounded-pill bg-light text-dark text-wrap">4 Sofas</span>
-                                    @else
-                                        <span class="badge rounded-pill bg-light text-dark text-wrap">4 Rooms</span>
-                                        <span class="badge rounded-pill bg-light text-dark text-wrap">2 Bathrooms</span>
-                                        <span class="badge rounded-pill bg-light text-dark text-wrap">2 Balconies</span>
-                                        <span class="badge rounded-pill bg-light text-dark text-wrap">6 Sofas</span>
-                                    @endif
-                                </div>
+                                    <div class="d-flex flex-wrap my-2">
+                                        <span class="badge bg-light text-dark text-wrap me-2 mb-2">Kapasitas: {{ $r->capacity }} orang</span>
+                                    </div>
 
-                                <div class="facilities mb-3">
-                                    <h6 class="mb-1">Facilities</h6>
-                                    <span class="badge rounded-pill bg-light text-dark text-wrap">Wifi</span>
-                                    <span class="badge rounded-pill bg-light text-dark text-wrap">Television</span>
-                                    <span class="badge rounded-pill bg-light text-dark text-wrap">AC</span>
-                                    @if ($r->capacity > 10)
-                                        <span class="badge rounded-pill bg-light text-dark text-wrap">Room Heater</span>
-                                        <span class="badge rounded-pill bg-light text-dark text-wrap">Smoking Room</span>
-                                    @endif
-                                </div>
-                            </div>
+                                    <h6 class="mt-2">Fasilitas Utama</h6>
+                                    <div class="d-flex flex-wrap mb-3">
+                                        <span class="badge rounded-pill bg-light text-dark text-wrap me-2 mb-2">Wifi</span>
+                                        <span class="badge rounded-pill bg-light text-dark text-wrap me-2 mb-2">AC</span>
+                                        <span class="badge rounded-pill bg-light text-dark text-wrap me-2 mb-2">TV</span>
+                                        @if ($r->capacity > 10)
+                                            <span class="badge rounded-pill bg-light text-dark text-wrap me-2 mb-2">Pemanas Ruangan</span>
+                                            <span class="badge rounded-pill bg-light text-dark text-wrap me-2 mb-2">Ruang Merokok</span>
+                                        @endif
+                                    </div>
 
-                            <div class="col-md-2 mt-lg-0 mt-md-0 mt-4 text-center">
-                                <h6 class="mb-4 text-success">IDR {{ number_format($r->price) }}</h6>
-                                @if ($request->from)
-                                    <form action="/order" method="post">
-                                        @csrf
-                                        <input type="hidden" name="room" value="{{ $r->id }}">
-                                        <input type="hidden" name="from" value="{{ $request->from }}">
-                                        <input type="hidden" name="to" value="{{ $request->to }}">
-                                        <button class="btn btn-sm w-100 btn-light border border-dark shadow-none mb-2">Book now</button>
-                                    </form>
-                                    <form action="/rooms/{{ $r->no }}" method="post">
-                                        @csrf
-                                        <input type="hidden" name="no" value="{{ $r->no }}">
-                                        <input type="hidden" name="from" value="{{ $request->from }}">
-                                        <input type="hidden" name="to" value="{{ $request->to }}">
-                                        <button class="btn btn-sm w-100 btn-dark shadow-none">More details</button>
-                                    </form>
-                                @else
-                                    <a href="/rooms/{{ $r->no }}" class="btn btn-sm w-100 btn-light border border-dark shadow-none mb-2">Book Now</a>
-                                    <a href="/rooms/{{ $r->no }}" class="btn btn-sm w-100 btn-dark shadow-none">More details</a>
-                                @endif
+                                    {{-- Tombol Aksi --}}
+                                    <div class="mt-auto d-flex justify-content-end align-items-center">
+                                         @if ($request->from)
+                                            <form action="/order" method="post" class="d-inline">
+                                                @csrf
+                                                <input type="hidden" name="room" value="{{ $r->id }}">
+                                                <input type="hidden" name="from" value="{{ $request->from }}">
+                                                <input type="hidden" name="to" value="{{ $request->to }}">
+                                                <button class="btn btn-dark shadow-none">Pesan Sekarang</button>
+                                            </form>
+                                        @else
+                                            <a href="/rooms/{{ $r->no }}" class="btn btn-dark shadow-none">Pesan Sekarang</a>
+                                        @endif
+                                        <a href="/rooms/{{ $r->no }}" class="btn btn-outline-dark shadow-none ms-2">Lihat Detail</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                @endforeach
+                @empty
+                    <div class="alert alert-warning text-center" role="alert">
+                      Tidak ada kamar yang tersedia dengan filter tersebut.
+                    </div>
+                @endforelse
 
-                <div class="d-flex justify-content-center">
-                    {!! $rooms->links() !!}
+                {{-- Pagination --}}
+                <div class="d-flex justify-content-center mt-4">
+                    {!! $rooms->appends(request()->except('page'))->links() !!}
                 </div>
             </div>
         </div>
     </div>
 @endsection
+
+@push('css')
+<style>
+    .room-card-hover {
+        transition: transform .2s ease-in-out, box-shadow .2s ease-in-out;
+    }
+    .room-card-hover:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+    }
+</style>
+@endpush

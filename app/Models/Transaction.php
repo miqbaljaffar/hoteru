@@ -39,7 +39,7 @@ class Transaction extends Model
     public function customer()
     {
         // Pastikan foreign key 'customer_id' sudah benar sesuai tabel database Anda
-        return $this->belongsTo(Customer::class, 'customer_id');
+        return $this->belongsTo(Customer::class, 'c_id');
     }
 
     public function room()
