@@ -3,7 +3,6 @@
 <head>
     @yield('title')
 
-    <!-- CSS only -->
     @include('frontend.inc.links')
     @yield('link')
     @yield('css')
@@ -16,6 +15,15 @@
             --indigo: #264653;
             --japanese-red: #b44c43;
             --accent-color: var(--matcha-green);
+        }
+
+        /* Perubahan Font Utama */
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .h-font {
+            font-family: 'Merienda', cursive;
         }
 
         .availability-form {
@@ -41,17 +49,6 @@
             object-position: center;
         }
 
-        @media screen and (max-width: 575px) {
-            .availability-form {
-                margin-top: 25px;
-                padding: 0 35px;
-            }
-
-            .swiper-slide img {
-                height: 50vh;
-            }
-        }
-
         .pop:hover {
             border-top-color: var(--matcha-green) !important;
             transform: scale(1.03);
@@ -70,6 +67,17 @@
         .box {
             border-top-color: var(--matcha-green) !important;
         }
+
+        @media screen and (max-width: 575px) {
+            .availability-form {
+                margin-top: 25px;
+                padding: 0 35px;
+            }
+
+            .swiper-slide img {
+                height: 50vh;
+            }
+        }
     </style>
 </head>
 
@@ -77,7 +85,6 @@
 
     @include('frontend.inc.header')
 
-    <!-- Swiper Carousel -->
     @include('frontend.inc.logout')
 
     @yield('content')
