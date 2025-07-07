@@ -10,10 +10,18 @@ class Customer extends Model
 {
     use HasFactory, Notifiable;
     protected $guarded = ['id'];
-    public function Transactions(){
+
+    public function Transactions()
+    {
         return $this->hasMany(Transaction::class);
     }
-    public function User(){
-        return $this->hasOne(User::class, 'id');
+
+    /**
+     * Mengganti relasi yang salah (menggunakan 'id') dengan
+     * relasi yang benar menggunakan foreign key 'c_id'.
+     */
+    public function User()
+    {
+        return $this->hasOne(User::class, 'c_id');
     }
 }

@@ -16,17 +16,17 @@
         font-weight: 600;
     }
     @media print {
-        body > *:not(#invoice-wrapper) {
-            display: none !important;
+        body * {
+            visibility: hidden;
+        }
+        #invoice-wrapper, #invoice-wrapper * {
+            visibility: visible;
         }
         #invoice-wrapper {
-            display: block !important;
-            margin: 0;
-            padding: 0;
-        }
-        .invoice-card {
-            box-shadow: none !important;
-            border: none !important;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
         }
     }
 </style>
